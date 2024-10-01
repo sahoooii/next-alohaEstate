@@ -1,15 +1,9 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
 
 const HomePage = () => {
-	return (
-		<div>
-			<h1 className='text-3xl'>HomePage</h1>
-			<Button variant='outline' size='lg'>
-				Button
-			</Button>
-		</div>
-	);
+	return <div>
+		<h1>Home</h1>
+	</div>;
 };
 
 export default HomePage;
