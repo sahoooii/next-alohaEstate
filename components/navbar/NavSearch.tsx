@@ -5,7 +5,7 @@ const NavSearch = () => {
 		<Input
 			type='text'
 			placeholder='Find Your Next Vacation...'
-			className='max-w-xs dark:bg-muted'
+			className='max-w-xs dark:bg-muted border border-blue-300'
 		/>
 	);
 };
