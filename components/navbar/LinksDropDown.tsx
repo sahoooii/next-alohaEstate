@@ -8,7 +8,7 @@ import {
 	DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { LuAlignLeft, LuLogIn } from 'react-icons/lu';
-import { IoPersonAddOutline } from "react-icons/io5";
+import { IoPersonAddOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import UserIcon from './UserIcon';
@@ -26,6 +26,7 @@ const LinksDropDown = () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-44 mr-3' align='start' sideOffset={10}>
+				{/* When not login Menu */}
 				<SignedOut>
 					<DropdownMenuItem>
 						<div className='flex items-center '>
@@ -45,6 +46,7 @@ const LinksDropDown = () => {
 						</div>
 					</DropdownMenuItem>
 				</SignedOut>
+				{/* After login Menu */}
 				<SignedIn>
 					{navLinks.map((link) => {
 						return (
@@ -58,9 +60,7 @@ const LinksDropDown = () => {
 					})}
 					<DropdownMenuSeparator />
 					<DropdownMenu>
-						<div className='pr-2 pl-2 pt-1.5 pb-1.5 text-[14px]'>
-							<SignOutLink />
-						</div>
+						<SignOutLink />
 					</DropdownMenu>
 				</SignedIn>
 			</DropdownMenuContent>
