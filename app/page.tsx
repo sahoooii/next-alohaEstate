@@ -1,9 +1,15 @@
-import React from 'react';
+import Hero from './Hero';
 
 const HomePage = () => {
-	return <div>
-		<h1>Home</h1>
-	</div>;
+	return (
+		<>
+			<Hero />
+			<div className='container py-10'>
+				<h1>Home</h1>
+				{/* Featured Properties */}
+			</div>
+		</>
+	);
 };
 
 export default HomePage;
