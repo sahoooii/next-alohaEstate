@@ -11,7 +11,7 @@ const createProfileAction = async (prevState: unknown, formData: FormData) => {
 
 const CreateProfilePage = () => {
 	return (
-		<section>
+		<section className='container py-10'>
 			<h1 className='text-2xl font-mono mb-8 capitalize'>new user</h1>
 			<div className='border p-8 rounded-md'>
 				<FormContainer action={createProfileAction}>

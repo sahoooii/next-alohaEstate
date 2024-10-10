@@ -51,7 +51,10 @@ const LinksDropDown = () => {
 					{navLinks.map((link) => {
 						return (
 							<DropdownMenuItem key={link.href} asChild>
-								<Link href={link.href} className='capitalize w-full'>
+								<Link
+									href={link.href}
+									className='capitalize w-full cursor-pointer'
+								>
 									<link.icon className='w-4 h-4 mr-3' />
 									{link.label}
 								</Link>

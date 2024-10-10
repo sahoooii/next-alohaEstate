@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Ubuntu } from 'next/font/google';
-import Navbar from '@/components/navbar/Navbar';
-import Providers from './providers';
 import { ClerkProvider } from '@clerk/nextjs';
+import Providers from './providers';
+import Navbar from '@/components/navbar/Navbar';
+import Footer from '@/components/footer/Footer';
 
 const ubuntu = Ubuntu({
 	subsets: ['latin'],
@@ -27,8 +28,11 @@ export default function RootLayout({
 			<html lang='en' suppressHydrationWarning>
 				<body className={`${ubuntu.variable} font-sans`}>
 					<Providers>
-						<Navbar />
-						<main>{children}</main>
+						<div className='relative min-h-screen pb-[100px]'>
+							<Navbar />
+							<main>{children}</main>
+							<Footer />
+						</div>
 					</Providers>
 				</body>
 			</html>
