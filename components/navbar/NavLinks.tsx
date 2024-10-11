@@ -12,7 +12,7 @@ const NavLinks = () => {
 				href='/'
 				className={`${
 					pathname === '/' ? 'bg-blue-500 text-white' : 'text-slate-500'
-				} text-white hover:bg-slate-400 hover:text-white rounded-md px-3 py-2`}
+				}  hover:bg-slate-400 hover:text-white rounded-md px-3 py-2`}
 			>
 				Home
 			</Link>
@@ -22,7 +22,7 @@ const NavLinks = () => {
 					pathname === '/properties'
 						? 'bg-blue-500 text-white'
 						: 'text-slate-500'
-				} text-white hover:bg-slate-400 hover:text-white rounded-md px-3 py-2`}
+				}  hover:bg-slate-400 hover:text-white rounded-md px-3 py-2`}
 			>
 				Properties
 			</Link>
