@@ -46,3 +46,17 @@ export const createProfileAction = async (
 	}
 	redirect('/');
 };
+
+export const fetchProfileImage = async () => {
+	await connectDB();
+
+	const user = await currentUser();
+	if (!user) return null;
+
+	const profile = await Profile.find({ clerkId: user.id }).select(
+		'profileImage'
+	);
+	const profileImage = profile && profile[0].profileImage;
+
+	return profileImage;
+};
