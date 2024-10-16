@@ -90,9 +90,9 @@ export const updateProfileAction = async (
 		// username unique validate
 		const usernameExists = await Profile.findOne({ username: typedUsername });
 
-		// Check same person, if so, can use same username
+		// Check login user and typed name user is the same person, if so, can use the same username
 		if (profile[0].username === typedUsername) {
-			typedUsername = typedUsername;
+			typedUsername = typedUsername || profile[0].username;
 		} else if (usernameExists) {
 			throw new Error('This username is already in use');
 		} else {
