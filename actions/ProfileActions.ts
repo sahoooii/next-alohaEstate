@@ -81,12 +81,18 @@ export const updateProfileAction = async (
 
 	try {
 		const rawData = Object.fromEntries(formData);
-		const validatedFields = profileSchema.parse(rawData);
+		// Return success or not
+		const validatedFields = profileSchema.safeParse(rawData);
+
+		if (!validatedFields.success) {
+			const errors = validatedFields.error.errors.map((error) => error.message);
+			throw new Error(errors.join('. '));
+		}
 
 		const profile = await Profile.find({ clerkId: user.id });
 
 		// Check username
-		let typedUsername = validatedFields.username;
+		let typedUsername = validatedFields.data.username;
 		// username unique validate
 		const usernameExists = await Profile.findOne({ username: typedUsername });
 
@@ -99,7 +105,7 @@ export const updateProfileAction = async (
 			typedUsername = typedUsername || profile[0].username;
 		}
 
-		await Profile.findOneAndUpdate(profile[0], validatedFields);
+		await Profile.findOneAndUpdate(profile[0], validatedFields.data);
 
 		revalidatePath('/profile');
 		return { message: 'Profile updated successfully' };
