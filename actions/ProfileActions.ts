@@ -2,7 +2,7 @@
 
 import connectDB from '@/config/database';
 import Profile from '@/models/Profile';
-import { profileSchema } from '../utils/schemas';
+import { profileSchema, validateWithZodSchema } from '../utils/schemas';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import cloudinary from '@/config/cloudinary';
 import { redirect } from 'next/navigation';
@@ -20,7 +20,7 @@ export const createProfileAction = async (
 		if (!user) throw new Error('Please login to create a profile');
 
 		const rawData = Object.fromEntries(formData);
-		const validatedFields = profileSchema.parse(rawData);
+		const validatedFields = validateWithZodSchema(profileSchema, rawData);
 
 		// username unique validate
 		const username = validatedFields.username;
@@ -81,18 +81,12 @@ export const updateProfileAction = async (
 
 	try {
 		const rawData = Object.fromEntries(formData);
-		// Return success or not
-		const validatedFields = profileSchema.safeParse(rawData);
-
-		if (!validatedFields.success) {
-			const errors = validatedFields.error.errors.map((error) => error.message);
-			throw new Error(errors.join('. '));
-		}
+		const validatedFields = validateWithZodSchema(profileSchema, rawData);
 
 		const profile = await Profile.find({ clerkId: user.id });
 
 		// Check username
-		let typedUsername = validatedFields.data.username;
+		let typedUsername = validatedFields.username;
 		// username unique validate
 		const usernameExists = await Profile.findOne({ username: typedUsername });
 
@@ -105,7 +99,7 @@ export const updateProfileAction = async (
 			typedUsername = typedUsername || profile[0].username;
 		}
 
-		await Profile.findOneAndUpdate(profile[0], validatedFields.data);
+		await Profile.findOneAndUpdate(profile[0], validatedFields);
 
 		revalidatePath('/profile');
 		return { message: 'Profile updated successfully' };
