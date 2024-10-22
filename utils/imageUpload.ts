@@ -14,7 +14,7 @@ export const uploadImage = async (image: File, fileName: string) => {
 	return imageUrl;
 };
 
-// Multiple images imageFiles from formData
+// Multiple images, imageFiles from formData
 export const uploadImages = async (imageFiles: File[], fileName: string) => {
 	const imageUrls = [];
 
