@@ -2,12 +2,16 @@
 
 import connectDB from '@/config/database';
 import Profile from '@/models/Profile';
-import { profileSchema, validateWithZodSchema } from '../utils/schemas';
+import {
+	imageSchema,
+	profileSchema,
+	validateWithZodSchema,
+} from '../utils/schemas';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
-import cloudinary from '@/config/cloudinary';
 import { redirect } from 'next/navigation';
 import { getAuthUser, renderError } from './Auth';
 import { revalidatePath } from 'next/cache';
+import { uploadImage } from '@/utils/imageUpload';
 
 export const createProfileAction = async (
 	prevState: unknown,
@@ -113,5 +117,22 @@ export const updateProfileImageAction = async (
 	prevState: unknown,
 	formData: FormData
 ): Promise<{ message: string }> => {
-	return { message: 'profile image updated successfully' };
+	try {
+		await connectDB();
+		
+		const user = await getAuthUser();
+		const profile = await Profile.find({ clerkId: user.id });
+
+		const image = formData.get('image') as File;
+		validateWithZodSchema(imageSchema, { image });
+
+		const fileName = 'profile';
+		const imageUrl = await uploadImage(image, fileName);
+		await Profile.findOneAndUpdate(profile[0], { profileImage: imageUrl });
+
+		revalidatePath('/profile');
+		return { message: 'Profile image updated successfully' };
+	} catch (error) {
+		return renderError(error);
+	}
 };

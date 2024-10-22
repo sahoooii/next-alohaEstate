@@ -28,8 +28,8 @@ const ImageInputContainer = (props: ImageInputContainerProps) => {
 				<Image
 					src={image}
 					alt={name}
-					width={100}
-					height={100}
+					width={200}
+					height={200}
 					className='rounded-full object-cover mb-4 w-28 h-28'
 				/>
 			) : (
@@ -43,14 +43,14 @@ const ImageInputContainer = (props: ImageInputContainerProps) => {
 			>
 				{text}
 			</Button>
-			
+
 			{isUpdateFormVisible && (
 				<div className='max-w-lg mt-4'>
 					<FormContainer action={action}>
 						{children}
 						<ImageInput />
 						<div className='flex justify-center items-center'>
-							<SubmitButton size='lg' />
+							<SubmitButton size='lg' text='change photo' />
 						</div>
 					</FormContainer>
 				</div>
