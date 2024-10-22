@@ -1,4 +1,3 @@
-import Profile from '@/models/Profile';
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 

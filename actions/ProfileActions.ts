@@ -2,12 +2,16 @@
 
 import connectDB from '@/config/database';
 import Profile from '@/models/Profile';
-import { profileSchema } from '../utils/schemas';
+import {
+	imageSchema,
+	profileSchema,
+	validateWithZodSchema,
+} from '../utils/schemas';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
-import cloudinary from '@/config/cloudinary';
 import { redirect } from 'next/navigation';
 import { getAuthUser, renderError } from './Auth';
 import { revalidatePath } from 'next/cache';
+import { uploadImage } from '@/utils/imageUpload';
 
 export const createProfileAction = async (
 	prevState: unknown,
@@ -20,7 +24,7 @@ export const createProfileAction = async (
 		if (!user) throw new Error('Please login to create a profile');
 
 		const rawData = Object.fromEntries(formData);
-		const validatedFields = profileSchema.parse(rawData);
+		const validatedFields = validateWithZodSchema(profileSchema, rawData);
 
 		// username unique validate
 		const username = validatedFields.username;
@@ -81,18 +85,12 @@ export const updateProfileAction = async (
 
 	try {
 		const rawData = Object.fromEntries(formData);
-		// Return success or not
-		const validatedFields = profileSchema.safeParse(rawData);
-
-		if (!validatedFields.success) {
-			const errors = validatedFields.error.errors.map((error) => error.message);
-			throw new Error(errors.join('. '));
-		}
+		const validatedFields = validateWithZodSchema(profileSchema, rawData);
 
 		const profile = await Profile.find({ clerkId: user.id });
 
 		// Check username
-		let typedUsername = validatedFields.data.username;
+		let typedUsername = validatedFields.username;
 		// username unique validate
 		const usernameExists = await Profile.findOne({ username: typedUsername });
 
@@ -105,10 +103,35 @@ export const updateProfileAction = async (
 			typedUsername = typedUsername || profile[0].username;
 		}
 
-		await Profile.findOneAndUpdate(profile[0], validatedFields.data);
+		await Profile.findOneAndUpdate(profile[0], validatedFields);
 
 		revalidatePath('/profile');
 		return { message: 'Profile updated successfully' };
+	} catch (error) {
+		return renderError(error);
+	}
+};
+
+// Profile image update
+export const updateProfileImageAction = async (
+	prevState: unknown,
+	formData: FormData
+): Promise<{ message: string }> => {
+	try {
+		await connectDB();
+		
+		const user = await getAuthUser();
+		const profile = await Profile.find({ clerkId: user.id });
+
+		const image = formData.get('image') as File;
+		validateWithZodSchema(imageSchema, { image });
+
+		const fileName = 'profile';
+		const imageUrl = await uploadImage(image, fileName);
+		await Profile.findOneAndUpdate(profile[0], { profileImage: imageUrl });
+
+		revalidatePath('/profile');
+		return { message: 'Profile image updated successfully' };
 	} catch (error) {
 		return renderError(error);
 	}
