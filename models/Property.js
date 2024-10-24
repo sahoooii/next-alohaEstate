@@ -16,25 +16,47 @@ const PropertySchema = new Schema(
 			type: String,
 			required: true,
 		},
+		price: {
+			type: Number,
+			required: true,
+		},
 		category: {
 			type: String,
 			required: true,
 		},
-		image: {
+		description: {
 			type: String,
 			required: true,
 		},
-		country: {
-			type: String,
-		},
+		images: [
+			{
+				type: [String],
+				validate: {
+					validator: (v) => v.length <= 4,
+					message: (props) =>
+						`The images array can contain a maximum of 4 images, but got ${props.value.length}`,
+				},
+			},
+		],
 		location: {
-			street: String,
-			city: String,
-			state: String,
-			zipcode: String,
+			street: {
+				type: String,
+				required: true,
+			},
+			city: {
+				type: String,
+				required: true,
+			},
+			state: {
+				type: String,
+			},
+			zipcode: {
+				type: String,
+				required: true,
+			},
 		},
-		description: {
-			type: String,
+		guests: {
+			type: Number,
 			required: true,
 		},
 		bedrooms: {
@@ -49,25 +71,10 @@ const PropertySchema = new Schema(
 			type: Number,
 			required: true,
 		},
-		amenities: [
-			{
-				type: String,
-			},
-		],
-		rates: {
-			nightly: Number,
-			weekly: Number,
-			monthly: Number,
+		amenities: {
+			type: String,
+			required: true,
 		},
-		seller_info: {
-			name: String,
-			email: String,
-		},
-		images: [
-			{
-				type: String,
-			},
-		],
 		is_featured: {
 			type: Boolean,
 			default: false,

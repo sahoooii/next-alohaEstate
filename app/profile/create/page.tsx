@@ -20,7 +20,10 @@ const CreateProfilePage = async () => {
 						<FormInput type='text' name='lastName' label='last name' />
 						<FormInput type='text' name='username' label='username' />
 					</div>
-					<SubmitButton text='create profile' className='mt-8' />
+					<SubmitButton
+						text='create profile'
+						className='mt-8 w-full md:w-[50%]'
+					/>
 				</FormContainer>
 			</div>
 		</section>
