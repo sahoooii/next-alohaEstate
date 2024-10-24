@@ -1,7 +1,6 @@
 import { IconType } from 'react-icons';
 import {
 	PiHouseLineBold,
-	PiHouseLight,
 	PiBuildingApartment,
 } from 'react-icons/pi';
 import { MdOutlineHouseSiding, MdOutlineCottage } from 'react-icons/md';

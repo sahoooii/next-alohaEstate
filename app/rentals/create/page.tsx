@@ -4,6 +4,7 @@ import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import PriceInput from '@/components/form/PriceInput';
 import SubmitButton from '@/components/form/SubmitButton';
+import TextAreaInput from '@/components/form/TextAreaInput';
 
 const CreatePropertyPage = () => {
 	return (
@@ -19,7 +20,7 @@ const CreatePropertyPage = () => {
 							type='text'
 							label='Property Name (30 Limit)'
 							placeholder='ex: Studio in Waikiki'
-							defaultValue='Cabin in Waikiki'
+							defaultValue='House in Waikiki'
 						/>
 						<FormInput
 							name='tagline'
@@ -31,7 +32,7 @@ const CreatePropertyPage = () => {
 						<PriceInput />
 						<CategoriesInput />
 					</div>
-					{/* textarea /description */}
+					<TextAreaInput name='description' labelText='Description (10 - 3000 words)' />
 					{/* location */}
 					{/* Accommodation */}
 					{/* images */}
