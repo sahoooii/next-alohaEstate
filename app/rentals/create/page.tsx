@@ -1,4 +1,5 @@
 import { createPropertyAction } from '@/actions/PropertyAction';
+import CategoriesInput from '@/components/form/CategoriesInput';
 import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import PriceInput from '@/components/form/PriceInput';
@@ -28,7 +29,7 @@ const CreatePropertyPage = () => {
 							defaultValue='Beach All Day'
 						/>
 						<PriceInput />
-						{/* categories */}
+						<CategoriesInput />
 					</div>
 					{/* textarea /description */}
 					{/* location */}
