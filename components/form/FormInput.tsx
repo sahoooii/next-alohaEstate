@@ -7,10 +7,11 @@ type FormInputProps = {
 	label?: string;
 	defaultValue?: string;
 	placeholder?: string;
+	className?: string;
 };
 
 const FormInput = (props: FormInputProps) => {
-	const { name, type, label, defaultValue, placeholder } = props;
+	const { name, type, label, defaultValue, placeholder, className } = props;
 	return (
 		<div className='mb-2'>
 			<Label htmlFor={name} className='text-md capitalize'>
@@ -23,6 +24,7 @@ const FormInput = (props: FormInputProps) => {
 				defaultValue={defaultValue}
 				placeholder={placeholder}
 				required
+				className={className}
 			/>
 		</div>
 	);
