@@ -1,5 +1,6 @@
 import { createPropertyAction } from '@/actions/PropertyAction';
 import CategoriesInput from '@/components/form/CategoriesInput';
+import CounterInput from '@/components/form/CounterInput';
 import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import PriceInput from '@/components/form/PriceInput';
@@ -38,9 +39,6 @@ const CreatePropertyPage = () => {
 					/>
 					{/* location */}
 					<div className='mb-4 bg-blue-50 p-4 mt-4'>
-						{/* <Label className='block font-bold mb-2 text-lg text-gray-700'>
-							Location
-						</Label> */}
 						<h3 className='text-lg mb-3 font-medium text-gray-700'>Location</h3>
 						<div className='grid md:grid-cols-2 md:gap-5 mb-6'>
 							<FormInput
@@ -74,8 +72,14 @@ const CreatePropertyPage = () => {
 							/>
 						</div>
 					</div>
-					{/* <LocationInput /> */}
 					{/* Accommodation */}
+					<h3 className='text-lg mt-8 mb-4 font-medium'>
+						Accommodation Detail
+					</h3>
+					<CounterInput detail='guests' />
+					<CounterInput detail='bedrooms' />
+					<CounterInput detail='beds' />
+					<CounterInput detail='baths' />
 					{/* images */}
 					<div className='flex justify-center'>
 						<SubmitButton

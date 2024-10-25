@@ -6,7 +6,6 @@ const PropertySchema = new Schema(
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'Profile',
-			required: true,
 		},
 		name: {
 			type: String,
