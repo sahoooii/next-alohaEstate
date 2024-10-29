@@ -1,6 +1,6 @@
 import cloudinary from '@/config/cloudinary';
-import { imageSchema, validateWithZodSchema } from './schemas';
 
+// For a single image
 export const uploadImage = async (image: File, fileName: string) => {
 	const imageBuffer = await image.arrayBuffer();
 	const imageArray = new Uint8Array(imageBuffer);
@@ -18,13 +18,10 @@ export const uploadImage = async (image: File, fileName: string) => {
 export const uploadImages = async (imageFiles: File[], fileName: string) => {
 	const imageUrls = [];
 
-	// const images = formData.getAll('images') as File[];
-	// Pass images data to imageFiles
+	// Pass imageFiles data to images
 	const images = imageFiles;
 
 	for (const imageFile of images) {
-		validateWithZodSchema(imageSchema, { imageFile });
-
 		const imageBuffer = await imageFile.arrayBuffer();
 		const imageArray = Array.from(new Uint8Array(imageBuffer));
 		const imageData = Buffer.from(imageArray);

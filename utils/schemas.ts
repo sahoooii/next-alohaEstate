@@ -30,15 +30,16 @@ export function validateWithZodSchema<T>(
 	return result.data;
 }
 
-// For Image
+// Image
+const maxUploadSize = 1024 * 1024; // 1MB
+const acceptedFilesTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+
+// For an image
 export const imageSchema = z.object({
 	image: validateFile(),
 });
 
 function validateFile() {
-	const maxUploadSize = 1024 * 1024; // 1MB
-	const acceptedFilesTypes = ['image/jpg', 'image/jpeg', 'image/png'];
-
 	return z
 		.instanceof(File)
 		.refine((file) => {
@@ -46,6 +47,29 @@ function validateFile() {
 		}, 'File size must be less than 1 MB')
 		.refine((file) => {
 			return !file || acceptedFilesTypes.includes(file.type);
+		}, 'File must be an image');
+}
+
+// For multiple images
+export const imagesSchema = z.object({
+	images: validateFiles(),
+});
+
+function validateFiles() {
+	return z
+		.array(
+			z.instanceof(File).refine((file) => {
+				return !file || file.size <= maxUploadSize;
+			}, 'File size must be less than 1MB'),
+			z.string()
+		)
+		.refine((file) => {
+			return file.length <= 4;
+		}, 'The images are up to 4 images')
+		.refine((files) => {
+			return files.every(
+				(file) => !file || acceptedFilesTypes.includes(file.type)
+			);
 		}, 'File must be an image');
 }
 
@@ -62,13 +86,13 @@ export const propertySchema = z.object({
 	tagline: z
 		.string()
 		.min(2, {
-			message: 'tagline must be at least 2 characters.',
+			message: 'Tagline must be at least 2 characters.',
 		})
 		.max(100, {
-			message: 'tagline must be less than 100 characters.',
+			message: 'Tagline must be less than 100 characters.',
 		}),
 	price: z.coerce.number().int().min(0, {
-		message: 'price must be a positive number.',
+		message: 'Price must be a positive number.',
 	}),
 	category: z.string(),
 	description: z.string().refine(
@@ -77,38 +101,32 @@ export const propertySchema = z.object({
 			return wordCount >= 10 && wordCount <= 3000;
 		},
 		{
-			message: 'description must be between 10 and 1000 words.',
+			message: 'Description must be between 10 and 1000 words.',
 		}
 	),
-	location: z.object({
-		street: z.string().min(2, {
-			message: 'street must be at least 2 characters.',
-		}),
-		city: z.string().min(2, {
-			message: 'city must be at least 2 characters.',
-		}),
-		state: z.string().min(2, {
-			message: 'state must be at least 2 characters.',
-		}),
-		zipcode: z
-			.string()
-			.min(2, {
-				message: 'zipcode must be at least 2 characters.',
-			})
-			.array(),
+	street: z.string().min(2, {
+		message: 'Street name must be at least 2 characters.',
+	}),
+	city: z.string().min(2, {
+		message: 'City name must be at least 2 characters.',
+	}),
+	state: z.string().min(2, {
+		message: 'State name must be at least 2 characters.',
+	}),
+	zipcode: z.string().min(2, {
+		message: 'Zipcode must be at least 2 characters.',
 	}),
 	guests: z.coerce.number().int().min(0, {
-		message: 'guest amount must be a positive number.',
+		message: 'Guest amount must be a positive number.',
 	}),
 	bedrooms: z.coerce.number().int().min(0, {
-		message: 'bedrooms amount must be a positive number.',
+		message: 'Bedrooms amount must be a positive number.',
 	}),
 	beds: z.coerce.number().int().min(0, {
-		message: 'beds amount must be a positive number.',
+		message: 'Beds amount must be a positive number.',
 	}),
 	baths: z.coerce.number().int().min(0, {
-		message: 'bahts amount must be a positive number.',
+		message: 'Bahts amount must be a positive number.',
 	}),
 	amenities: z.string(),
-	is_featured: z.boolean(),
 });

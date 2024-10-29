@@ -32,7 +32,7 @@ export const createProfileAction = async (
 		if (usernameExists) throw new Error('Your username is already in use.');
 
 		const profileData = {
-			clerkId: user?.id,
+			clerkId: user.id,
 			email: user.emailAddresses[0].emailAddress,
 			profileImage: user.imageUrl ?? '',
 			...validatedFields,

@@ -1,8 +1,10 @@
 import { createPropertyAction } from '@/actions/PropertyAction';
+import AmenitiesInput from '@/components/form/AmenitiesInput';
 import CategoriesInput from '@/components/form/CategoriesInput';
 import CounterInput from '@/components/form/CounterInput';
 import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
+import ImageInput from '@/components/form/ImageInput';
 import PriceInput from '@/components/form/PriceInput';
 import SubmitButton from '@/components/form/SubmitButton';
 import TextAreaInput from '@/components/form/TextAreaInput';
@@ -80,7 +82,17 @@ const CreatePropertyPage = () => {
 					<CounterInput detail='bedrooms' />
 					<CounterInput detail='beds' />
 					<CounterInput detail='baths' />
+					{/* Amenities */}
+					<div className='mb-6 bg-blue-50 sm:p-10 p-4 mt-14'>
+						<h3 className='text-lg mb-6 font-medium text-gray-700'>
+							Amenities
+						</h3>
+						<AmenitiesInput />
+					</div>
 					{/* images */}
+					<div className='mb-4'>
+						<ImageInput labelName='Images (4 Limit)' name='images' />
+					</div>
 					<div className='flex justify-center'>
 						<SubmitButton
 							text='create property'

@@ -30,11 +30,11 @@ const PropertySchema = new Schema(
 		images: [
 			{
 				type: [String],
-				validate: {
-					validator: (v) => v.length <= 4,
-					message: (props) =>
-						`The images array can contain a maximum of 4 images, but got ${props.value.length}`,
-				},
+				// validate: {
+				// 	validator: (v) => v.length <= 4,
+				// 	message: (props) =>
+				// 		`The images array can contain a maximum of 4 images, but got ${props.value.length}`,
+				// },
 			},
 		],
 		location: {
@@ -48,6 +48,7 @@ const PropertySchema = new Schema(
 			},
 			state: {
 				type: String,
+				required: true,
 			},
 			zipcode: {
 				type: String,
@@ -70,10 +71,15 @@ const PropertySchema = new Schema(
 			type: Number,
 			required: true,
 		},
-		amenities: {
-			type: String,
-			required: true,
-		},
+		// amenities: {
+		// 	type: String,
+		// 	required: true,
+		// },
+		amenities: [
+			{
+				type: String,
+			},
+		],
 		is_featured: {
 			type: Boolean,
 			default: false,
