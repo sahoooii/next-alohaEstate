@@ -47,7 +47,10 @@ const ProfilePage = async () => {
 						/>
 					</div>
 					<div className='flex justify-center'>
-						<SubmitButton text='update profile' className='mt-8' />
+						<SubmitButton
+							text='update profile'
+							className='mt-8 w-full md:w-[50%]'
+						/>
 					</div>
 				</FormContainer>
 			</div>

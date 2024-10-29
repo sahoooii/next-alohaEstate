@@ -7,7 +7,7 @@ import {
 	profileSchema,
 	validateWithZodSchema,
 } from '../utils/schemas';
-import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
+import { clerkClient, currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { getAuthUser, renderError } from './Auth';
 import { revalidatePath } from 'next/cache';
@@ -32,7 +32,7 @@ export const createProfileAction = async (
 		if (usernameExists) throw new Error('Your username is already in use.');
 
 		const profileData = {
-			clerkId: user?.id,
+			clerkId: user.id,
 			email: user.emailAddresses[0].emailAddress,
 			profileImage: user.imageUrl ?? '',
 			...validatedFields,
@@ -119,7 +119,7 @@ export const updateProfileImageAction = async (
 ): Promise<{ message: string }> => {
 	try {
 		await connectDB();
-		
+
 		const user = await getAuthUser();
 		const profile = await Profile.find({ clerkId: user.id });
 
@@ -136,3 +136,5 @@ export const updateProfileImageAction = async (
 		return renderError(error);
 	}
 };
+
+// Delete account

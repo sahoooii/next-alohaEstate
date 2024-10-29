@@ -48,7 +48,7 @@ const ImageInputContainer = (props: ImageInputContainerProps) => {
 				<div className='max-w-lg mt-4'>
 					<FormContainer action={action}>
 						{children}
-						<ImageInput />
+						<ImageInput labelName='Image' name='image' />
 						<div className='flex justify-center items-center'>
 							<SubmitButton size='lg' text='change photo' />
 						</div>

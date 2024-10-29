@@ -2,12 +2,18 @@ import React from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 
-const ImageInput = () => {
-	const name = 'image';
+const ImageInput = ({
+	labelName,
+	name,
+}: {
+	labelName: string;
+	name: string;
+}) => {
+	// const name = 'image';
 	return (
 		<div className='mb-2 items-center'>
 			<Label htmlFor={name} className='capitalize'>
-				image
+				{labelName}
 			</Label>
 			<Input
 				id={name}
@@ -16,6 +22,7 @@ const ImageInput = () => {
 				required
 				accept='image/*'
 				className='max-w-xs'
+				multiple={name === 'images'}
 			/>
 		</div>
 	);

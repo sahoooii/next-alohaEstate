@@ -30,23 +30,103 @@ export function validateWithZodSchema<T>(
 	return result.data;
 }
 
-// For Image
+// Image
+const maxUploadSize = 1024 * 1024; // 1MB
+const acceptedFilesTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+
+// For an image
 export const imageSchema = z.object({
 	image: validateFile(),
 });
 
 function validateFile() {
-	const maxUploadSize = 1024 * 1024; // 1MB
-	const acceptedFilesTypes = ['image/jpg', 'image/jpeg', 'image/png'];
-
 	return z
 		.instanceof(File)
 		.refine((file) => {
 			return !file || file.size <= maxUploadSize;
 		}, 'File size must be less than 1 MB')
 		.refine((file) => {
-			return (
-				!file || acceptedFilesTypes.includes(file.type)
+			return !file || acceptedFilesTypes.includes(file.type);
+		}, 'File must be an image');
+}
+
+// For multiple images
+export const imagesSchema = z.object({
+	images: validateFiles(),
+});
+
+function validateFiles() {
+	return z
+		.array(
+			z.instanceof(File).refine((file) => {
+				return !file || file.size <= maxUploadSize;
+			}, 'File size must be less than 1MB'),
+			z.string()
+		)
+		.refine((file) => {
+			return file.length <= 4;
+		}, 'The images are up to 4 images')
+		.refine((files) => {
+			return files.every(
+				(file) => !file || acceptedFilesTypes.includes(file.type)
 			);
 		}, 'File must be an image');
 }
+
+// Property
+export const propertySchema = z.object({
+	name: z
+		.string()
+		.min(2, {
+			message: 'Property name must be at least 2 characters.',
+		})
+		.max(100, {
+			message: 'Property name must be less than 100 characters.',
+		}),
+	tagline: z
+		.string()
+		.min(2, {
+			message: 'Tagline must be at least 2 characters.',
+		})
+		.max(100, {
+			message: 'Tagline must be less than 100 characters.',
+		}),
+	price: z.coerce.number().int().min(0, {
+		message: 'Price must be a positive number.',
+	}),
+	category: z.string(),
+	description: z.string().refine(
+		(description) => {
+			const wordCount = description.split(' ').length;
+			return wordCount >= 10 && wordCount <= 3000;
+		},
+		{
+			message: 'Description must be between 10 and 1000 words.',
+		}
+	),
+	street: z.string().min(2, {
+		message: 'Street name must be at least 2 characters.',
+	}),
+	city: z.string().min(2, {
+		message: 'City name must be at least 2 characters.',
+	}),
+	state: z.string().min(2, {
+		message: 'State name must be at least 2 characters.',
+	}),
+	zipcode: z.string().min(2, {
+		message: 'Zipcode must be at least 2 characters.',
+	}),
+	guests: z.coerce.number().int().min(0, {
+		message: 'Guest amount must be a positive number.',
+	}),
+	bedrooms: z.coerce.number().int().min(0, {
+		message: 'Bedrooms amount must be a positive number.',
+	}),
+	beds: z.coerce.number().int().min(0, {
+		message: 'Beds amount must be a positive number.',
+	}),
+	baths: z.coerce.number().int().min(0, {
+		message: 'Bahts amount must be a positive number.',
+	}),
+	amenities: z.string(),
+});
