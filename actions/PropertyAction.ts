@@ -52,3 +52,30 @@ export const createPropertyAction = async (
 	}
 	redirect('/');
 };
+
+export const fetchProperties = async ({
+	search = '',
+	category,
+}: {
+	search?: string;
+	category?: string;
+}) => {
+	await connectDB();
+
+	const properties = await Property.find(
+		{
+			category,
+			$or: [
+				{ name: { contains: search, mode: 'insensitive' } },
+				{ tagline: { contains: search, mode: 'insensitive' } },
+			],
+		},
+		{ name: true, tagline: true, price: true, images: true, location: true },
+		{
+			orderBy: {
+				createdAt: 'desc',
+			},
+		}
+	);
+	return properties;
+};
