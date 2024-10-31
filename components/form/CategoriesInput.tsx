@@ -28,7 +28,7 @@ const CategoriesInput = ({ defaultValue }: { defaultValue?: string }) => {
 					{categories.map((category) => {
 						return (
 							<SelectItem key={category.label} value={category.label}>
-								<span className='flex items-center gap-2'>
+								<span className='flex items-center gap-2 capitalize'>
 									<category.icon /> {category.label}
 								</span>
 							</SelectItem>

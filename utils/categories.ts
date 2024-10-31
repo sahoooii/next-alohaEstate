@@ -1,10 +1,8 @@
 import { IconType } from 'react-icons';
-import {
-	PiHouseLineBold,
-	PiBuildingApartment,
-} from 'react-icons/pi';
-import { MdOutlineHouseSiding, MdOutlineCottage } from 'react-icons/md';
+import { PiHouseLineBold, PiBuildingApartment } from 'react-icons/pi';
+import { MdOutlineHouseSiding } from 'react-icons/md';
 import { FaHouseFloodWater } from 'react-icons/fa6';
+import { LuHotel } from 'react-icons/lu';
 
 type Category = {
 	label: CategoryLabel;
@@ -12,13 +10,17 @@ type Category = {
 };
 
 export type CategoryLabel =
+	| 'hotel'
 	| 'house'
 	| 'condo/apartment'
-	| 'cottage'
-	| 'lodge'
-	| 'Overwater villa';
+	| 'cottage/lodge'
+	| 'overwater villa';
 
 export const categories: Category[] = [
+	{
+		label: 'hotel',
+		icon: LuHotel,
+	},
 	{
 		label: 'house',
 		icon: PiHouseLineBold,
@@ -28,15 +30,11 @@ export const categories: Category[] = [
 		icon: PiBuildingApartment,
 	},
 	{
-		label: 'cottage',
-		icon: MdOutlineCottage,
-	},
-	{
-		label: 'lodge',
+		label: 'cottage/lodge',
 		icon: MdOutlineHouseSiding,
 	},
 	{
-		label: 'Overwater villa',
+		label: 'overwater villa',
 		icon: FaHouseFloodWater,
 	},
 ];
