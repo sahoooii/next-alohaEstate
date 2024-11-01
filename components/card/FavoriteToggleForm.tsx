@@ -1,7 +1,5 @@
-import React from 'react';
-
 const FavoriteToggleForm = () => {
-	return <div>FavoriteToggleForm</div>;
+	return <div></div>;
 };
 
 export default FavoriteToggleForm;

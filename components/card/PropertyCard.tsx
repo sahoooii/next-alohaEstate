@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import PropertyRating from './PropertyRating';
-import FavoriteToggleButton from './FavoriteToggleButton';
 import { PropertyCardProps } from '@/utils/types';
 import { formatCurrency } from '@/utils/format';
+import { FaLocationDot } from 'react-icons/fa6';
+import FavoriteToggleButton from './FavoriteToggleButton';
 
 const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
 	const { id: propertyId, name, tagline, price, images, location } = property;
 	const thumbnail = images[0][0];
 	// console.log(location);
-
+	const { city } = location;
 	return (
 		<article className='group relative'>
 			<Link href={`/properties/${propertyId}`}>
@@ -36,12 +37,15 @@ const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
 						<span className='font-semibold'>{formatCurrency(price)} </span>
 						Night
 					</p>
-					{/* location city name 取得 */}
+					<p className='text-sm flex items-center'>
+						<FaLocationDot className='mr-1 w-3 h-3' />
+						{city}
+					</p>
 				</div>
 			</Link>
-			{/* <div className='absolute top-5 right-5 z-5'> */}
-			{/* favorite toggle btn */}
-			{/* </div> */}
+			<div className='absolute top-5 right-5 z-5'>
+				<FavoriteToggleButton propertyId={propertyId} />
+			</div>
 		</article>
 	);
 };
