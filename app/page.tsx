@@ -12,20 +12,20 @@ const HomePage = ({
 	return (
 		<section>
 			<Hero />
-			<CategoriesList
-				category={searchParams.category}
-				search={searchParams.search}
-			/>
-			<PropertiesContainer
-				category={searchParams.category}
-				search={searchParams.search}
-			/>
-			{/* <div className='container py-10 h-[500px]'> */}
+			<div className='container py-8 mb-20'>
+				<CategoriesList
+					category={searchParams.category}
+					search={searchParams.search}
+				/>
+				<PropertiesContainer
+					category={searchParams.category}
+					search={searchParams.search}
+				/>
 
-			{/* Add later, after create data */}
-			{/* Featured Properties */}
-			{/* Recent Properties */}
-			{/* </div> */}
+				{/* Add later, after create data */}
+				{/* Featured Properties */}
+				{/* Recent Properties */}
+			</div>
 		</section>
 	);
 };

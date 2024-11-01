@@ -62,20 +62,26 @@ export const fetchProperties = async ({
 }) => {
 	await connectDB();
 
-	const properties = await Property.find(
-		{
-			category,
-			$or: [
+	const properties = await Property.find({
+		where: {
+			category: category,
+			OR: [
 				{ name: { contains: search, mode: 'insensitive' } },
 				{ tagline: { contains: search, mode: 'insensitive' } },
 			],
 		},
-		{ name: true, tagline: true, price: true, images: true, location: true },
-		{
-			orderBy: {
-				createdAt: 'desc',
-			},
-		}
-	);
+		select: {
+			id: true,
+			name: true,
+			tagline: true,
+			image: true,
+			country: true,
+			price: true,
+		},
+		orderBy: {
+			createdAt: 'desc',
+		},
+	});
+
 	return properties;
 };
