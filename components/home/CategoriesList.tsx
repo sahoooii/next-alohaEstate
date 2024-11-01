@@ -11,7 +11,7 @@ const CategoriesList = ({
 	const searchTerm = search ? `&search=${search}` : '';
 
 	return (
-		<section className='sm:container py-4 sm:py-6'>
+		<section className='py-4 sm:py-6'>
 			<div className='flex flex-wrap gap-x-2 sm:gap-x-12 justify-center'>
 				{categories.map((item) => {
 					const isActive = item.label === category;
@@ -25,7 +25,7 @@ const CategoriesList = ({
 									isActive ? 'text-primary' : ''
 								}`}
 							>
-								<item.icon className='w-5 h-5 sm:w-8 sm:h-8' />
+								<item.icon className='w-6 h-6 sm:w-8 sm:h-8' />
 								<p className='capitalize text-xs sm:text-sm mt-1 text-center'>
 									{item.label}
 								</p>
