@@ -14,7 +14,6 @@ const PropertiesContainer = async ({
 		category,
 		search,
 	});
-	// console.log('property:', properties);
 
 	if (properties.length === 0) {
 		return (

@@ -26,7 +26,7 @@ const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
 					<h3 className='text-base font-semibold mt-1'>
 						{name.substring(0, 30)}
 					</h3>
-					{/* property rating */}
+					<PropertyRating inPage={false} propertyId={propertyId} />
 				</div>
 				<p className='text-sm text-muted-foreground mt-1'>
 					{tagline.substring(0, 40)}
@@ -40,7 +40,7 @@ const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
 				</div>
 			</Link>
 			{/* <div className='absolute top-5 right-5 z-5'> */}
-				{/* favorite toggle btn */}
+			{/* favorite toggle btn */}
 			{/* </div> */}
 		</article>
 	);
