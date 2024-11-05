@@ -9,5 +9,5 @@ export type PropertyCardProps = {
 	name: string;
 	tagline: string;
 	price: number;
-	location: [city: string];
+	location: { city: string };
 };
