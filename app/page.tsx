@@ -9,27 +9,27 @@ const HomePage = ({
 }: {
 	searchParams: { category?: string; search?: string };
 }) => {
-	console.log(searchParams);
-
 	return (
-		<section>
-			<Hero />
-			<div className='container py-8 mb-20'>
-				<CategoriesList
-					category={searchParams.category}
-					search={searchParams.search}
-				/>
-				<Suspense fallback={<LoadingCards />}>
-					<PropertiesContainer
+		<div>
+			<section>
+				<Hero />
+				<div className='container py-8 mb-20'>
+					<CategoriesList
 						category={searchParams.category}
 						search={searchParams.search}
 					/>
-				</Suspense>
-				{/* Add later, after create data */}
-				{/* Featured Properties */}
-				{/* Recent Properties */}
-			</div>
-		</section>
+					<Suspense fallback={<LoadingCards />}>
+						<PropertiesContainer
+							category={searchParams.category}
+							search={searchParams.search}
+						/>
+					</Suspense>
+					{/* Add later, after create data */}
+					{/* Featured Properties */}
+					{/* Recent Properties */}
+				</div>
+			</section>
+		</div>
 	);
 };
 

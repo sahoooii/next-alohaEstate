@@ -23,7 +23,7 @@ const LinksDropDown = () => {
 					<UserIcon />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className='w-44 mr-3' align='start' sideOffset={10}>
+			<DropdownMenuContent className='w-44 mr-6' align='start' sideOffset={10}>
 				{/* When not login Menu */}
 				<SignedOut>
 					<DropdownMenuItem>

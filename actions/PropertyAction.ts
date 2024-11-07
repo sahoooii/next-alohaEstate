@@ -2,6 +2,7 @@
 
 import connectDB from '@/config/database';
 import { getAuthUser, renderError } from './Auth';
+import { revalidatePath } from 'next/cache';
 import {
 	imagesSchema,
 	propertySchema,
@@ -10,6 +11,7 @@ import {
 import { redirect } from 'next/navigation';
 import { uploadImages } from '@/utils/imageUpload';
 import Property from '@/models/Property';
+import Favorite from '@/models/Favorite';
 
 export const createPropertyAction = async (
 	prevState: unknown,
@@ -53,6 +55,7 @@ export const createPropertyAction = async (
 	redirect('/');
 };
 
+// fetch and search properties
 export const fetchProperties = async ({
 	search = '',
 	category,
@@ -107,7 +110,69 @@ export const fetchProperties = async ({
 			price: 1,
 			location: 1,
 		}
-	);
+	).sort({ updatedAt: -1 });
 
 	return properties;
+};
+
+export const fetchFavoriteId = async ({
+	propertyId,
+}: {
+	propertyId: string;
+}) => {
+	await connectDB();
+
+	const user = await getAuthUser();
+	const favorite = await Favorite.findOne(
+		{
+			propertyId,
+			profileId: user.id,
+		},
+		{
+			id: 1,
+		}
+	);
+
+	return favorite?.id || null;
+};
+
+export const toggleFavoriteAction = async (prevState: {
+	propertyId: string;
+	favoriteId: string | null;
+	pathname: string;
+}) => {
+	const { propertyId, favoriteId, pathname } = prevState;
+	console.log(propertyId, favoriteId, pathname);
+	await connectDB();
+
+	const user = await getAuthUser();
+
+	// login userとfavoriteを押したuserが一緒か
+	try {
+		const sameUser = favoriteId && await Favorite.find({ id: favoriteId }, {});
+		console.log('same:', sameUser);
+		console.log('fav:', favoriteId);
+		console.log(sameUser[0].profileId === user.id);
+
+		if (favoriteId) {
+			if (sameUser[0].profileId === user.id) {
+				await Favorite.deleteOne({ id: favoriteId });
+			}
+		}
+		if (!favoriteId) {
+			await Favorite.create({
+				profileId: user.id,
+				propertyId,
+			});
+		}
+		revalidatePath(pathname);
+
+		return {
+			message: favoriteId
+				? 'Removed from favorites list'
+				: 'Added to favorites list',
+		};
+	} catch (error) {
+		return renderError(error);
+	}
 };
