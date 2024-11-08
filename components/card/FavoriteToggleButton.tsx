@@ -5,7 +5,7 @@ import { CardSignInButton } from '../form/Buttons';
 
 const FavoriteToggleButton = async ({ propertyId }: { propertyId: string }) => {
 	const { userId } = auth();
-	// error occurred
+	// Html error occurred
 	if (!userId) return <CardSignInButton />;
 
 	const favoriteId = await fetchFavoriteId({ propertyId });

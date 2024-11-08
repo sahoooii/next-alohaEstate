@@ -55,7 +55,7 @@ export const createPropertyAction = async (
 	redirect('/');
 };
 
-// fetch and search properties
+// Fetch and search properties
 export const fetchProperties = async ({
 	search = '',
 	category,
@@ -115,6 +115,7 @@ export const fetchProperties = async ({
 	return properties;
 };
 
+// To get Favorite id (_id at Favorite schema)
 export const fetchFavoriteId = async ({
 	propertyId,
 }: {
@@ -136,30 +137,21 @@ export const fetchFavoriteId = async ({
 	return favorite?.id || null;
 };
 
+// Find favorite Id and toggle function
 export const toggleFavoriteAction = async (prevState: {
 	propertyId: string;
 	favoriteId: string | null;
 	pathname: string;
 }) => {
 	const { propertyId, favoriteId, pathname } = prevState;
-	console.log(propertyId, favoriteId, pathname);
-	await connectDB();
 
+	await connectDB();
 	const user = await getAuthUser();
 
-	// login userとfavoriteを押したuserが一緒か
 	try {
-		const sameUser = favoriteId && await Favorite.find({ id: favoriteId }, {});
-		console.log('same:', sameUser);
-		console.log('fav:', favoriteId);
-		console.log(sameUser[0].profileId === user.id);
-
 		if (favoriteId) {
-			if (sameUser[0].profileId === user.id) {
-				await Favorite.deleteOne({ id: favoriteId });
-			}
-		}
-		if (!favoriteId) {
+			await Favorite.deleteOne({ _id: favoriteId });
+		} else {
 			await Favorite.create({
 				profileId: user.id,
 				propertyId,
