@@ -14,7 +14,7 @@ const UserIcon = async () => {
 			/>
 		);
 	}
-	return <LuUser2 className='w-6 h-6 rounded-full text-white' />;
+	return <LuUser2 className='w-6 h-6 rounded-full text-white bg-primary' />;
 };
 
 export default UserIcon;

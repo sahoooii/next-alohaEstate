@@ -9,8 +9,8 @@ import FavoriteToggleButton from './FavoriteToggleButton';
 const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
 	const { id: propertyId, name, tagline, price, images, location } = property;
 	const thumbnail = images[0][0];
-	// console.log(location);
 	const { city } = location;
+
 	return (
 		<article className='group relative'>
 			<Link href={`/properties/${propertyId}`}>

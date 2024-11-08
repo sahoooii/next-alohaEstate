@@ -6,7 +6,7 @@ import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import ImageInput from '@/components/form/ImageInput';
 import PriceInput from '@/components/form/PriceInput';
-import SubmitButton from '@/components/form/SubmitButton';
+import { SubmitButton } from '@/components/form/Buttons';
 import TextAreaInput from '@/components/form/TextAreaInput';
 
 const CreatePropertyPage = () => {

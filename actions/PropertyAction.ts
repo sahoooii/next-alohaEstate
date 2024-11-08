@@ -2,6 +2,7 @@
 
 import connectDB from '@/config/database';
 import { getAuthUser, renderError } from './Auth';
+import { revalidatePath } from 'next/cache';
 import {
 	imagesSchema,
 	propertySchema,
@@ -10,6 +11,7 @@ import {
 import { redirect } from 'next/navigation';
 import { uploadImages } from '@/utils/imageUpload';
 import Property from '@/models/Property';
+import Favorite from '@/models/Favorite';
 
 export const createPropertyAction = async (
 	prevState: unknown,
@@ -53,6 +55,7 @@ export const createPropertyAction = async (
 	redirect('/');
 };
 
+// Fetch and search properties
 export const fetchProperties = async ({
 	search = '',
 	category,
@@ -62,26 +65,106 @@ export const fetchProperties = async ({
 }) => {
 	await connectDB();
 
-	const properties = await Property.find({
-		where: {
-			category: category,
-			OR: [
-				{ name: { contains: search, mode: 'insensitive' } },
-				{ tagline: { contains: search, mode: 'insensitive' } },
-			],
+	const hasCategory = category ? { category: category } : {};
+
+	const hasSearch = search
+		? {
+				$or: [
+					{
+						name: { $regex: search, $options: 'i' },
+					},
+					{
+						tagline: { $regex: search, $options: 'i' },
+					},
+				],
+		  }
+		: {};
+
+	const haveCategoryAndSearch =
+		category && search
+			? {
+					category: category,
+					$or: [
+						{
+							name: { $regex: search, $options: 'i' },
+						},
+						{
+							tagline: { $regex: search, $options: 'i' },
+						},
+					],
+			  }
+			: {};
+
+	const properties = await Property.find(
+		{
+			...hasCategory,
+			...hasSearch,
+			...haveCategoryAndSearch,
 		},
-		select: {
-			id: true,
-			name: true,
-			tagline: true,
-			image: true,
-			country: true,
-			price: true,
-		},
-		orderBy: {
-			createdAt: 'desc',
-		},
-	});
+		{
+			id: 1,
+			name: 1,
+			tagline: 1,
+			images: 1,
+			country: 1,
+			price: 1,
+			location: 1,
+		}
+	).sort({ updatedAt: -1 });
 
 	return properties;
+};
+
+// To get Favorite id (_id at Favorite schema)
+export const fetchFavoriteId = async ({
+	propertyId,
+}: {
+	propertyId: string;
+}) => {
+	await connectDB();
+
+	const user = await getAuthUser();
+	const favorite = await Favorite.findOne(
+		{
+			propertyId,
+			profileId: user.id,
+		},
+		{
+			id: 1,
+		}
+	);
+
+	return favorite?.id || null;
+};
+
+// Find favorite Id and toggle function
+export const toggleFavoriteAction = async (prevState: {
+	propertyId: string;
+	favoriteId: string | null;
+	pathname: string;
+}) => {
+	const { propertyId, favoriteId, pathname } = prevState;
+
+	await connectDB();
+	const user = await getAuthUser();
+
+	try {
+		if (favoriteId) {
+			await Favorite.deleteOne({ _id: favoriteId });
+		} else {
+			await Favorite.create({
+				profileId: user.id,
+				propertyId,
+			});
+		}
+		revalidatePath(pathname);
+
+		return {
+			message: favoriteId
+				? 'Removed from favorites list'
+				: 'Added to favorites list',
+		};
+	} catch (error) {
+		return renderError(error);
+	}
 };

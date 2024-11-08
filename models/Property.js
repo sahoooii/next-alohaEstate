@@ -4,7 +4,6 @@ const PropertySchema = new Schema(
 	{
 		// Who made this property info
 		owner: {
-			// type: Schema.Types.ObjectId,
 			type: String,
 			ref: 'Profile',
 		},

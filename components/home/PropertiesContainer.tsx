@@ -1,7 +1,7 @@
 import { fetchProperties } from '@/actions/PropertyAction';
-import PropertiesList from './PropertiesList';
-import EmptyList from './EmptyList';
 import type { PropertyCardProps } from '@/utils/types';
+import EmptyList from './EmptyList';
+import PropertyCard from '../card/PropertyCard';
 
 const PropertiesContainer = async ({
 	category,
@@ -28,9 +28,11 @@ const PropertiesContainer = async ({
 	}
 
 	return (
-		<div>
-			<PropertiesList properties={properties} />
-		</div>
+		<section className='mt-4 gap-8 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+			{properties.map((property) => (
+				<PropertyCard key={property.id} property={property} />
+			))}
+		</section>
 	);
 };
 

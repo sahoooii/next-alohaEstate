@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '../ui/button';
 import FormContainer from './FormContainer';
 import ImageInput from './ImageInput';
-import SubmitButton from './SubmitButton';
+import { SubmitButton } from './Buttons';
 import { type actionFunction } from '@/utils/types';
 import { LuUser2 } from 'react-icons/lu';
 
