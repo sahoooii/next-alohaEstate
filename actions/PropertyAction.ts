@@ -56,6 +56,7 @@ export const createPropertyAction = async (
 };
 
 // Fetch and search properties
+// Add paginate later
 export const fetchProperties = async ({
 	search = '',
 	category,
@@ -167,4 +168,24 @@ export const toggleFavoriteAction = async (prevState: {
 	} catch (error) {
 		return renderError(error);
 	}
+};
+
+// Add paginate later
+export const fetchFavorites = async () => {
+	await connectDB();
+	const user = await getAuthUser();
+
+	const favorites = await Favorite.find({ profileId: user.id })
+		.sort({ createdAt: -1 })
+		.populate('propertyId', {
+			id: 1,
+			name: 1,
+			tagline: 1,
+			images: 1,
+			country: 1,
+			price: 1,
+			location: 1,
+		});
+
+	return favorites.map((favorite) => favorite.propertyId);
 };

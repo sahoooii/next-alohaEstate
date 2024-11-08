@@ -1,7 +1,7 @@
 import { fetchProperties } from '@/actions/PropertyAction';
 import type { PropertyCardProps } from '@/utils/types';
 import EmptyList from './EmptyList';
-import PropertyCard from '../card/PropertyCard';
+import PropertiesList from './PropertiesList';
 
 const PropertiesContainer = async ({
 	category,
@@ -17,23 +17,15 @@ const PropertiesContainer = async ({
 
 	if (properties.length === 0) {
 		return (
-			<div>
-				<EmptyList
-					heading='No properties.'
-					message='Try changing or removing some of your filters'
-					btnText='Clear Filters'
-				/>
-			</div>
+			<EmptyList
+				heading='No properties.'
+				message='Try changing or removing some of your filters'
+				btnText='Clear Filters'
+			/>
 		);
 	}
 
-	return (
-		<section className='mt-4 gap-8 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-			{properties.map((property) => (
-				<PropertyCard key={property.id} property={property} />
-			))}
-		</section>
-	);
+	return <PropertiesList properties={properties} />;
 };
 
 export default PropertiesContainer;
