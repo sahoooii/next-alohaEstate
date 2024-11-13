@@ -18,7 +18,7 @@ const CategoriesList = ({
 					return (
 						<Link
 							key={item.label}
-							href={`/?category=${item.label}${searchTerm}`}
+							href={`/properties?category=${item.label}${searchTerm}`}
 						>
 							<article
 								className={`p-3 flex flex-col items-center cursor-pointer duration-300 hover:text-primary w-[100px] ${

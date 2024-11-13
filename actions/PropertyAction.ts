@@ -55,14 +55,24 @@ export const createPropertyAction = async (
 	redirect('/');
 };
 
+export const getAllPropertiesCount = async () => {
+	await connectDB();
+	const totalProperties = await Property.countDocuments({});
+
+	return totalProperties;
+};
+
 // Fetch and search properties
-// Add paginate later
 export const fetchProperties = async ({
 	search = '',
 	category,
+	page,
+	pageSize,
 }: {
 	search?: string;
 	category?: string;
+	page: number;
+	pageSize: number;
 }) => {
 	await connectDB();
 
@@ -96,6 +106,8 @@ export const fetchProperties = async ({
 			  }
 			: {};
 
+	const skip = (page - 1) * pageSize;
+
 	const properties = await Property.find(
 		{
 			...hasCategory,
@@ -111,7 +123,10 @@ export const fetchProperties = async ({
 			price: 1,
 			location: 1,
 		}
-	).sort({ updatedAt: -1 });
+	)
+		.sort({ updatedAt: -1 })
+		.skip(skip)
+		.limit(pageSize);
 
 	return properties;
 };
@@ -139,19 +154,25 @@ export const fetchFavoriteId = async ({
 };
 
 // Find favorite Id and toggle function
-export const toggleFavoriteAction = async (prevState: {
-	propertyId: string;
-	favoriteId: string | null;
-	pathname: string;
-}) => {
+export const toggleFavoriteAction = async (
+	prevState: {
+		propertyId: string;
+		favoriteId: string | null;
+		pathname: string;
+	}
+) => {
 	const { propertyId, favoriteId, pathname } = prevState;
 
 	await connectDB();
 	const user = await getAuthUser();
-
+	console.log(pathname == '/favorites');
 	try {
 		if (favoriteId) {
 			await Favorite.deleteOne({ _id: favoriteId });
+
+			// if (pathname === '/favorites') {
+			// 	redirect('/favorites?page=1');
+			// }
 		} else {
 			await Favorite.create({
 				profileId: user.id,
@@ -170,10 +191,17 @@ export const toggleFavoriteAction = async (prevState: {
 	}
 };
 
-// Add paginate later
-export const fetchFavorites = async () => {
+export const fetchFavorites = async ({
+	page,
+	pageSize,
+}: {
+	page: number;
+	pageSize: number;
+}) => {
 	await connectDB();
 	const user = await getAuthUser();
+
+	const skip = (page - 1) * pageSize;
 
 	const favorites = await Favorite.find({ profileId: user.id })
 		.sort({ createdAt: -1 })
@@ -185,7 +213,19 @@ export const fetchFavorites = async () => {
 			country: 1,
 			price: 1,
 			location: 1,
-		});
+		})
+		.sort({ updatedAt: -1 })
+		.skip(skip)
+		.limit(pageSize);
 
 	return favorites.map((favorite) => favorite.propertyId);
+};
+
+export const getAllFavorites = async () => {
+	await connectDB();
+	const user = await getAuthUser();
+
+	const totalFavorites = await Favorite.countDocuments({ profileId: user.id });
+
+	return totalFavorites;
 };
