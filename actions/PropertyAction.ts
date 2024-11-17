@@ -124,7 +124,7 @@ export const fetchProperties = async ({
 			location: 1,
 		}
 	)
-		.sort({ updatedAt: -1 })
+		.sort({ createdAt: -1 })
 		.skip(skip)
 		.limit(pageSize);
 
@@ -154,25 +154,19 @@ export const fetchFavoriteId = async ({
 };
 
 // Find favorite Id and toggle function
-export const toggleFavoriteAction = async (
-	prevState: {
-		propertyId: string;
-		favoriteId: string | null;
-		pathname: string;
-	}
-) => {
+export const toggleFavoriteAction = async (prevState: {
+	propertyId: string;
+	favoriteId: string | null;
+	pathname: string;
+}) => {
 	const { propertyId, favoriteId, pathname } = prevState;
 
 	await connectDB();
 	const user = await getAuthUser();
-	console.log(pathname == '/favorites');
+
 	try {
 		if (favoriteId) {
 			await Favorite.deleteOne({ _id: favoriteId });
-
-			// if (pathname === '/favorites') {
-			// 	redirect('/favorites?page=1');
-			// }
 		} else {
 			await Favorite.create({
 				profileId: user.id,
@@ -188,6 +182,11 @@ export const toggleFavoriteAction = async (
 		};
 	} catch (error) {
 		return renderError(error);
+	} finally {
+	// For favorites page pagination, when delete last item at the page, back to the 1st page
+		if (pathname === '/favorites') {
+			redirect('/favorites');
+		}
 	}
 };
 
@@ -204,7 +203,7 @@ export const fetchFavorites = async ({
 	const skip = (page - 1) * pageSize;
 
 	const favorites = await Favorite.find({ profileId: user.id })
-		.sort({ createdAt: -1 })
+		.sort({ updatedAt: -1 })
 		.populate('propertyId', {
 			id: 1,
 			name: 1,
