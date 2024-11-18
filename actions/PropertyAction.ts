@@ -183,7 +183,7 @@ export const toggleFavoriteAction = async (prevState: {
 	} catch (error) {
 		return renderError(error);
 	} finally {
-	// For favorites page pagination, when delete last item at the page, back to the 1st page
+		// For favorites page pagination, when delete last item at the page, back to the 1st page
 		if (pathname === '/favorites') {
 			redirect('/favorites');
 		}
@@ -227,4 +227,27 @@ export const getAllFavorites = async () => {
 	const totalFavorites = await Favorite.countDocuments({ profileId: user.id });
 
 	return totalFavorites;
+};
+
+// Featured Properties
+// Pick two most reviews properties later
+export const getFeaturedProperties = async () => {
+	await connectDB();
+
+	const properties = await Property.find(
+		{
+			is_featured: true,
+		},
+		{
+			id: 1,
+			name: 1,
+			tagline: 1,
+			images: 1,
+			country: 1,
+			price: 1,
+			location: 1,
+		}
+	);
+
+	return properties;
 };

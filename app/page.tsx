@@ -1,5 +1,7 @@
+import FeaturedProperties from '@/components/home/FeaturedProperties';
 import Hero from '../components/home/Hero';
 import { Suspense } from 'react';
+import LoadingCards from '@/components/card/LoadingCards';
 
 const HomePage = ({
 	searchParams,
@@ -10,10 +12,11 @@ const HomePage = ({
 		<div>
 			<section>
 				<Hero />
-				<div className='container py-8 mb-20'>
-					{/* Add later, after create data */}
-					{/* Featured Properties */}
-					{/* Recent Properties */}
+				<div>
+					<FeaturedProperties />
+						{/* Recent Properties */}
+					{/* <Suspense fallback={<LoadingCards />}>
+					</Suspense> */}
 				</div>
 			</section>
 		</div>
