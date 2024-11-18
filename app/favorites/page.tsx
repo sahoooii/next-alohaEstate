@@ -1,11 +1,11 @@
 import { fetchFavorites, getAllFavorites } from '@/actions/PropertyAction';
-import EmptyList from '@/components/home/EmptyList';
-import PropertiesList from '@/components/home/PropertiesList';
+import EmptyList from '@/components/properties/EmptyList';
+import PropertiesList from '@/components/properties/PropertiesList';
 import PaginationPage from '@/components/properties/PaginationPage';
 
 const FavoritesPage = async ({
 	searchParams,
-	pageSize = '2',
+	pageSize = '8',
 }: {
 	searchParams: {
 		page: string;

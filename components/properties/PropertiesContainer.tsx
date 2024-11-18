@@ -5,13 +5,13 @@ import {
 import type { PropertyCardProps } from '@/utils/types';
 import EmptyList from './EmptyList';
 import PropertiesList from './PropertiesList';
-import PaginationPage from '../properties/PaginationPage';
+import PaginationPage from './PaginationPage';
 
 const PropertiesContainer = async ({
 	category,
 	search,
 	page = '1',
-	pageSize = '2',
+	pageSize = '8',
 }: {
 	category?: string;
 	search?: string;
