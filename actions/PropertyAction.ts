@@ -55,13 +55,24 @@ export const createPropertyAction = async (
 	redirect('/');
 };
 
+export const getAllPropertiesCount = async () => {
+	await connectDB();
+	const totalProperties = await Property.countDocuments({});
+
+	return totalProperties;
+};
+
 // Fetch and search properties
 export const fetchProperties = async ({
 	search = '',
 	category,
+	page,
+	pageSize,
 }: {
 	search?: string;
 	category?: string;
+	page: number;
+	pageSize: number;
 }) => {
 	await connectDB();
 
@@ -95,6 +106,8 @@ export const fetchProperties = async ({
 			  }
 			: {};
 
+	const skip = (page - 1) * pageSize;
+
 	const properties = await Property.find(
 		{
 			...hasCategory,
@@ -110,7 +123,10 @@ export const fetchProperties = async ({
 			price: 1,
 			location: 1,
 		}
-	).sort({ updatedAt: -1 });
+	)
+		.sort({ createdAt: -1 })
+		.skip(skip)
+		.limit(pageSize);
 
 	return properties;
 };
@@ -166,5 +182,49 @@ export const toggleFavoriteAction = async (prevState: {
 		};
 	} catch (error) {
 		return renderError(error);
+	} finally {
+	// For favorites page pagination, when delete last item at the page, back to the 1st page
+		if (pathname === '/favorites') {
+			redirect('/favorites');
+		}
 	}
+};
+
+export const fetchFavorites = async ({
+	page,
+	pageSize,
+}: {
+	page: number;
+	pageSize: number;
+}) => {
+	await connectDB();
+	const user = await getAuthUser();
+
+	const skip = (page - 1) * pageSize;
+
+	const favorites = await Favorite.find({ profileId: user.id })
+		.sort({ updatedAt: -1 })
+		.populate('propertyId', {
+			id: 1,
+			name: 1,
+			tagline: 1,
+			images: 1,
+			country: 1,
+			price: 1,
+			location: 1,
+		})
+		.sort({ updatedAt: -1 })
+		.skip(skip)
+		.limit(pageSize);
+
+	return favorites.map((favorite) => favorite.propertyId);
+};
+
+export const getAllFavorites = async () => {
+	await connectDB();
+	const user = await getAuthUser();
+
+	const totalFavorites = await Favorite.countDocuments({ profileId: user.id });
+
+	return totalFavorites;
 };

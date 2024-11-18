@@ -2,7 +2,7 @@ import { Skeleton } from '../ui/skeleton';
 
 const LoadingCards = () => {
 	return (
-		<div className='mt-4 gap-8 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+		<div className='container mt-4 gap-8 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
 			<SkeltonCard />
 			<SkeltonCard />
 			<SkeltonCard />
