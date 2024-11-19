@@ -10,4 +10,7 @@ export type PropertyCardProps = {
 	tagline: string;
 	price: number;
 	location: { city: string };
+	guests: number;
+	beds: number;
+	baths: number;
 };
