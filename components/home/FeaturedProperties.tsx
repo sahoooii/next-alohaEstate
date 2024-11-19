@@ -7,7 +7,7 @@ const FeaturedProperties = async () => {
 
 	return properties.length > 0 ? (
 		// mb
-		<section className='bg-blue-50 px-4 pt-6 pb-10 sm:mb-12'>
+		<section className='bg-blue-50 px-4 pt-6 pb-14'>
 			<div className='container m-auto'>
 				<h2 className='text-3xl font-bold font-mono text-blue-500 mb-6 text-center'>
 					Featured Properties
@@ -20,7 +20,11 @@ const FeaturedProperties = async () => {
 			</div>
 		</section>
 	) : (
-		<div>FeaturedProperties</div>
+		<div>
+			<h2 className='text-3xl font-bold font-mono text-blue-500 mb-6 text-center'>
+				FeaturedProperties Coming Soon...
+			</h2>
+		</div>
 	);
 };
 

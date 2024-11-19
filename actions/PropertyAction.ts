@@ -254,3 +254,27 @@ export const getFeaturedProperties = async () => {
 
 	return properties;
 };
+
+export const getRecentProperties = async () => {
+	await connectDB();
+
+	const properties = await Property.find(
+		{},
+		{
+			id: 1,
+			name: 1,
+			tagline: 1,
+			images: 1,
+			country: 1,
+			price: 1,
+			location: 1,
+			guests: 1,
+			beds: 1,
+			baths: 1,
+		}
+	)
+		.sort({ createdAt: -1 })
+		.limit(3);
+
+	return properties;
+};

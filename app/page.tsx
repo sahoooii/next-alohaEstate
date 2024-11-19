@@ -1,7 +1,8 @@
-import FeaturedProperties from '@/components/home/FeaturedProperties';
 import Hero from '../components/home/Hero';
 import { Suspense } from 'react';
 import LoadingCards from '@/components/card/LoadingCards';
+import FeaturedProperties from '@/components/home/FeaturedProperties';
+import RecentProperties from '@/components/home/RecentProperties';
 
 const HomePage = () => {
 	return (
@@ -10,7 +11,7 @@ const HomePage = () => {
 				<Hero />
 				<div>
 					<FeaturedProperties />
-						{/* Recent Properties */}
+					<RecentProperties />
 					{/* <Suspense fallback={<LoadingCards />}>
 					</Suspense> */}
 				</div>
