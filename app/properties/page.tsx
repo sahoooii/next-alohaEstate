@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
-import LoadingCards from '@/components/card/LoadingCards';
 import PropertiesContainer from '@/components/properties/PropertiesContainer';
 import CategoriesList from '@/components/properties/CategoriesList';
+import { LoadingCards } from '@/components/card/LoadingCards';
 
 const PropertiesPage = ({
 	searchParams,

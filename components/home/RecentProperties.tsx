@@ -7,8 +7,8 @@ const RecentProperties = async () => {
 	const properties: PropertyCardProps[] = await getRecentProperties();
 
 	return (
-		<div className='sm:mb-20'>
-			<section className='px-4 pt-8 pb-10 mb-6'>
+		<div className='sm:mb-24 mb-6'>
+			<section className='px-4 pt-8 pb-6 mb-6'>
 				<div className='container m-auto'>
 					<h2 className='text-3xl font-bold font-mono text-blue-500 mb-6 text-center'>
 						Recent Properties
@@ -24,11 +24,10 @@ const RecentProperties = async () => {
 					)}
 				</div>
 			</section>
-			{/* btn component color */}
-			<section className='m-auto max-w-lg my-10 px-6'>
+			<section className='m-auto max-w-lg mt-5 mb-14 sm:mb-20 px-6'>
 				<Link
 					href='/properties'
-					className='block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700'
+					className='block bg-primary text-white text-center py-4 px-6 rounded-xl hover:bg-blue-400'
 				>
 					View All Properties
 				</Link>

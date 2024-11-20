@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingCards from '@/components/card/LoadingCards';
+import { LoadingCards } from '@/components/card/LoadingCards';
 
 const loading = () => {
 	return <LoadingCards />;
