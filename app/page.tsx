@@ -1,6 +1,6 @@
 import Hero from '../components/home/Hero';
 import { Suspense } from 'react';
-import { FeaturedLoadingCards, LoadingCards } from '@/components/card/LoadingCards';
+import { FeaturedLoadingCards, RecentLoadingCards } from '@/components/card/LoadingCards';
 import FeaturedProperties from '@/components/home/FeaturedProperties';
 import RecentProperties from '@/components/home/RecentProperties';
 
@@ -14,7 +14,7 @@ const HomePage = () => {
 					<Suspense fallback={<FeaturedLoadingCards />}>
 						<FeaturedProperties />
 					</Suspense>
-					<Suspense fallback={<LoadingCards />}>
+					<Suspense fallback={<RecentLoadingCards />}>
 						<RecentProperties />
 					</Suspense>
 				</div>

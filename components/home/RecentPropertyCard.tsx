@@ -35,7 +35,7 @@ const RecentPropertyCard = ({ property }: { property: PropertyCardProps }) => {
 					${price}
 				</h3>
 
-				<div className='flex justify-center gap-4 text-gray-500 mb-4 items-center'>
+				<div className='flex gap-4 text-gray-500 mb-4 items-center'>
 					<p>
 						<FaPeopleGroup className='inline mr-2'></FaPeopleGroup>
 						{guests}{' '}

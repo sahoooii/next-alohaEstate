@@ -1,12 +1,22 @@
 import { getFeaturedProperties } from '@/actions/PropertyAction';
 import { PropertyCardProps } from '@/utils/types';
 import FeaturedPropertyCard from './FeaturedPropertyCard';
+import EmptyList from '../properties/EmptyList';
 
 const FeaturedProperties = async () => {
 	const properties: PropertyCardProps[] = await getFeaturedProperties();
 
-	return properties.length > 0 ? (
-		// mb
+	if (properties.length === 0) {
+		return (
+			<EmptyList
+				heading='Featured Properties Coming Soon...'
+				message='We are working on it!'
+				btnText='Go Top'
+			/>
+		);
+	}
+
+	return (
 		<section className='bg-blue-50 px-4 pt-6 pb-14'>
 			<div className='container m-auto'>
 				<h2 className='text-3xl font-bold font-mono text-blue-500 mb-6 text-center'>
@@ -19,12 +29,6 @@ const FeaturedProperties = async () => {
 				</div>
 			</div>
 		</section>
-	) : (
-		<div>
-			<h2 className='text-3xl font-bold font-mono text-blue-500 mb-6 text-center'>
-				FeaturedProperties Coming Soon...
-			</h2>
-		</div>
 	);
 };
 

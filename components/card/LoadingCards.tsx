@@ -19,6 +19,17 @@ export const FeaturedLoadingCards = () => {
 	);
 };
 
+export const RecentLoadingCards = () => {
+	return (
+		<div className='container mt-4 gap-8 grid sm:grid-cols-3 lg:grid-cols-3'>
+			<SkeltonRecentCard />
+			<SkeltonRecentCard />
+			<SkeltonRecentCard />
+		</div>
+	);
+};
+
+
 export const SkeltonCard = () => {
 	return (
 		<div>
@@ -34,11 +45,23 @@ export const SkeltonFeaturedCard = () => {
 		<div className='flex flex-col lg:flex-row mb-4'>
 			<Skeleton className='lg:h-[214px] h-[300px] w-full rounded-t-xl' />
 			<div>
-				<Skeleton className='h-6 mt-2 w-3/4' />
-				<Skeleton className='h-4 mt-2 w-1/2' />
+				<Skeleton className='h-7 mt-2 w-3/4' />
+				<Skeleton className='h-5 mt-2 w-1/2' />
+				<Skeleton className='h-4 mt-2 w-full' />
 			</div>
 		</div>
 	);
 };
 
-// export default LoadingCards;
+export const SkeltonRecentCard = () => {
+	return (
+		<div className='flex flex-col lg:flex-row mb-4'>
+			<Skeleton className='lg:h-[350px] h-[300px] w-full rounded-t-xl mb-2' />
+			<div>
+				<Skeleton className='h-7 mt-2 w-3/4' />
+				<Skeleton className='h-5 mt-2 w-1/2' />
+				<Skeleton className='h-4 mt-2 w-full' />
+			</div>
+		</div>
+	);
+};

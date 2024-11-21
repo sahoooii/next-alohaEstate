@@ -2,6 +2,7 @@ import { getRecentProperties } from '@/actions/PropertyAction';
 import { PropertyCardProps } from '@/utils/types';
 import RecentPropertyCard from './RecentPropertyCard';
 import Link from 'next/link';
+import EmptyList from '../properties/EmptyList';
 
 const RecentProperties = async () => {
 	const properties: PropertyCardProps[] = await getRecentProperties();
@@ -14,7 +15,11 @@ const RecentProperties = async () => {
 						Recent Properties
 					</h2>
 					{properties.length === 0 ? (
-						<p>No properties found</p>
+						<EmptyList
+							heading='This Contents Coming Soon...'
+							message='We are working on it!'
+							btnText='Go Top'
+						/>
 					) : (
 						<div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
 							{properties.map((property) => (
