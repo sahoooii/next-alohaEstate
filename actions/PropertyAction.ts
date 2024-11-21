@@ -122,6 +122,9 @@ export const fetchProperties = async ({
 			country: 1,
 			price: 1,
 			location: 1,
+			guests: 1,
+			beds: 1,
+			baths: 1,
 		}
 	)
 		.sort({ createdAt: -1 })
@@ -183,7 +186,7 @@ export const toggleFavoriteAction = async (prevState: {
 	} catch (error) {
 		return renderError(error);
 	} finally {
-	// For favorites page pagination, when delete last item at the page, back to the 1st page
+		// For favorites page pagination, when delete last item at the page, back to the 1st page
 		if (pathname === '/favorites') {
 			redirect('/favorites');
 		}
@@ -212,6 +215,9 @@ export const fetchFavorites = async ({
 			country: 1,
 			price: 1,
 			location: 1,
+			guests: 1,
+			beds: 1,
+			baths: 1,
 		})
 		.sort({ updatedAt: -1 })
 		.skip(skip)
@@ -227,4 +233,54 @@ export const getAllFavorites = async () => {
 	const totalFavorites = await Favorite.countDocuments({ profileId: user.id });
 
 	return totalFavorites;
+};
+
+// Featured Properties
+// Pick two most reviews properties later
+export const getFeaturedProperties = async () => {
+	await connectDB();
+
+	const properties = await Property.find(
+		{
+			is_featured: true,
+		},
+		{
+			id: 1,
+			name: 1,
+			tagline: 1,
+			images: 1,
+			country: 1,
+			price: 1,
+			location: 1,
+			guests: 1,
+			beds: 1,
+			baths: 1,
+		}
+	);
+
+	return properties;
+};
+
+export const getRecentProperties = async () => {
+	await connectDB();
+
+	const properties = await Property.find(
+		{},
+		{
+			id: 1,
+			name: 1,
+			tagline: 1,
+			images: 1,
+			country: 1,
+			price: 1,
+			location: 1,
+			guests: 1,
+			beds: 1,
+			baths: 1,
+		}
+	)
+		.sort({ createdAt: -1 })
+		.limit(3);
+
+	return properties;
 };
