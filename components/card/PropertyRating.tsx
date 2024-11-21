@@ -11,7 +11,7 @@ const PropertyRating = ({
 	const rating = 4.7;
 	const count = 100;
 
-	const className = `flex gap-1 items-center ${inPage ? 'text-md' : 'text-xs'}`;
+	const className = `flex gap-1 items-center ${inPage ? 'text-md' : 'text-sm'}`;
 	const countText = count > 1 ? 'Reviews' : 'Review';
 	const countValue = `(${count}) ${inPage ? countText : ''}`;
 	return (

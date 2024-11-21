@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { PropertyCardProps } from '@/utils/types';
 import { FaBath, FaBed, FaLocationDot, FaPeopleGroup } from 'react-icons/fa6';
 import Link from 'next/link';
+import { formatCurrency } from '@/utils/format';
 
 const RecentPropertyCard = ({ property }: { property: PropertyCardProps }) => {
 	const {
@@ -28,11 +29,19 @@ const RecentPropertyCard = ({ property }: { property: PropertyCardProps }) => {
 			/>
 			<div className='p-4'>
 				<div className='text-left md:text-center lg:text-left mb-6'>
-					<h3 className='text-xl font-bold'>{property.name}</h3>
-					<p className='text-gray-600'>{tagline}</p>
+					{name.length > 30 ? (
+						<h3 className='text-xl font-bold'>{name.substring(0, 30)}...</h3>
+					) : (
+						<h3 className='text-xl font-bold'>{name.substring(0, 30)}</h3>
+					)}
+					{tagline.length > 35 ? (
+						<p className='text-gray-600'>{tagline.substring(0, 35)}...</p>
+					) : (
+						<p className='text-gray-600'>{tagline.substring(0, 35)}</p>
+					)}
 				</div>
 				<h3 className='absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right'>
-					${price}
+					{formatCurrency(price)}
 				</h3>
 
 				<div className='flex gap-4 text-gray-500 mb-4 items-center'>
@@ -53,7 +62,7 @@ const RecentPropertyCard = ({ property }: { property: PropertyCardProps }) => {
 					<p>
 						<FaBath className='inline mr-2'></FaBath> {baths}{' '}
 						<span className='md:hidden lg:inline'>
-							{baths <= 1 ? 'Bath' : 'Bath'}
+							{baths <= 1 ? 'Bath' : 'Baths'}
 						</span>
 					</p>
 				</div>

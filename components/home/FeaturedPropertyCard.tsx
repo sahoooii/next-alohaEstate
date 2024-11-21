@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PropertyCardProps } from '@/utils/types';
 import { FaBath, FaBed, FaLocationDot, FaPeopleGroup } from 'react-icons/fa6';
+import { formatCurrency } from '@/utils/format';
 
 const FeaturedPropertyCard = ({
 	property,
@@ -31,10 +32,18 @@ const FeaturedPropertyCard = ({
 				className='object-cover rounded-t-xl lg:rounded-tr-none lg:rounded-l-xl w-full lg:w-2/5'
 			/>
 			<div className='p-6'>
-				<h3 className='text-xl font-bold'>{name}</h3>
-				<p className='text-gray-600 mb-4'>{tagline}</p>
+				{name.length > 30 ? (
+					<h3 className='text-xl font-bold'>{name.substring(0, 30)}...</h3>
+				) : (
+					<h3 className='text-xl font-bold'>{name.substring(0, 30)}</h3>
+				)}
+				{tagline.length > 35 ? (
+					<p className='text-gray-600'>{tagline.substring(0, 35)}...</p>
+				) : (
+					<p className='text-gray-600'>{tagline.substring(0, 35)}</p>
+				)}
 				<h3 className='absolute top-[10px] left-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right lg:text-right'>
-					${price} /Night
+					{formatCurrency(price)} / night
 				</h3>
 				<div className='flex justify-center gap-3 text-gray-500 mb-4'>
 					<p>
@@ -46,15 +55,11 @@ const FeaturedPropertyCard = ({
 					</p>
 					<p>
 						<FaBed className='inline-block mr-2' /> {beds}{' '}
-						<span className='lg:inline'>
-							{beds <= 1 ? 'Bed' : 'Beds'}
-						</span>
+						<span className='lg:inline'>{beds <= 1 ? 'Bed' : 'Beds'}</span>
 					</p>
 					<p>
 						<FaBath className='inline-block mr-2' /> {baths}{' '}
-						<span className='lg:inline'>
-							{baths <= 1 ? 'Bath' : 'Bath'}
-						</span>
+						<span className='lg:inline'>{baths <= 1 ? 'Bath' : 'Baths'}</span>
 					</p>
 				</div>
 

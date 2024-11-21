@@ -122,6 +122,9 @@ export const fetchProperties = async ({
 			country: 1,
 			price: 1,
 			location: 1,
+			guests: 1,
+			beds: 1,
+			baths: 1,
 		}
 	)
 		.sort({ createdAt: -1 })
@@ -212,6 +215,9 @@ export const fetchFavorites = async ({
 			country: 1,
 			price: 1,
 			location: 1,
+			guests: 1,
+			beds: 1,
+			baths: 1,
 		})
 		.sort({ updatedAt: -1 })
 		.skip(skip)
