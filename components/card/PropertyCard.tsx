@@ -24,13 +24,13 @@ const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
 	return (
 		<article className='group relative rounded-xl shadow-md'>
 			<Link href={`/properties/${propertyId}`}>
-				<div className='relative h-[300px] mb-2 overflow-hidden rounded-md'>
+				<div className='relative h-[300px] mb-2 overflow-hidden rounded-t-xl'>
 					<Image
 						src={thumbnail}
 						fill
 						sizes='(max-width:768px) 100vw, 50vw'
 						alt={name}
-						className=' rounded-t-xl object-cover transform group-hover:scale-110 transition-transform duration-500'
+						className='rounded-t-xl object-cover transform group-hover:scale-110 transition-transform duration-500'
 					/>
 				</div>
 				<div className='p-4'>

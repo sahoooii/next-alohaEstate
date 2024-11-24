@@ -18,15 +18,17 @@ const RecentPropertyCard = ({ property }: { property: PropertyCardProps }) => {
 	} = property;
 
 	return (
-		<div className='rounded-xl shadow-md relative'>
-			<Image
-				src={images[0][0]}
-				alt={name}
-				width={0}
-				height={0}
-				sizes='100vw'
-				className='w-full h-auto rounded-t-xl'
-			/>
+		<div className='relative rounded-xl shadow-md'>
+			<div className='relative h-[300px] mb-2 overflow-hidden'>
+				<Image
+					src={images[0][0]}
+					alt={name}
+					fill
+					sizes='(max-width:768px) 100vw, 50vw'
+					className='w-full h-auto rounded-t-xl'
+				/>
+			</div>
+
 			<div className='p-4'>
 				<div className='text-left md:text-center lg:text-left mb-6'>
 					{name.length > 30 ? (
