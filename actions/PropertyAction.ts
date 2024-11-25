@@ -12,6 +12,7 @@ import { redirect } from 'next/navigation';
 import { uploadImages } from '@/utils/imageUpload';
 import Property from '@/models/Property';
 import Favorite from '@/models/Favorite';
+import Profile from '@/models/Profile';
 
 export const createPropertyAction = async (
 	prevState: unknown,
@@ -235,8 +236,7 @@ export const getAllFavorites = async () => {
 	return totalFavorites;
 };
 
-// Featured Properties
-// Pick two most reviews properties later
+// Featured Properties-> Most reviews property later
 export const getFeaturedProperties = async () => {
 	await connectDB();
 
@@ -283,4 +283,17 @@ export const getRecentProperties = async () => {
 		.limit(3);
 
 	return properties;
+};
+
+export const fetchPropertyDetails = async (id: string) => {
+	await connectDB();
+
+	const property = await Property.findById(id);
+
+	const profile = property && (await Profile.find({ clerkId: property.owner }));
+
+	// If wrong ID to find the property
+	if (property && profile) {
+		return [property, ...profile];
+	}
 };

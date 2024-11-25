@@ -7,7 +7,7 @@ const FavoriteSchema = new Schema(
 			ref: 'Profile',
 		},
 		propertyId: {
-			type: String,
+			type: Schema.Types.ObjectId,
 			ref: 'Property',
 		},
 	},
