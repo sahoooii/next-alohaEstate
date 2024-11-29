@@ -21,11 +21,11 @@ const RecentPropertyCard = ({ property }: { property: PropertyCardProps }) => {
 		<div className='relative rounded-xl shadow-md'>
 			<div className='relative h-[300px] mb-2 overflow-hidden'>
 				<Image
-					src={images[0][0]}
+					src={images[0]}
 					alt={name}
 					fill
 					sizes='(max-width:768px) 100vw, 50vw'
-					className='w-full h-auto rounded-t-xl'
+					className='w-full h-auto rounded-t-xl object-cover'
 				/>
 			</div>
 

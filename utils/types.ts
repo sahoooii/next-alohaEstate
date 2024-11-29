@@ -14,3 +14,9 @@ export type PropertyCardProps = {
 	beds: number;
 	baths: number;
 };
+
+export type PropertyData = {
+	owner: string;
+	location: { street: string; city: string; state: string; zipcode: string };
+	images: string[];
+};

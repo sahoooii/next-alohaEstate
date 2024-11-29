@@ -19,7 +19,7 @@ const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
 		baths,
 	} = property;
 
-	const thumbnail = images[0][0];
+	const thumbnail = images[0];
 
 	return (
 		<article className='group relative rounded-xl shadow-md'>
