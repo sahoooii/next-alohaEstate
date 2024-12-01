@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import PropertiesContainer from '@/components/properties/PropertiesContainer';
 import CategoriesList from '@/components/properties/CategoriesList';
 import { LoadingCards } from '@/components/card/LoadingCards';
-import BreadCrumps from '@/components/properties/BreadCrumps';
+import BreadCrumps from '@/components/propertyDetails/BreadCrumps';
 
 const PropertiesPage = ({
 	searchParams,

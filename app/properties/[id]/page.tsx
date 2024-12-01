@@ -1,13 +1,15 @@
 import { fetchPropertyDetails } from '@/actions/PropertyAction';
 import FavoriteToggleButton from '@/components/card/FavoriteToggleButton';
-import BreadCrumps from '@/components/properties/BreadCrumps';
-import ImageContainer from '@/components/properties/ImageContainer';
-import ShareButton from '@/components/properties/ShareButton';
+import PropertyRating from '@/components/card/PropertyRating';
+import BookingCalendar from '@/components/propertyDetails/BookingCalendar';
+import BreadCrumps from '@/components/propertyDetails/BreadCrumps';
+import ImageContainer from '@/components/propertyDetails/ImageContainer';
+import ShareButton from '@/components/propertyDetails/ShareButton';
 import { redirect } from 'next/navigation';
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchPropertyDetails(params.id);
-	// console.log('pop:', property[1]);
+
 	if (!property) redirect('/');
 
 	const {
@@ -28,8 +30,8 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const { firstName, lastName, username, email, profileImages } = property[1];
 
 	return (
-		<div>
-			<section className='container mt-8'>
+		<div className='container mt-8'>
+			<section>
 				<BreadCrumps name={name} link='/properties' title='All Properties' />
 				<header className='flex justify-between items-center mt-4'>
 					<h1 className='text-4xl font-bold capitalize'>{name}</h1>
@@ -40,6 +42,17 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 				</header>
 				<h3 className='py-3 text-xl text-gray-500 capitalize'>{tagline}</h3>
 				<ImageContainer images={images} name={name} />
+			</section>
+			<section className='lg:grid lg:grid-cols-12 gap-x-12 mt-8 mb-20'>
+				<div className='lg:col-span-8'>
+					<div className='flex gap-x-4 items-center'>
+						<h1 className='text-xl font-bold'>{name}</h1>
+						<PropertyRating propertyId={propertyId} inPage />
+					</div>
+				</div>
+				<div className='lg:col-span-4 flex flex-col items-center'>
+					<BookingCalendar />
+				</div>
 			</section>
 		</div>
 	);

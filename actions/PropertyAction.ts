@@ -291,7 +291,7 @@ export const fetchPropertyDetails = async (id: string) => {
 
 	const profile = property && (await Profile.find({ clerkId: property.owner }));
 
-	// If wrong ID to find the property
+	// If typed wrong ID 
 	if (property && profile) {
 		return [property, ...profile];
 	}
