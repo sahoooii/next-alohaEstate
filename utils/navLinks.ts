@@ -13,9 +13,9 @@ type NavLink = {
 
 export const navLinks: NavLink[] = [
 	{ href: '/', label: 'home', icon: AiOutlineHome },
-	{ href: '/favorites ', label: 'favorites', icon: MdFavoriteBorder },
-	{ href: '/bookings ', label: 'bookings', icon: TbBrandBooking },
-	{ href: '/reviews ', label: 'reviews', icon: VscPreview },
+	{ href: '/favorites', label: 'favorites', icon: MdFavoriteBorder },
+	{ href: '/bookings', label: 'bookings', icon: TbBrandBooking },
+	{ href: '/reviews', label: 'reviews', icon: VscPreview },
 	{ href: '/rentals/create ', label: 'create rental', icon: TbHomePlus },
 	{ href: '/rentals', label: 'my rentals', icon: MdOutlineMapsHomeWork },
 	{ href: '/messages', label: 'Messages', icon: AiOutlineMessage },

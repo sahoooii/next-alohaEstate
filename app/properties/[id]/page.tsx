@@ -6,6 +6,7 @@ import BreadCrumps from '@/components/propertyDetails/BreadCrumps';
 import ImageContainer from '@/components/propertyDetails/ImageContainer';
 import PropertyDetails from '@/components/propertyDetails/PropertyDetails';
 import ShareButton from '@/components/propertyDetails/ShareButton';
+import UserInfo from '@/components/propertyDetails/UserInfo';
 import { redirect } from 'next/navigation';
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
@@ -30,7 +31,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 
 	const details = { guests, bedrooms, beds, baths };
 
-	const { firstName, lastName, username, email, profileImages } = property[1];
+	const { firstName, lastName, username, email, profileImage } = property[1];
 
 	return (
 		<div className='container mt-8'>
@@ -53,6 +54,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 						<PropertyRating propertyId={propertyId} inPage />
 					</div>
 					<PropertyDetails details={details} />
+					<UserInfo profile={{ profileImage, firstName, lastName }} />
 				</div>
 				<div className='lg:col-span-4 flex flex-col items-center'>
 					<BookingCalendar />
