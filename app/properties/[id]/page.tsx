@@ -4,6 +4,7 @@ import PropertyRating from '@/components/card/PropertyRating';
 import BookingCalendar from '@/components/propertyDetails/BookingCalendar';
 import BreadCrumps from '@/components/propertyDetails/BreadCrumps';
 import ImageContainer from '@/components/propertyDetails/ImageContainer';
+import PropertyDetails from '@/components/propertyDetails/PropertyDetails';
 import ShareButton from '@/components/propertyDetails/ShareButton';
 import { redirect } from 'next/navigation';
 
@@ -27,6 +28,8 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 		amenities,
 	} = property[0];
 
+	const details = { guests, bedrooms, beds, baths };
+
 	const { firstName, lastName, username, email, profileImages } = property[1];
 
 	return (
@@ -49,6 +52,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 						<h1 className='text-xl font-bold'>{name}</h1>
 						<PropertyRating propertyId={propertyId} inPage />
 					</div>
+					<PropertyDetails details={details} />
 				</div>
 				<div className='lg:col-span-4 flex flex-col items-center'>
 					<BookingCalendar />
