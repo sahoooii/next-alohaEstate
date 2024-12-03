@@ -40,7 +40,7 @@ const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
 						<h3 className='text-xl font-bold'>{isLongSentence(30, name)}</h3>
 						<p className='text-gray-600'>{isLongSentence(35, tagline)}</p>
 					</div>
-					
+
 					<h3 className='absolute top-[10px] left-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right'>
 						{formatCurrency(price)}
 					</h3>

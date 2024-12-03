@@ -7,7 +7,10 @@ import ImageContainer from '@/components/propertyDetails/ImageContainer';
 import PropertyDetails from '@/components/propertyDetails/PropertyDetails';
 import ShareButton from '@/components/propertyDetails/ShareButton';
 import UserInfo from '@/components/propertyDetails/UserInfo';
+import Description from '@/components/propertyDetails/Description';
+import { Separator } from '@/components/ui/separator';
 import { redirect } from 'next/navigation';
+import Amenities from '@/components/propertyDetails/Amenities';
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchPropertyDetails(params.id);
@@ -47,6 +50,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 				<h3 className='py-3 text-xl text-gray-500 capitalize'>{tagline}</h3>
 				<ImageContainer images={images} name={name} />
 			</section>
+
 			<section className='lg:grid lg:grid-cols-12 gap-x-12 mt-8 mb-20'>
 				<div className='lg:col-span-8'>
 					<div className='flex gap-x-4 items-center'>
@@ -55,6 +59,9 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 					</div>
 					<PropertyDetails details={details} />
 					<UserInfo profile={{ profileImage, firstName, lastName }} />
+					<Separator className='mt-4' />
+					<Description description={description} />
+					<Amenities amenities={amenities} />
 				</div>
 				<div className='lg:col-span-4 flex flex-col items-center'>
 					<BookingCalendar />
