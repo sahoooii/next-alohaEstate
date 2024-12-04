@@ -12,6 +12,8 @@ import { redirect } from 'next/navigation';
 import { uploadImages } from '@/utils/imageUpload';
 import Property from '@/models/Property';
 import Favorite from '@/models/Favorite';
+import Profile from '@/models/Profile';
+import { PropertyData } from '@/utils/types';
 
 export const createPropertyAction = async (
 	prevState: unknown,
@@ -31,9 +33,9 @@ export const createPropertyAction = async (
 		validateWithZodSchema(imagesSchema, { images });
 
 		const fileName = 'properties';
-		const imagesUrls = await uploadImages(images, fileName);
+		const imagesUrls: string[] = await uploadImages(images, fileName);
 
-		const propertyData = {
+		const propertyData: PropertyData = {
 			owner: user.id,
 			location: {
 				street: validatedFields.street,
@@ -41,11 +43,9 @@ export const createPropertyAction = async (
 				state: validatedFields.state,
 				zipcode: validatedFields.zipcode,
 			},
-			images: [''],
+			images: imagesUrls,
 			...validatedFields,
 		};
-
-		propertyData.images = imagesUrls;
 
 		const newProperty = new Property(propertyData);
 		await newProperty.save();
@@ -235,15 +235,12 @@ export const getAllFavorites = async () => {
 	return totalFavorites;
 };
 
-// Featured Properties
-// Pick two most reviews properties later
+// Featured Properties-> Most reviews property later
 export const getFeaturedProperties = async () => {
 	await connectDB();
 
 	const properties = await Property.find(
-		{
-			is_featured: true,
-		},
+		{},
 		{
 			id: 1,
 			name: 1,
@@ -256,7 +253,9 @@ export const getFeaturedProperties = async () => {
 			beds: 1,
 			baths: 1,
 		}
-	);
+	)
+		.sort({ numReviews: -1 })
+		.limit(2);
 
 	return properties;
 };
@@ -283,4 +282,17 @@ export const getRecentProperties = async () => {
 		.limit(3);
 
 	return properties;
+};
+
+export const fetchPropertyDetails = async (id: string) => {
+	await connectDB();
+
+	const property = await Property.findById(id);
+
+	const profile = property && (await Profile.find({ clerkId: property.owner }));
+
+	// If typed wrong ID 
+	if (property && profile) {
+		return [property, ...profile];
+	}
 };

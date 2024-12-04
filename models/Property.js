@@ -29,12 +29,8 @@ const PropertySchema = new Schema(
 		},
 		images: [
 			{
-				type: [String],
-				// validate: {
-				// 	validator: (v) => v.length <= 4,
-				// 	message: (props) =>
-				// 		`The images array can contain a maximum of 4 images, but got ${props.value.length}`,
-				// },
+				type: String,
+				// type: [String],
 			},
 		],
 		location: {
@@ -80,10 +76,10 @@ const PropertySchema = new Schema(
 				type: String,
 			},
 		],
-		is_featured: {
-			type: Boolean,
-			default: false,
-		},
+		// is_featured: {
+		// 	type: Boolean,
+		// 	default: false,
+		// },
 	},
 	{
 		timestamps: true,

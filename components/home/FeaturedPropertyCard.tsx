@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PropertyCardProps } from '@/utils/types';
-import { FaBath, FaBed, FaLocationDot, FaPeopleGroup } from 'react-icons/fa6';
-import { formatCurrency } from '@/utils/format';
+import { FaLocationDot } from 'react-icons/fa6';
+import { formatCurrency, isLongSentence } from '@/utils/format';
+import PropertyDetails from '../propertyDetails/PropertyDetails';
 
 const FeaturedPropertyCard = ({
 	property,
@@ -21,6 +22,8 @@ const FeaturedPropertyCard = ({
 		baths,
 	} = property;
 
+	const details = { guests, beds, baths };
+
 	return (
 		<div className='bg-white rounded-xl shadow-md relative flex flex-col lg:flex-row'>
 			<Image
@@ -32,38 +35,15 @@ const FeaturedPropertyCard = ({
 				className='object-cover rounded-t-xl lg:rounded-tr-none lg:rounded-l-xl w-full lg:w-2/5'
 			/>
 			<div className='p-6'>
-				{name.length > 30 ? (
-					<h3 className='text-xl font-bold'>{name.substring(0, 30)}...</h3>
-				) : (
-					<h3 className='text-xl font-bold'>{name.substring(0, 30)}</h3>
-				)}
-				{tagline.length > 35 ? (
-					<p className='text-gray-600'>{tagline.substring(0, 35)}...</p>
-				) : (
-					<p className='text-gray-600'>{tagline.substring(0, 35)}</p>
-				)}
+				<h3 className='text-xl font-bold'>{isLongSentence(30, tagline)}</h3>
+				<p className='text-gray-600'>{isLongSentence(35, tagline)}</p>
+
 				<h3 className='absolute top-[10px] left-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right lg:text-right'>
 					{formatCurrency(price)} / night
 				</h3>
-				<div className='flex justify-center gap-3 text-gray-500 mb-4'>
-					<p>
-						<FaPeopleGroup className='inline-block mr-2' />
-						{guests}{' '}
-						<span className='lg:inline'>
-							{guests <= 1 ? 'Guest' : 'Guests'}
-						</span>
-					</p>
-					<p>
-						<FaBed className='inline-block mr-2' /> {beds}{' '}
-						<span className='lg:inline'>{beds <= 1 ? 'Bed' : 'Beds'}</span>
-					</p>
-					<p>
-						<FaBath className='inline-block mr-2' /> {baths}{' '}
-						<span className='lg:inline'>{baths <= 1 ? 'Bath' : 'Baths'}</span>
-					</p>
-				</div>
 
-				<div className='border border-gray-200 mb-5'></div>
+				<PropertyDetails details={details} />
+				<div className='border border-gray-200 mb-5' />
 
 				<div className='flex flex-col lg:flex-row justify-between'>
 					<div className='flex align-middle items-center gap-2 mb-4 lg:mb-0'>

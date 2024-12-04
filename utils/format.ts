@@ -7,3 +7,19 @@ export const formatCurrency = (amount: number | null) => {
 		maximumFractionDigits: 0,
 	}).format(value);
 };
+
+export const formatQuantity = (
+	quantity: number | undefined,
+	noun: string
+): string => {
+	return quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
+};
+
+export const isLongSentence = (
+	sentenceLength: number,
+	sentence: string
+): string => {
+	return sentence.length > sentenceLength
+		? `${sentence.substring(0, sentenceLength)}...`
+		: `${sentence}`;
+};
