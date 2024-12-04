@@ -11,6 +11,7 @@ import Description from '@/components/propertyDetails/Description';
 import { Separator } from '@/components/ui/separator';
 import { redirect } from 'next/navigation';
 import Amenities from '@/components/propertyDetails/Amenities';
+import { FaLocationDot } from 'react-icons/fa6';
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchPropertyDetails(params.id);
@@ -22,7 +23,6 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 		name,
 		tagline,
 		price,
-		category,
 		description,
 		images,
 		guests,
@@ -30,11 +30,14 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 		beds,
 		baths,
 		amenities,
+		location,
 	} = property[0];
+
+	const { street, city } = location;
 
 	const details = { guests, bedrooms, beds, baths };
 
-	const { firstName, lastName, username, email, profileImage } = property[1];
+	const { firstName, lastName, email, profileImage } = property[1];
 
 	return (
 		<div className='container mt-8'>
@@ -51,11 +54,17 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 				<ImageContainer images={images} name={name} />
 			</section>
 
-			<section className='lg:grid lg:grid-cols-12 gap-x-12 mt-8 mb-20'>
-				<div className='lg:col-span-8'>
+			<section className='md:grid md:grid-cols-12 gap-x-12 mt-8  mb-20 lg:mb-32'>
+				<div className='md:col-span-8'>
 					<div className='flex gap-x-4 items-center'>
 						<h1 className='text-xl font-bold'>{name}</h1>
 						<PropertyRating propertyId={propertyId} inPage />
+					</div>
+					<div className='flex align-middle gap-2 mb-2 items-center'>
+						<FaLocationDot className='text-orange-700' />
+						<span className='text-orange-700'>
+							{street}, {city}
+						</span>
 					</div>
 					<PropertyDetails details={details} />
 					<UserInfo profile={{ profileImage, firstName, lastName }} />
@@ -63,7 +72,9 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 					<Description description={description} />
 					<Amenities amenities={amenities} />
 				</div>
-				<div className='lg:col-span-4 flex flex-col items-center'>
+				{/* position ipad */}
+				<div className='md:col-span-4 flex flex-col items-center mt-4 md:mt-0'>
+					<p className='text-lg font-bold text-primary'>${price} / night</p>
 					<BookingCalendar />
 				</div>
 			</section>
