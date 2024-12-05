@@ -11,7 +11,7 @@ const PropertiesPage = ({
 	searchParams: {
 		category?: string;
 		search?: string;
-		page?: string;
+		page: string;
 	};
 	pageSize: string;
 }) => {
