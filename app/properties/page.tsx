@@ -6,12 +6,12 @@ import BreadCrumps from '@/components/propertyDetails/BreadCrumps';
 
 const PropertiesPage = ({
 	searchParams,
-	// pageSize,
-}: {
+}: // pageSize,
+{
 	searchParams: {
 		category?: string;
 		search?: string;
-		// page: string;
+		page: string;
 	};
 	// pageSize: string;
 }) => {
@@ -28,7 +28,7 @@ const PropertiesPage = ({
 				<PropertiesContainer
 					category={searchParams.category}
 					search={searchParams.search}
-					// page={searchParams.page}
+					page={searchParams.page}
 					// pageSize={pageSize}
 				/>
 			</Suspense>
