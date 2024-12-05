@@ -5,17 +5,15 @@ import PaginationPage from '@/components/properties/PaginationPage';
 
 const FavoritesPage = async ({
 	searchParams,
-}: // pageSize = '8',
-{
+}: {
 	searchParams: {
 		page: string;
 	};
-	// pageSize: string;
 }) => {
 	const paginationPage =
 		searchParams.page === undefined ? 1 : parseInt(searchParams.page);
 
-	const pageSize = '2';
+	const pageSize = '8';
 	const paginationPageSize = parseInt(pageSize);
 
 	const favorites = await fetchFavorites({

@@ -18,7 +18,7 @@ const PropertiesContainer = async ({
 }) => {
 	const paginationPage = parseInt(page);
 
-	const pageSize = '4';
+	const pageSize = '8';
 	const paginationPageSize = parseInt(pageSize);
 
 	const properties: PropertyCardProps[] = await fetchProperties({

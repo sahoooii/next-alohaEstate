@@ -27,7 +27,6 @@ const PropertiesPage = ({
 					category={searchParams.category}
 					search={searchParams.search}
 					page={searchParams.page}
-					// pageSize={pageSize}
 				/>
 			</Suspense>
 		</div>
