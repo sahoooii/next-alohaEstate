@@ -193,17 +193,19 @@ export const toggleFavoriteAction = async (prevState: {
 	}
 };
 
-export const fetchFavorites = async ({
-	page,
-	pageSize,
-}: {
-	page: number;
-	pageSize: number;
-}) => {
+export const fetchFavorites = async (
+// 	{
+// 	page,
+// 	pageSize,
+// }: {
+// 	page: number;
+// 	pageSize: number;
+// }
+) => {
 	await connectDB();
 	const user = await getAuthUser();
 
-	const skip = (page - 1) * pageSize;
+	// const skip = (page - 1) * pageSize;
 
 	const favorites = await Favorite.find({ profileId: user.id })
 		.sort({ updatedAt: -1 })
@@ -219,9 +221,9 @@ export const fetchFavorites = async ({
 			beds: 1,
 			baths: 1,
 		})
-		.sort({ updatedAt: -1 })
-		.skip(skip)
-		.limit(pageSize);
+		.sort({ updatedAt: -1 });
+		// .skip(skip)
+		// .limit(pageSize);
 
 	return favorites.map((favorite) => favorite.propertyId);
 };
@@ -291,7 +293,7 @@ export const fetchPropertyDetails = async (id: string) => {
 
 	const profile = property && (await Profile.find({ clerkId: property.owner }));
 
-	// If typed wrong ID 
+	// If typed wrong ID
 	if (property && profile) {
 		return [property, ...profile];
 	}
