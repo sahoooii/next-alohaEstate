@@ -66,13 +66,13 @@ export const getAllPropertiesCount = async () => {
 export const fetchProperties = async ({
 	search = '',
 	category,
-	page,
-	pageSize,
+	// page,
+	// pageSize,
 }: {
 	search?: string;
 	category?: string;
-	page: number;
-	pageSize: number;
+	// page: number;
+	// pageSize: number;
 }) => {
 	await connectDB();
 
@@ -106,7 +106,7 @@ export const fetchProperties = async ({
 			  }
 			: {};
 
-	const skip = (page - 1) * pageSize;
+	// const skip = (page - 1) * pageSize;
 
 	const properties = await Property.find(
 		{
@@ -127,9 +127,9 @@ export const fetchProperties = async ({
 			baths: 1,
 		}
 	)
-		.sort({ createdAt: -1 })
-		.skip(skip)
-		.limit(pageSize);
+		.sort({ createdAt: -1 });
+		// .skip(skip)
+		// .limit(pageSize);
 
 	return properties;
 };

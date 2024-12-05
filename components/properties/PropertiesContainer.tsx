@@ -10,28 +10,28 @@ import PaginationPage from './PaginationPage';
 const PropertiesContainer = async ({
 	category,
 	search,
-	page = '1',
-	pageSize = '8',
+	// page = '1',
+	// pageSize = '8',
 }: {
 	category?: string;
 	search?: string;
-	page: string;
-	pageSize: string;
+	// page: string;
+	// pageSize: string;
 }) => {
-	const paginationPage = parseInt(page);
-	const paginationPageSize = parseInt(pageSize);
+	// const paginationPage = parseInt(page);
+	// const paginationPageSize = parseInt(pageSize);
 
 	const properties: PropertyCardProps[] = await fetchProperties({
 		category,
 		search,
-		page: paginationPage,
-		pageSize: paginationPageSize,
+		// page: paginationPage,
+		// pageSize: paginationPageSize,
 	});
 
-	const totalProperties = await getAllPropertiesCount();
-	const totalPages = Math.ceil(totalProperties / paginationPageSize);
+	// const totalProperties = await getAllPropertiesCount();
+	// const totalPages = Math.ceil(totalProperties / paginationPageSize);
 
-	const showPagination = totalProperties > paginationPageSize;
+	// const showPagination = totalProperties > paginationPageSize;
 
 	if (properties.length === 0) {
 		return (
@@ -46,13 +46,13 @@ const PropertiesContainer = async ({
 	return (
 		<>
 			<PropertiesList properties={properties} />
-			{showPagination && (
+			{/* {showPagination && (
 				<PaginationPage
 					page={paginationPage}
 					totalPages={totalPages}
 					linkName='properties'
 				/>
-			)}
+			)} */}
 		</>
 	);
 };
