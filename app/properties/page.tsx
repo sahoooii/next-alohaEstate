@@ -6,14 +6,12 @@ import BreadCrumps from '@/components/propertyDetails/BreadCrumps';
 
 const PropertiesPage = ({
 	searchParams,
-}: // pageSize,
-{
+}: {
 	searchParams: {
 		category?: string;
 		search?: string;
 		page: string;
 	};
-	// pageSize: string;
 }) => {
 	return (
 		<div className='container py-8 mb-20'>

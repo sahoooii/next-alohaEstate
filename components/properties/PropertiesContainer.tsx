@@ -11,16 +11,14 @@ const PropertiesContainer = async ({
 	category,
 	search,
 	page = '1',
-	// pageSize = '8',
 }: {
 	category?: string;
 	search?: string;
 	page: string;
-	// pageSize: string;
 }) => {
 	const paginationPage = parseInt(page);
 
-	const pageSize = '8';
+	const pageSize = '4';
 	const paginationPageSize = parseInt(pageSize);
 
 	const properties: PropertyCardProps[] = await fetchProperties({
