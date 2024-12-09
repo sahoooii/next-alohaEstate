@@ -38,8 +38,8 @@ const CreatePropertyPage = () => {
 					<TextAreaInput
 						name='description'
 						labelText='Description (10 - 3000 words)'
+						placeholder="ex: Aloha & Welcome to Mermaid's Oasis! This 4 bedroom home is directly oceanfront in spectacular Hawaiian Paradise Park..."
 					/>
-					{/* location */}
 					<div className='mb-4 bg-blue-50 p-4 mt-4'>
 						<h3 className='text-lg mb-3 font-medium text-gray-700'>Location</h3>
 						<div className='grid md:grid-cols-2 md:gap-5 mb-6'>

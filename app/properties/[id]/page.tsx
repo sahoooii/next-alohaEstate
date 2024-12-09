@@ -12,6 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import { redirect } from 'next/navigation';
 import Amenities from '@/components/propertyDetails/Amenities';
 import { FaLocationDot } from 'react-icons/fa6';
+import SubmitReview from '@/components/reviews/SubmitReview';
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchPropertyDetails(params.id);
@@ -54,7 +55,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 				<ImageContainer images={images} name={name} />
 			</section>
 
-			<section className='md:grid md:grid-cols-12 gap-x-12 mt-8  mb-20 lg:mb-32'>
+			<section className='md:grid md:grid-cols-12 gap-x-12 mt-8 mb-8 lg:mb-14'>
 				<div className='md:col-span-8'>
 					<div className='flex gap-x-4 items-center'>
 						<h1 className='text-xl font-bold'>{name}</h1>
@@ -72,11 +73,14 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 					<Description description={description} />
 					<Amenities amenities={amenities} />
 				</div>
-				{/* position ipad */}
 				<div className='md:col-span-4 flex flex-col items-center mt-4 md:mt-0'>
 					<p className='text-lg font-bold text-primary'>${price} / night</p>
 					<BookingCalendar />
 				</div>
+			</section>
+			<Separator />
+			<section className='mb-20 lg:mb-32'>
+				<SubmitReview propertyId={propertyId} />
 			</section>
 		</div>
 	);
