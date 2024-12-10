@@ -37,7 +37,7 @@ const ReviewMenu: Review[] = [
 	{
 		value: '5',
 		icon: FaRegFaceKissWinkHeart,
-		title: '4 -- Love it!! Want to stay rest of my LIFE!',
+		title: '5 -- Love it!! Want to stay rest of my LIFE!',
 	},
 ];
 

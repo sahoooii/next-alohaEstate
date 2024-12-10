@@ -6,7 +6,7 @@ const reviewSchema = new Schema(
 			type: String,
 			ref: 'Profile',
 		},
-		username: {
+		name: {
 			type: String,
 			unique: true,
 			required: true,
@@ -16,11 +16,15 @@ const reviewSchema = new Schema(
 		},
 		rating: {
 			type: Number,
+			min: 1,
+			max: 5,
 			required: true,
-			default: 0,
+			default: 3,
 		},
 		comment: {
 			type: String,
+			min: 10,
+			max: 1000,
 			required: true,
 		},
 	},
