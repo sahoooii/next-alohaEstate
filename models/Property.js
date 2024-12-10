@@ -1,5 +1,38 @@
 import { Schema, model, models } from 'mongoose';
 
+const reviewSchema = new Schema(
+	{
+		profileId: {
+			type: String,
+			ref: 'Profile',
+		},
+		name: {
+			type: String,
+			unique: true,
+			required: true,
+		},
+		profileImage: {
+			type: String,
+		},
+		rating: {
+			type: Number,
+			min: 1,
+			max: 5,
+			required: true,
+			default: 3,
+		},
+		comment: {
+			type: String,
+			min: 10,
+			max: 1000,
+			required: true,
+		},
+	},
+	{
+		timestamps: true,
+	}
+);
+
 const PropertySchema = new Schema(
 	{
 		// Who made this property info
@@ -67,15 +100,12 @@ const PropertySchema = new Schema(
 			type: Number,
 			required: true,
 		},
-		// amenities: {
-		// 	type: String,
-		// 	required: true,
-		// },
 		amenities: [
 			{
 				type: String,
 			},
 		],
+		reviews: [reviewSchema],
 		// is_featured: {
 		// 	type: Boolean,
 		// 	default: false,
