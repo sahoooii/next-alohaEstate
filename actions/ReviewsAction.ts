@@ -52,8 +52,24 @@ export const createReviewAction = async (
 	}
 };
 
-export const fetchPropertyReviews = async () => {
-	return { message: 'Fetch Review' };
+export const fetchPropertyReviews = async (propertyId: string) => {
+	await connectDB();
+
+	const reviews = await Property.findById(
+		{ _id: propertyId },
+		{
+			reviews: {
+				profileId: 1,
+				name: 1,
+				profileImage: 1,
+				rating: 1,
+				comment: 1,
+				_id: 1,
+			},
+		}
+	).sort({ createdAt: -1 });
+
+	return reviews;
 };
 
 export const fetchPropertyReviewsByUser = async () => {
