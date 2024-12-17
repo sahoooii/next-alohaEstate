@@ -1,4 +1,4 @@
-import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaRegStar } from 'react-icons/fa';
 
 const Rating = ({ rating }: { rating: number }) => {
 	const stars = Array.from({ length: 5 }, (_, i) => i + 1 <= rating);
