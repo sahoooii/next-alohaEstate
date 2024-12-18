@@ -24,31 +24,39 @@ const ReviewsPage = async () => {
 				}`}
 			/>
 			<section className='grid md:grid-cols-2 gap-8 mt-4'>
+				{/* Add date and change to property image  */}
 				{reviews.map((review) => {
-					const { name, _id } = review;
+					const { name, _id: propertyId, images } = review;
+					const propertyImage = images[0];
+
 					const {
 						_id: reviewId,
 						comment,
 						rating,
 						name: profileName,
 						profileImage,
+						createdAt,
 					} = review.reviews;
 
+					const createdDate = createdAt.toString().substring(0, 15);
+
 					const reviewInfo = {
-						_id,
+						propertyId,
 						name,
+						propertyImage,
 						reviewId,
 						comment,
 						rating,
 						profileName,
 						profileImage,
+						createdDate,
 					};
 
 					return (
 						<ReviewCard key={reviewId} reviewInfo={reviewInfo}>
 							<DeleteReview
 								reviewId={reviewId.toString()}
-								propertyId={_id.toString()}
+								propertyId={propertyId.toString()}
 							/>
 						</ReviewCard>
 					);

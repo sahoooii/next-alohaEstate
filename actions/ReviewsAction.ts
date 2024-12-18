@@ -74,6 +74,7 @@ export const fetchPropertyReviews = async (propertyId: string) => {
 				rating: 1,
 				comment: 1,
 				_id: 1,
+				createdAt: 1,
 			},
 		}
 	).sort({ createdAt: -1 });
@@ -96,6 +97,7 @@ export const fetchPropertyReviewsByUser = async () => {
 		},
 		{
 			$project: {
+				images: 1,
 				name: 1,
 				reviews: {
 					profileId: 1,
@@ -104,6 +106,7 @@ export const fetchPropertyReviewsByUser = async () => {
 					rating: 1,
 					comment: 1,
 					_id: 1,
+					createdAt: 1,
 				},
 			},
 		},
