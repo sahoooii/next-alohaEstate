@@ -20,7 +20,7 @@ const ReviewCardAtDetailsPage = ({ reviewInfo }: ReviewCardProps) => {
 	const createdDate = createdAt.toString().substring(0, 15);
 
 	return (
-		<Card className='relative'>
+		<Card>
 			<CardHeader>
 				<div className='flex items-center'>
 					<Image

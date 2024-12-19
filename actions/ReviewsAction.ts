@@ -78,15 +78,21 @@ export const fetchPropertyReviews = async (propertyId: string) => {
 			},
 		}
 	).sort({ createdAt: -1 });
-
 	return reviews;
 };
 
 // Show at reviews page
-// Add date
-export const fetchPropertyReviewsByUser = async () => {
+export const fetchPropertyReviewsByUser = async ({
+	page,
+	pageSize,
+}: {
+	page: number;
+	pageSize: number;
+}) => {
 	await connectDB();
 	const user = await getAuthUser();
+
+	const skip = (page - 1) * pageSize;
 
 	const reviews = await Property.aggregate([
 		{ $unwind: { path: '$reviews' } },
@@ -110,11 +116,30 @@ export const fetchPropertyReviewsByUser = async () => {
 				},
 			},
 		},
-	]);
-
+	])
+		.sort({ createdAt: -1 })
+		.skip(skip)
+		.limit(pageSize);
 	// console.log('reviews:', reviews);
 
 	return reviews;
+};
+
+// For pagination
+export const fetchAllReviewsByUser = async () => {
+	await connectDB();
+	const user = await getAuthUser();
+
+	const totalReviews = await Property.aggregate([
+		{ $unwind: { path: '$reviews' } },
+		{
+			$match: {
+				'reviews.profileId': user.id,
+			},
+		},
+	]);
+
+	return totalReviews.length;
 };
 
 export const deleteReviewAction = async (prevState: {
@@ -135,7 +160,6 @@ export const deleteReviewAction = async (prevState: {
 			(review: { _id: { toString: () => string } }) =>
 				review._id.toString() === reviewId
 		);
-		// console.log('deleteReview:', deleteReview._id);
 
 		await Property.findOneAndUpdate(
 			{ _id: propertyId, 'reviews.profileId': user.id },

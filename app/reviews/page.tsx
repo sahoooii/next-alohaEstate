@@ -3,13 +3,34 @@ import Title from '@/components/propertyDetails/Title';
 import ReviewCard from '@/components/reviews/ReviewCard';
 import {
 	deleteReviewAction,
+	fetchAllReviewsByUser,
 	fetchPropertyReviewsByUser,
 } from '@/actions/ReviewsAction';
 import DeleteReviewButton from '@/components/reviews/DeleteReviewButton';
 import FormContainer from '@/components/form/FormContainer';
+import PaginationPage from '@/components/properties/PaginationPage';
 
-const ReviewsPage = async () => {
-	const reviews = await fetchPropertyReviewsByUser();
+const ReviewsPage = async ({
+	searchParams,
+}: {
+	searchParams: {
+		page: string;
+	};
+}) => {
+	const paginationPage =
+		searchParams.page === undefined ? 1 : parseInt(searchParams.page);
+
+	const pageSize = '8';
+	const paginationPageSize = parseInt(pageSize);
+
+	const reviews = await fetchPropertyReviewsByUser({
+		page: paginationPage,
+		pageSize: paginationPageSize,
+	});
+	const totalReviews = await fetchAllReviewsByUser();
+	const totalPages = Math.ceil(totalReviews / paginationPageSize);
+
+	const showPagination = totalReviews > paginationPageSize;
 
 	if (reviews.length === 0)
 		return (
@@ -17,14 +38,13 @@ const ReviewsPage = async () => {
 		);
 
 	return (
-		<div className='container mt-8 mb-20'>
-			<Title
-				text={`You wrote ${reviews.length} ${
-					reviews.length === 1 ? 'review' : 'reviews'
+		<div className='container mt-8'>
+			<h1 className='text-2xl font-mono mb-8 capitalize'>
+				{`You wrote ${totalReviews} ${
+					totalReviews === 1 ? 'Review' : 'Reviews'
 				}`}
-			/>
+			</h1>
 			<section className='grid md:grid-cols-2 gap-8 mt-4'>
-				{/* Add date and change to property image  */}
 				{reviews.map((review) => {
 					const { name, _id: propertyId, images } = review;
 					const propertyImage = images[0];
@@ -62,6 +82,15 @@ const ReviewsPage = async () => {
 					);
 				})}
 			</section>
+			<div className='mb-20 md:mb-12 lg:mb-24'>
+				{showPagination && (
+					<PaginationPage
+						page={paginationPage}
+						totalPages={totalPages}
+						linkName='reviews'
+					/>
+				)}
+			</div>
 		</div>
 	);
 };

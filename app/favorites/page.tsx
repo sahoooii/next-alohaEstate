@@ -40,7 +40,9 @@ const FavoritesPage = async ({
 
 	return (
 		<div className='container pt-10 pb-28 sm:pb-16 md:pb-32'>
-			<h1 className='text-2xl font-mono mb-8 capitalize'>Your favorites</h1>
+			<h1 className='text-2xl font-mono mb-8 capitalize'>
+				{`${totalFavorites} ${totalFavorites === 1 ? 'Favorite' : 'Favorites'} Property`}
+			</h1>
 			<PropertiesList properties={favorites} />
 			{showPagination && (
 				<PaginationPage
