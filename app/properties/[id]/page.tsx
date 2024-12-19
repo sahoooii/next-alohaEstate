@@ -12,7 +12,8 @@ import { Separator } from '@/components/ui/separator';
 import { redirect } from 'next/navigation';
 import Amenities from '@/components/propertyDetails/Amenities';
 import { FaLocationDot } from 'react-icons/fa6';
-import SubmitReview from '@/components/reviews/SubmitReview';
+import CreateReview from '@/components/reviews/CreateReview';
+import PropertyReviews from '@/components/reviews/PropertyReviews';
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchPropertyDetails(params.id);
@@ -39,7 +40,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const details = { guests, bedrooms, beds, baths };
 
 	const { firstName, lastName, email, profileImage } = property[1];
-
+	const fullName = `${firstName} ${lastName}`;
 	return (
 		<div className='container mt-8'>
 			<section>
@@ -68,7 +69,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 						</span>
 					</div>
 					<PropertyDetails details={details} />
-					<UserInfo profile={{ profileImage, firstName, lastName }} />
+					<UserInfo profile={{ profileImage, fullName }} />
 					<Separator className='mt-4' />
 					<Description description={description} />
 					<Amenities amenities={amenities} />
@@ -80,7 +81,8 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 			</section>
 			<Separator />
 			<section className='mb-20 lg:mb-32'>
-				<SubmitReview propertyId={propertyId} />
+				<CreateReview propertyId={propertyId} />
+				<PropertyReviews propertyId={propertyId} />
 			</section>
 		</div>
 	);

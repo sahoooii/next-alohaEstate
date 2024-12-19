@@ -20,9 +20,9 @@ const RatingInput = ({
 			<Label htmlFor={name} className='capitalize'>
 				{labelText || name}
 			</Label>
-			<Select defaultValue='3' name={name} required>
+			<Select name={name} required>
 				<SelectTrigger className='w-full'>
-					<SelectValue />
+					<SelectValue placeholder='Select a rate' />
 				</SelectTrigger>
 				<SelectContent>
 					{ReviewMenu.map((review) => (

@@ -6,6 +6,7 @@ import Property from '@/models/Property';
 import { createReviewSchema, validateWithZodSchema } from '@/utils/schemas';
 
 import { revalidatePath } from 'next/cache';
+import Profile from '@/models/Profile';
 
 export const createReviewAction = async (
 	prevState: unknown,
@@ -15,11 +16,18 @@ export const createReviewAction = async (
 	const user = await getAuthUser();
 
 	try {
+		const profile = await Profile.find(
+			{ clerkId: user.id },
+			{ firstName: 1, lastName: 1, profileImage: 1 }
+		);
+
+		const { firstName, lastName, profileImage } = profile[0];
+		const fullName = `${firstName} ${lastName}`;
+
 		const rawData = Object.fromEntries(formData);
 		const validatedFields = validateWithZodSchema(createReviewSchema, rawData);
 
 		const { propertyId, rating, comment } = validatedFields;
-		const fullName = `${user.firstName} ${user.lastName}`;
 
 		const property = await Property.findById(propertyId);
 
@@ -36,7 +44,7 @@ export const createReviewAction = async (
 			const review = {
 				profileId: user.id,
 				name: fullName,
-				profileImage: user.imageUrl,
+				profileImage: profileImage,
 				rating: Number(rating),
 				comment: comment,
 			};
@@ -52,14 +60,120 @@ export const createReviewAction = async (
 	}
 };
 
-export const fetchPropertyReviews = async () => {
-	return { message: 'Fetch Review' };
+// Show at property details page
+export const fetchPropertyReviews = async (propertyId: string) => {
+	await connectDB();
+
+	const reviews = await Property.findById(
+		{ _id: propertyId },
+		{
+			reviews: {
+				profileId: 1,
+				name: 1,
+				profileImage: 1,
+				rating: 1,
+				comment: 1,
+				_id: 1,
+				createdAt: 1,
+			},
+		}
+	).sort({ createdAt: -1 });
+	return reviews;
 };
 
-export const fetchPropertyReviewsByUser = async () => {
-	return { message: 'fetch Reviews' };
+// Show at reviews page
+export const fetchPropertyReviewsByUser = async ({
+	page,
+	pageSize,
+}: {
+	page: number;
+	pageSize: number;
+}) => {
+	await connectDB();
+	const user = await getAuthUser();
+
+	const skip = (page - 1) * pageSize;
+
+	const reviews = await Property.aggregate([
+		{ $unwind: { path: '$reviews' } },
+		{
+			$match: {
+				'reviews.profileId': user.id,
+			},
+		},
+		{
+			$project: {
+				images: 1,
+				name: 1,
+				reviews: {
+					profileId: 1,
+					name: 1,
+					profileImage: 1,
+					rating: 1,
+					comment: 1,
+					_id: 1,
+					createdAt: 1,
+				},
+			},
+		},
+	])
+		.sort({ createdAt: -1 })
+		.skip(skip)
+		.limit(pageSize);
+	// console.log('reviews:', reviews);
+
+	return reviews;
 };
 
-export const deleteReviewAction = async () => {
-	return { message: 'Delete Review' };
+// For pagination
+export const fetchAllReviewsByUser = async () => {
+	await connectDB();
+	const user = await getAuthUser();
+
+	const totalReviews = await Property.aggregate([
+		{ $unwind: { path: '$reviews' } },
+		{
+			$match: {
+				'reviews.profileId': user.id,
+			},
+		},
+	]);
+
+	return totalReviews.length;
+};
+
+export const deleteReviewAction = async (prevState: {
+	propertyId: string;
+	reviewId: string;
+}) => {
+	await connectDB();
+	const user = await getAuthUser();
+	const { propertyId, reviewId } = prevState;
+
+	try {
+		const reviews = await Property.find(
+			{ _id: propertyId },
+			{ reviews: { _id: 1 } }
+		);
+
+		const deleteReview = reviews[0].reviews.find(
+			(review: { _id: { toString: () => string } }) =>
+				review._id.toString() === reviewId
+		);
+
+		await Property.findOneAndUpdate(
+			{ _id: propertyId, 'reviews.profileId': user.id },
+			{
+				$pull: { reviews: deleteReview },
+			},
+			{
+				new: true,
+			}
+		);
+
+		revalidatePath('/reviews');
+		return { message: 'Deleted Review successfully' };
+	} catch (error) {
+		return renderError(error);
+	}
 };

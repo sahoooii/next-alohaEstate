@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { createReviewAction } from '@/actions/ReviewsAction';
 import { MdOutlineRateReview } from 'react-icons/md';
 
-const SubmitReview = ({ propertyId }: { propertyId: string }) => {
+const CreateReview = ({ propertyId }: { propertyId: string }) => {
 	const [isReviewFormVisible, setIsReviewFormVisible] = useState(false);
 
 	return (
@@ -44,4 +44,4 @@ const SubmitReview = ({ propertyId }: { propertyId: string }) => {
 	);
 };
 
-export default SubmitReview;
+export default CreateReview;
