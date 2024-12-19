@@ -117,7 +117,7 @@ export const fetchPropertyReviewsByUser = async ({
 			},
 		},
 	])
-		.sort({ createdAt: -1 })
+		.sort({ createdAt: 1 })
 		.skip(skip)
 		.limit(pageSize);
 	// console.log('reviews:', reviews);
