@@ -25,10 +25,10 @@ const ReviewCard = ({ reviewInfo, children }: ReviewCardProps) => {
 					<Link href={`/properties/${reviewInfo.propertyId}`}>
 						<Image
 							src={reviewInfo.propertyImage}
-							width={50}
-							height={50}
+							width={100}
+							height={100}
 							alt={reviewInfo.name}
-							className='rounded-sm w-20 h-20 object-cover'
+							className='rounded-sm object-cover'
 						/>
 					</Link>
 					<div className='ml-4'>

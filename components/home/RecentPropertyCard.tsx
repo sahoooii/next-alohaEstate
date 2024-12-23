@@ -4,6 +4,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import Link from 'next/link';
 import { formatCurrency, isLongSentence } from '@/utils/format';
 import PropertyDetails from '../propertyDetails/PropertyDetails';
+import PropertyRating from '../card/PropertyRating';
 
 const RecentPropertyCard = ({ property }: { property: PropertyCardProps }) => {
 	const {
@@ -34,10 +35,11 @@ const RecentPropertyCard = ({ property }: { property: PropertyCardProps }) => {
 
 			<div className='p-4'>
 				<div className='text-left md:text-center lg:text-left mb-6'>
-					<h3 className='text-xl font-bold'>{isLongSentence(30, name)}</h3>
-					<p className='text-gray-600'>{isLongSentence(35, tagline)}</p>
+					<h3 className='text-xl font-bold mb-1'>{isLongSentence(30, name)}</h3>
+					<PropertyRating inPage={false} propertyId={propertyId} />
+					<p className='text-gray-600 mt-1'>{isLongSentence(35, tagline)}</p>
 				</div>
-				
+
 				<h3 className='absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right'>
 					{formatCurrency(price)}
 				</h3>

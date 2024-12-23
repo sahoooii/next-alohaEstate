@@ -1,4 +1,5 @@
 import { Skeleton } from '../ui/skeleton';
+import { Card, CardHeader } from '@/components/ui/card';
 
 export const LoadingCards = () => {
 	return (
@@ -65,3 +66,19 @@ export const SkeltonRecentCard = () => {
 		</div>
 	);
 };
+
+export const ReviewLoadingCard = () => {
+	return (
+		<Card className='h-[150px]'>
+			<CardHeader>
+				<div className='flex items-center'>
+					<Skeleton className='w-20 h-20 rounded-sm' />
+					<div className='ml-4'>
+						<Skeleton className='w-[150px] h-6 mb-2' />
+						<Skeleton className='w-[100px] h-4' />
+					</div>
+				</div>
+			</CardHeader>
+		</Card>
+	);
+}

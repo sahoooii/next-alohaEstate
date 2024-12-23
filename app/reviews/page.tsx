@@ -1,14 +1,11 @@
 import EmptyList from '@/components/properties/EmptyList';
-import Title from '@/components/propertyDetails/Title';
 import ReviewCard from '@/components/reviews/ReviewCard';
 import {
-	deleteReviewAction,
 	fetchAllReviewsByUser,
 	fetchPropertyReviewsByUser,
 } from '@/actions/ReviewsAction';
-import DeleteReviewButton from '@/components/reviews/DeleteReviewButton';
-import FormContainer from '@/components/form/FormContainer';
 import PaginationPage from '@/components/properties/PaginationPage';
+import DeleteReview from '@/components/reviews/DeleteReview';
 
 const ReviewsPage = async ({
 	searchParams,
@@ -92,22 +89,6 @@ const ReviewsPage = async ({
 				)}
 			</div>
 		</div>
-	);
-};
-
-const DeleteReview = ({
-	reviewId,
-	propertyId,
-}: {
-	reviewId: string;
-	propertyId: string;
-}) => {
-	const deleteReview = deleteReviewAction.bind(null, { reviewId, propertyId });
-
-	return (
-		<FormContainer action={deleteReview}>
-			<DeleteReviewButton actionType='delete' />
-		</FormContainer>
 	);
 };
 
