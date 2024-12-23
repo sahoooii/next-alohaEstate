@@ -14,6 +14,8 @@ import Amenities from '@/components/propertyDetails/Amenities';
 import { FaLocationDot } from 'react-icons/fa6';
 import CreateReview from '@/components/reviews/CreateReview';
 import PropertyReviews from '@/components/reviews/PropertyReviews';
+import { auth } from '@clerk/nextjs/server';
+import { findExistingReview } from '@/actions/ReviewsAction';
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchPropertyDetails(params.id);
@@ -39,8 +41,16 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 
 	const details = { guests, bedrooms, beds, baths };
 
-	const { firstName, lastName, email, profileImage } = property[1];
+	const { firstName, lastName, clerkId, email, profileImage } = property[1];
 	const fullName = `${firstName} ${lastName}`;
+
+	const { userId } = auth();
+	const isNotOwner = clerkId !== userId;
+
+	// 1. Not wrote a review yet 2. Logged in 3. Not own property
+	const reviewDoesNotExist =
+		userId && isNotOwner && !(await findExistingReview(userId, propertyId));
+
 	return (
 		<div className='container mt-8'>
 			<section>
@@ -59,8 +69,8 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 			<section className='md:grid md:grid-cols-12 gap-x-12 mt-8 mb-8 lg:mb-14'>
 				<div className='md:col-span-8'>
 					{/* <div className='flex gap-x-4 items-center'> */}
-						<h1 className='text-xl font-bold'>{name}</h1>
-						<PropertyRating propertyId={propertyId} inPage />
+					<h1 className='text-xl font-bold'>{name}</h1>
+					<PropertyRating propertyId={propertyId} inPage />
 					{/* </div> */}
 					<div className='flex align-middle gap-2 mb-2 items-center'>
 						<FaLocationDot className='text-orange-700' />
@@ -81,7 +91,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 			</section>
 			<Separator />
 			<section className='mb-20 lg:mb-32'>
-				<CreateReview propertyId={propertyId} />
+				{reviewDoesNotExist && <CreateReview propertyId={propertyId} />}
 				<PropertyReviews propertyId={propertyId} />
 			</section>
 		</div>

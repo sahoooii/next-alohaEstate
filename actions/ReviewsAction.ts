@@ -211,3 +211,15 @@ export const fetchPropertyRating = async (propertyId: string) => {
 
 	return rating;
 };
+
+export const findExistingReview = async (
+	userId: string,
+	propertyId: string
+) => {
+	await connectDB();
+
+	return await Property.findOne(
+		{ 'reviews.profileId': userId, _id: propertyId },
+		{}
+	);
+};
