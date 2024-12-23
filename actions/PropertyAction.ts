@@ -238,7 +238,7 @@ export const getAllFavorites = async () => {
 };
 
 // Featured Properties-> Most reviews property later
-export const getFeaturedProperties = async () => {
+export const getTopRatedProperties = async () => {
 	await connectDB();
 
 	const properties = await Property.find(
@@ -256,7 +256,7 @@ export const getFeaturedProperties = async () => {
 			baths: 1,
 		}
 	)
-		.sort({ numReviews: -1 })
+		.sort({ averageRating: -1 })
 		.limit(2);
 
 	return properties;

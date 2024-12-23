@@ -6,7 +6,6 @@ import {
 } from '@/actions/ReviewsAction';
 import PaginationPage from '@/components/properties/PaginationPage';
 import DeleteReview from '@/components/reviews/DeleteReview';
-import { Card } from '@/components/ui/card';
 
 const ReviewsPage = async ({
 	searchParams,

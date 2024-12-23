@@ -58,10 +58,10 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 
 			<section className='md:grid md:grid-cols-12 gap-x-12 mt-8 mb-8 lg:mb-14'>
 				<div className='md:col-span-8'>
-					<div className='flex gap-x-4 items-center'>
+					{/* <div className='flex gap-x-4 items-center'> */}
 						<h1 className='text-xl font-bold'>{name}</h1>
 						<PropertyRating propertyId={propertyId} inPage />
-					</div>
+					{/* </div> */}
 					<div className='flex align-middle gap-2 mb-2 items-center'>
 						<FaLocationDot className='text-orange-700' />
 						<span className='text-orange-700'>

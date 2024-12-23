@@ -105,6 +105,16 @@ const PropertySchema = new Schema(
 				type: String,
 			},
 		],
+		averageRating: {
+			type: Number,
+			required: true,
+			default: 0,
+		},
+		numReviews: {
+			type: Number,
+			required: true,
+			default: 0,
+		},
 		reviews: [reviewSchema],
 		// is_featured: {
 		// 	type: Boolean,

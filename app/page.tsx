@@ -12,9 +12,9 @@ const HomePage = () => {
 				<div>
 					{/* Make sure later */}
 					{/* After create reviews function add Featured Properties */}
-					{/* <Suspense fallback={<FeaturedLoadingCards />}>
+					<Suspense fallback={<FeaturedLoadingCards />}>
 						<FeaturedProperties />
-					</Suspense> */}
+					</Suspense>
 					<Suspense fallback={<RecentLoadingCards />}>
 						<RecentProperties />
 					</Suspense>

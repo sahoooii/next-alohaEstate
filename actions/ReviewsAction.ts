@@ -4,7 +4,6 @@ import connectDB from '@/config/database';
 import { getAuthUser, renderError } from './Auth';
 import Property from '@/models/Property';
 import { createReviewSchema, validateWithZodSchema } from '@/utils/schemas';
-
 import { revalidatePath } from 'next/cache';
 import Profile from '@/models/Profile';
 
@@ -50,6 +49,17 @@ export const createReviewAction = async (
 			};
 
 			property.reviews.push(review);
+
+			// Average rate calculation
+			property.numReviews = property.reviews.length;
+
+			property.averageRating = (
+				property.reviews.reduce(
+					(acc: number, property: { rating: number }) => acc + property.rating,
+					0
+				) / property.reviews.length
+			).toFixed(1);
+
 			await property.save();
 		}
 		revalidatePath(`/properties/${propertyId}`);
@@ -151,17 +161,17 @@ export const deleteReviewAction = async (prevState: {
 	const { propertyId, reviewId } = prevState;
 
 	try {
-		const reviews = await Property.find(
+		let property = await Property.findById(
 			{ _id: propertyId },
-			{ reviews: { _id: 1 } }
+			{ averageRating: 1, numReviews: 1, reviews: 1 }
 		);
 
-		const deleteReview = reviews[0].reviews.find(
+		const deleteReview = property.reviews.find(
 			(review: { _id: { toString: () => string } }) =>
 				review._id.toString() === reviewId
 		);
 
-		await Property.findOneAndUpdate(
+		property = await Property.findOneAndUpdate(
 			{ _id: propertyId, 'reviews.profileId': user.id },
 			{
 				$pull: { reviews: deleteReview },
@@ -171,9 +181,33 @@ export const deleteReviewAction = async (prevState: {
 			}
 		);
 
+		property.numReviews = property.reviews.length;
+
+		property.averageRating =
+			property.numReviews > 0 &&
+			(
+				property.reviews.reduce(
+					(acc: number, property: { rating: number }) => acc + property.rating,
+					0
+				) / property.reviews.length
+			).toFixed(1);
+
+		await property.save();
+
 		revalidatePath('/reviews');
 		return { message: 'Deleted Review successfully' };
 	} catch (error) {
 		return renderError(error);
 	}
+};
+
+export const fetchPropertyRating = async (propertyId: string) => {
+	await connectDB();
+
+	const rating = await Property.findById(
+		{ _id: propertyId },
+		{ numReviews: 1, averageRating: 1 }
+	);
+
+	return rating;
 };
