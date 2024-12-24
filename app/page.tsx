@@ -12,7 +12,7 @@ const HomePage = () => {
 		<div>
 			<section>
 				<Hero />
-				<div>
+				<div className='mb-24'>
 					<Suspense fallback={<FeaturedLoadingCards />}>
 						<FeaturedProperties />
 					</Suspense>
