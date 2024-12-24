@@ -13,7 +13,7 @@ export const LoadingCards = () => {
 
 export const FeaturedLoadingCards = () => {
 	return (
-		<div className='container mt-4 grid grid-cols-1 md:grid-cols-2 gap-6'>
+		<div className='container mt-8 grid grid-cols-1 md:grid-cols-2 gap-6'>
 			<SkeltonFeaturedCard />
 			<SkeltonFeaturedCard />
 		</div>
@@ -22,7 +22,7 @@ export const FeaturedLoadingCards = () => {
 
 export const RecentLoadingCards = () => {
 	return (
-		<div className='container mt-4 gap-8 grid sm:grid-cols-3 lg:grid-cols-3'>
+		<div className='container mt-8 gap-8 grid sm:grid-cols-3 lg:grid-cols-3'>
 			<SkeltonRecentCard />
 			<SkeltonRecentCard />
 			<SkeltonRecentCard />

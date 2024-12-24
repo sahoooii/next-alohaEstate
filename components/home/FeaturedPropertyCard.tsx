@@ -26,7 +26,7 @@ const FeaturedPropertyCard = ({
 	const details = { guests, beds, baths };
 
 	return (
-		<div className='bg-white rounded-xl shadow-md flex flex-col lg:flex-row'>
+		<div className='bg-white rounded-xl shadow-md flex flex-col lg:flex-row relative'>
 			<Image
 				src={images[0]}
 				alt={name}
@@ -36,7 +36,7 @@ const FeaturedPropertyCard = ({
 				className='object-cover rounded-t-xl lg:rounded-tr-none lg:rounded-l-xl h-auto w-full lg:w-2/5'
 			/>
 			<div className='p-6'>
-				<h3 className='text-xl font-bold'>{isLongSentence(30, tagline)}</h3>
+				<h3 className='text-xl font-bold'>{isLongSentence(30, name)}</h3>
 				<p className='text-gray-600'>{isLongSentence(35, tagline)}</p>
 
 				<h3 className='absolute top-[10px] left-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right lg:text-right'>
