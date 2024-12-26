@@ -24,6 +24,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 
 	const {
 		id: propertyId,
+		owner,
 		name,
 		tagline,
 		price,
@@ -35,13 +36,13 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 		baths,
 		amenities,
 		location,
-	} = property[0];
+	} = property;
 
 	const { street, city } = location;
 
 	const details = { guests, bedrooms, beds, baths };
 
-	const { firstName, lastName, clerkId, email, profileImage } = property[1];
+	const { firstName, lastName, clerkId, email, profileImage } = owner;
 	const fullName = `${firstName} ${lastName}`;
 
 	const { userId } = auth();
@@ -49,7 +50,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 
 	// 1. Not wrote a review yet 2. Logged in 3. Not own property
 	const reviewDoesNotExist =
-		userId && isNotOwner && !(await findExistingReview(userId, propertyId));
+		userId && isNotOwner && !(await findExistingReview(propertyId));
 
 	return (
 		<div className='container mt-8'>

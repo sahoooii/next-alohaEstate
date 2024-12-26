@@ -6,7 +6,7 @@ import Image from 'next/image';
 type ReviewCardProps = {
 	reviewInfo: {
 		profileId: string;
-		name: string;
+		fullName: string;
 		profileImage: string;
 		rating: number;
 		comment: string;
@@ -27,12 +27,12 @@ const ReviewCardAtDetailsPage = ({ reviewInfo }: ReviewCardProps) => {
 						src={reviewInfo.profileImage}
 						width={50}
 						height={50}
-						alt={reviewInfo.name}
+						alt={reviewInfo.fullName}
 						className='rounded-full w-14 h-14 object-cover'
 					/>
 					<div className='ml-4'>
 						<h3 className='text-sm font-bold capitalize mb-1'>
-							{reviewInfo.name}
+							{reviewInfo.fullName}
 						</h3>
 						<p className='text-sm text-gray-600'>{createdDate}</p>
 						<Rating rating={reviewInfo.rating} />

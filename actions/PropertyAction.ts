@@ -12,8 +12,9 @@ import { redirect } from 'next/navigation';
 import { uploadImages } from '@/utils/imageUpload';
 import Property from '@/models/Property';
 import Favorite from '@/models/Favorite';
-import Profile from '@/models/Profile';
 import { PropertyData } from '@/utils/types';
+import { getUserId } from './UserId';
+import Profile from '@/models/Profile';
 
 export const createPropertyAction = async (
 	prevState: unknown,
@@ -22,8 +23,6 @@ export const createPropertyAction = async (
 	await connectDB();
 
 	try {
-		const user = await getAuthUser();
-
 		const rawData = Object.fromEntries(formData);
 		const validatedFields = validateWithZodSchema(propertySchema, rawData);
 
@@ -35,8 +34,10 @@ export const createPropertyAction = async (
 		const fileName = 'properties';
 		const imagesUrls: string[] = await uploadImages(images, fileName);
 
+		const userId = await getUserId();
+
 		const propertyData: PropertyData = {
-			owner: user.id,
+			owner: userId,
 			location: {
 				street: validatedFields.street,
 				city: validatedFields.city,
@@ -142,11 +143,12 @@ export const fetchFavoriteId = async ({
 }) => {
 	await connectDB();
 
-	const user = await getAuthUser();
+	const userId = await getUserId();
+
 	const favorite = await Favorite.findOne(
 		{
 			propertyId,
-			profileId: user.id,
+			profileId: userId,
 		},
 		{
 			id: 1,
@@ -165,14 +167,14 @@ export const toggleFavoriteAction = async (prevState: {
 	const { propertyId, favoriteId, pathname } = prevState;
 
 	await connectDB();
-	const user = await getAuthUser();
+	const userId = await getUserId();
 
 	try {
 		if (favoriteId) {
 			await Favorite.deleteOne({ _id: favoriteId });
 		} else {
 			await Favorite.create({
-				profileId: user.id,
+				profileId: userId,
 				propertyId,
 			});
 		}
@@ -193,21 +195,20 @@ export const toggleFavoriteAction = async (prevState: {
 	}
 };
 
-export const fetchFavorites = async (
-	{
+export const fetchFavorites = async ({
 	page,
 	pageSize,
 }: {
 	page: number;
 	pageSize: number;
-}
-) => {
+}) => {
 	await connectDB();
-	const user = await getAuthUser();
+
+	const userId = await getUserId();
 
 	const skip = (page - 1) * pageSize;
 
-	const favorites = await Favorite.find({ profileId: user.id })
+	const favorites = await Favorite.find({ profileId: userId })
 		.sort({ updatedAt: -1 })
 		.populate('propertyId', {
 			id: 1,
@@ -230,9 +231,12 @@ export const fetchFavorites = async (
 
 export const getAllFavorites = async () => {
 	await connectDB();
-	const user = await getAuthUser();
 
-	const totalFavorites = await Favorite.countDocuments({ profileId: user.id });
+	const userId = await getUserId();
+
+	const totalFavorites = await Favorite.countDocuments({
+		profileId: userId,
+	});
 
 	return totalFavorites;
 };
@@ -289,12 +293,8 @@ export const getRecentProperties = async () => {
 export const fetchPropertyDetails = async (id: string) => {
 	await connectDB();
 
-	const property = await Property.findById(id);
+	const property = await Property.findById(id).populate('owner', {});
+	// console.log('property:', property);
 
-	const profile = property && (await Profile.find({ clerkId: property.owner }));
-
-	// If typed wrong ID
-	if (property && profile) {
-		return [property, ...profile];
-	}
+	return property;
 };

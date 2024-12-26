@@ -1,26 +1,29 @@
 'use server';
 
 import connectDB from '@/config/database';
-import { getAuthUser, renderError } from './Auth';
+import { renderError } from './Auth';
 import Property from '@/models/Property';
 import { createReviewSchema, validateWithZodSchema } from '@/utils/schemas';
 import { revalidatePath } from 'next/cache';
 import Profile from '@/models/Profile';
+import { getUserId } from './UserId';
 
 export const createReviewAction = async (
 	prevState: unknown,
 	formData: FormData
 ) => {
 	await connectDB();
-	const user = await getAuthUser();
+
+	const userId = await getUserId();
 
 	try {
-		const profile = await Profile.find(
-			{ clerkId: user.id },
-			{ firstName: 1, lastName: 1, profileImage: 1 }
-		);
+		const profile = await Profile.findById(userId, {
+			firstName: 1,
+			lastName: 1,
+			profileImage: 1,
+		});
 
-		const { firstName, lastName, profileImage } = profile[0];
+		const { firstName, lastName, profileImage } = profile;
 		const fullName = `${firstName} ${lastName}`;
 
 		const rawData = Object.fromEntries(formData);
@@ -33,7 +36,7 @@ export const createReviewAction = async (
 		// Each person only one review for each property
 		if (property) {
 			const alreadyReviewed = property.reviews.find(
-				(review: { profileId: string }) => review.profileId === user.id
+				(review: { profileId: string }) => review.profileId === userId
 			);
 
 			if (alreadyReviewed) {
@@ -41,8 +44,8 @@ export const createReviewAction = async (
 			}
 
 			const review = {
-				profileId: user.id,
-				name: fullName,
+				profileId: userId,
+				fullName: fullName,
 				profileImage: profileImage,
 				rating: Number(rating),
 				comment: comment,
@@ -79,7 +82,7 @@ export const fetchPropertyReviews = async (propertyId: string) => {
 		{
 			reviews: {
 				profileId: 1,
-				name: 1,
+				fullName: 1,
 				profileImage: 1,
 				rating: 1,
 				comment: 1,
@@ -100,7 +103,8 @@ export const fetchPropertyReviewsByUser = async ({
 	pageSize: number;
 }) => {
 	await connectDB();
-	const user = await getAuthUser();
+
+	const userId = await getUserId();
 
 	const skip = (page - 1) * pageSize;
 
@@ -108,7 +112,7 @@ export const fetchPropertyReviewsByUser = async ({
 		{ $unwind: { path: '$reviews' } },
 		{
 			$match: {
-				'reviews.profileId': user.id,
+				'reviews.profileId': userId,
 			},
 		},
 		{
@@ -117,7 +121,7 @@ export const fetchPropertyReviewsByUser = async ({
 				name: 1,
 				reviews: {
 					profileId: 1,
-					name: 1,
+					fullName: 1,
 					profileImage: 1,
 					rating: 1,
 					comment: 1,
@@ -130,7 +134,6 @@ export const fetchPropertyReviewsByUser = async ({
 		.sort({ createdAt: 1 })
 		.skip(skip)
 		.limit(pageSize);
-	// console.log('reviews:', reviews);
 
 	return reviews;
 };
@@ -138,13 +141,14 @@ export const fetchPropertyReviewsByUser = async ({
 // For pagination
 export const fetchAllReviewsByUser = async () => {
 	await connectDB();
-	const user = await getAuthUser();
+
+	const userId = await getUserId();
 
 	const totalReviews = await Property.aggregate([
 		{ $unwind: { path: '$reviews' } },
 		{
 			$match: {
-				'reviews.profileId': user.id,
+				'reviews.profileId': userId,
 			},
 		},
 	]);
@@ -157,7 +161,9 @@ export const deleteReviewAction = async (prevState: {
 	reviewId: string;
 }) => {
 	await connectDB();
-	const user = await getAuthUser();
+
+	const userId = await getUserId();
+
 	const { propertyId, reviewId } = prevState;
 
 	try {
@@ -172,7 +178,7 @@ export const deleteReviewAction = async (prevState: {
 		);
 
 		property = await Property.findOneAndUpdate(
-			{ _id: propertyId, 'reviews.profileId': user.id },
+			{ _id: propertyId, 'reviews.profileId': userId },
 			{
 				$pull: { reviews: deleteReview },
 			},
@@ -213,10 +219,12 @@ export const fetchPropertyRating = async (propertyId: string) => {
 };
 
 export const findExistingReview = async (
-	userId: string,
+	// userId: string,
 	propertyId: string
 ) => {
 	await connectDB();
+
+	const userId = await getUserId();
 
 	return await Property.findOne(
 		{ 'reviews.profileId': userId, _id: propertyId },

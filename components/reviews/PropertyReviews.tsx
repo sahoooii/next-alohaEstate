@@ -4,7 +4,7 @@ import ReviewCardAtDetailsPage from './ReviewCardAtDetailsPage';
 
 type Reviews = {
 	profileId: string;
-	name: string;
+	fullName: string;
 	profileImage: string;
 	rating: number;
 	comment: string;
