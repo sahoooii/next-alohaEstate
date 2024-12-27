@@ -24,6 +24,7 @@ const bookingSchema = new Schema(
 		},
 		paymentStatus: {
 			type: Boolean,
+			default: false,
 		},
 	},
 	{

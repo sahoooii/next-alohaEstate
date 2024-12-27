@@ -1,7 +1,6 @@
 import { fetchPropertyDetails } from '@/actions/PropertyAction';
 import FavoriteToggleButton from '@/components/card/FavoriteToggleButton';
 import PropertyRating from '@/components/card/PropertyRating';
-import BookingCalendar from '@/components/propertyDetails/BookingCalendar';
 import BreadCrumps from '@/components/propertyDetails/BreadCrumps';
 import ImageContainer from '@/components/propertyDetails/ImageContainer';
 import PropertyDetails from '@/components/propertyDetails/PropertyDetails';
@@ -16,6 +15,16 @@ import CreateReview from '@/components/reviews/CreateReview';
 import PropertyReviews from '@/components/reviews/PropertyReviews';
 import { auth } from '@clerk/nextjs/server';
 import { findExistingReview } from '@/actions/ReviewsAction';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const DynamicBookingWrapper = dynamic(
+	() => import('@/components/booking/BookingWrapper'),
+	{
+		ssr: false,
+		loading: () => <Skeleton className='h-[200px] w-full' />,
+	}
+);
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchPropertyDetails(params.id);
@@ -36,7 +45,10 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 		baths,
 		amenities,
 		location,
+		bookings,
 	} = property;
+
+	console.log(property);
 
 	const { street, city } = location;
 
@@ -48,7 +60,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const { userId } = auth();
 	const isNotOwner = clerkId !== userId;
 
-	// 1. Not wrote a review yet 2. Logged in 3. Not own property
+	// 1. Not write a review yet 2. NOt logged in 3. Not own property
 	const reviewDoesNotExist =
 		userId && isNotOwner && !(await findExistingReview(propertyId));
 
@@ -87,7 +99,12 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 				</div>
 				<div className='md:col-span-4 flex flex-col items-center mt-4 md:mt-0'>
 					<p className='text-lg font-bold text-primary'>${price} / night</p>
-					<BookingCalendar />
+					{/* calendar */}
+					<DynamicBookingWrapper
+						propertyId={propertyId}
+						price={price}
+						bookings={bookings}
+					/>
 				</div>
 			</section>
 			<Separator />

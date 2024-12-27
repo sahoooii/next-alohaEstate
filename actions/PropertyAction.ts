@@ -1,7 +1,7 @@
 'use server';
 
 import connectDB from '@/config/database';
-import { getAuthUser, renderError } from './Auth';
+import { renderError } from './Auth';
 import { revalidatePath } from 'next/cache';
 import {
 	imagesSchema,
@@ -14,7 +14,7 @@ import Property from '@/models/Property';
 import Favorite from '@/models/Favorite';
 import { PropertyData } from '@/utils/types';
 import { getUserId } from './UserId';
-import Profile from '@/models/Profile';
+import Booking from '@/models/Booking';
 
 export const createPropertyAction = async (
 	prevState: unknown,
@@ -294,7 +294,16 @@ export const fetchPropertyDetails = async (id: string) => {
 	await connectDB();
 
 	const property = await Property.findById(id).populate('owner', {});
-	// console.log('property:', property);
+	const booking = await Booking.find(
+		{ propertyId: id },
+		{ checkIn: 1, checkOut: 1 }
+	);
+	console.log('booking:', booking);
+	console.log('property:', { property, ...booking });
+
+	// .populate('bookings', { checkIn: 1, checkOut: 1 });
+
+	// console.log('pop:', property);
 
 	return property;
 };
