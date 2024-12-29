@@ -17,7 +17,7 @@ export const createBookingAction = async (prevState: {
 
 	const userId = await getUserId();
 	const { propertyId, checkIn, checkOut } = prevState;
-	// console.log('id:', propertyId);
+	console.log('checkIn:', checkIn);
 
 	const property = await Property.findById(propertyId, { price: 1 });
 

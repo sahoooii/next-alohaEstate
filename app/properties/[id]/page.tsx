@@ -28,6 +28,8 @@ const DynamicBookingWrapper = dynamic(
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchPropertyDetails(params.id);
+	// property.booking.map((booking) => console.log('data:', booking));
+	// console.log('booking:', property.booking);
 
 	if (!property) redirect('/');
 
@@ -46,9 +48,9 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 		amenities,
 		location,
 		bookings,
-	} = property;
+	} = property.property;
 
-	console.log(property);
+	// {_id:bookingId, checkIn, checkOut} = property.booking
 
 	const { street, city } = location;
 

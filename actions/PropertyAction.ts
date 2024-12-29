@@ -298,12 +298,7 @@ export const fetchPropertyDetails = async (id: string) => {
 		{ propertyId: id },
 		{ checkIn: 1, checkOut: 1 }
 	);
-	console.log('booking:', booking);
-	console.log('property:', { property, ...booking });
-
-	// .populate('bookings', { checkIn: 1, checkOut: 1 });
-
-	// console.log('pop:', property);
-
-	return property;
+	
+	return { property, booking };
+	// return property;
 };
