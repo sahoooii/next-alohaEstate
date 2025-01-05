@@ -294,11 +294,21 @@ export const fetchPropertyDetails = async (id: string) => {
 	await connectDB();
 
 	const property = await Property.findById(id).populate('owner', {});
-	const booking = await Booking.find(
+
+	const bookings = await Booking.find(
 		{ propertyId: id },
 		{ checkIn: 1, checkOut: 1 }
 	);
-	
-	return { property, booking };
+
+	// For exclude _id field
+	const bookingData = bookings.map((booking) => {
+		const data = {
+			checkIn: booking.checkIn,
+			checkOut: booking.checkOut,
+		};
+		return data;
+	});
+
+	return { property, bookingData };
 	// return property;
 };

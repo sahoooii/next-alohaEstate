@@ -8,7 +8,7 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 
 type actionType = 'edit' | 'delete';
 
-const ReviewIconButton = ({
+const IconButton = ({
 	actionType,
 }: {
 	actionType: actionType;
@@ -38,4 +38,4 @@ const ReviewIconButton = ({
 	);
 };
 
-export default ReviewIconButton;
+export default IconButton;

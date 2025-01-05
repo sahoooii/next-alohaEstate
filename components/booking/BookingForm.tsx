@@ -1,5 +1,5 @@
 import { calculateTotals } from '@/utils/calculateTotals';
-import { formatCurrency } from '@/utils/format';
+import { formatCurrency, formatQuantity } from '@/utils/format';
 import { useProperty } from '@/utils/store';
 import React from 'react';
 import { Card, CardTitle } from '@/components/ui/card';
@@ -16,7 +16,7 @@ const BookingForm = () => {
 	return (
 		<Card className='p-8 mb-4'>
 			<CardTitle className='mb-5 flex justify-center'>Booking Summary</CardTitle>
-			<FormRow label={`$${price} × ${totalNights} Nights`} amount={subTotal} />
+			<FormRow label={`$${price} × ${formatQuantity(totalNights, 'night')}`} amount={subTotal} />
 			<FormRow label='Cleaning Fee' amount={cleaningFee} />
 			<FormRow label='Service Fee' amount={serviceFee} />
 			<FormRow label='Tax' amount={tax} />

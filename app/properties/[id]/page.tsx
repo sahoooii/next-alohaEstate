@@ -17,6 +17,7 @@ import { auth } from '@clerk/nextjs/server';
 import { findExistingReview } from '@/actions/ReviewsAction';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Booking } from '@/utils/types';
 
 const DynamicBookingWrapper = dynamic(
 	() => import('@/components/booking/BookingWrapper'),
@@ -28,8 +29,6 @@ const DynamicBookingWrapper = dynamic(
 
 const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchPropertyDetails(params.id);
-	// property.booking.map((booking) => console.log('data:', booking));
-	// console.log('booking:', property.booking);
 
 	if (!property) redirect('/');
 
@@ -47,10 +46,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 		baths,
 		amenities,
 		location,
-		bookings,
 	} = property.property;
-
-	// {_id:bookingId, checkIn, checkOut} = property.booking
 
 	const { street, city } = location;
 
@@ -105,7 +101,7 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 					<DynamicBookingWrapper
 						propertyId={propertyId}
 						price={price}
-						bookings={bookings}
+						bookings={property.bookingData}
 					/>
 				</div>
 			</section>
