@@ -12,7 +12,6 @@ import EmptyList from '@/components/properties/EmptyList';
 import { formatCurrency, formatDate, formatQuantity } from '@/utils/format';
 import { fetchBookings } from '@/actions/BookingAction';
 import DeleteBooking from '@/components/booking/DeleteBooking';
-import LoadingTable from '@/components/booking/LoadingTable';
 
 const BookingPage = async () => {
 	const bookings = await fetchBookings();
