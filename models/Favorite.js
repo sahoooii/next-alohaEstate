@@ -3,7 +3,7 @@ import { Schema, model, models } from 'mongoose';
 const FavoriteSchema = new Schema(
 	{
 		profileId: {
-			type: String,
+			type: Schema.Types.ObjectId,
 			ref: 'Profile',
 		},
 		propertyId: {

@@ -24,7 +24,9 @@ const ReviewsPage = async ({
 		page: paginationPage,
 		pageSize: paginationPageSize,
 	});
+
 	const totalReviews = await fetchAllReviewsByUser();
+	// console.log(reviews);
 	const totalPages = Math.ceil(totalReviews / paginationPageSize);
 
 	const showPagination = totalReviews > paginationPageSize;
@@ -50,7 +52,7 @@ const ReviewsPage = async ({
 						_id: reviewId,
 						comment,
 						rating,
-						name: profileName,
+						fullName: profileName,
 						profileImage,
 						createdAt,
 					} = review.reviews;

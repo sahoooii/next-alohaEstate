@@ -3,13 +3,11 @@ import { Schema, model, models } from 'mongoose';
 const reviewSchema = new Schema(
 	{
 		profileId: {
-			type: String,
+			type: Schema.Types.ObjectId,
 			ref: 'Profile',
 		},
-		name: {
+		fullName: {
 			type: String,
-			unique: true,
-			required: true,
 		},
 		profileImage: {
 			type: String,
@@ -35,9 +33,9 @@ const reviewSchema = new Schema(
 
 const PropertySchema = new Schema(
 	{
-		// Who made this property info
+		// Who made this property info will delete?
 		owner: {
-			type: String,
+			type: Schema.Types.ObjectId,
 			ref: 'Profile',
 		},
 		name: {
@@ -116,10 +114,6 @@ const PropertySchema = new Schema(
 			default: 0,
 		},
 		reviews: [reviewSchema],
-		// is_featured: {
-		// 	type: Boolean,
-		// 	default: false,
-		// },
 	},
 	{
 		timestamps: true,

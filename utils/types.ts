@@ -20,3 +20,15 @@ export type PropertyData = {
 	location: { street: string; city: string; state: string; zipcode: string };
 	images: string[];
 };
+
+// Booking
+export type DateRangeSelect = {
+	startDate: Date;
+	endDate: Date;
+	key: string;
+};
+
+export type Booking = {
+	checkIn: Date;
+	checkOut: Date;
+};

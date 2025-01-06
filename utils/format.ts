@@ -23,3 +23,17 @@ export const isLongSentence = (
 		? `${sentence.substring(0, sentenceLength)}...`
 		: `${sentence}`;
 };
+
+// onlyMonth = get year and month
+export const formatDate = (date: Date, onlyMonth?: boolean) => {
+	const options: Intl.DateTimeFormatOptions = {
+		year: 'numeric',
+		month: 'short',
+		timeZone: 'Asia/Tokyo',
+	};
+	if (!onlyMonth) {
+		options.day = 'numeric';
+		options.weekday = 'short';
+	}
+	return new Intl.DateTimeFormat('en-US', options).format(date);
+};
