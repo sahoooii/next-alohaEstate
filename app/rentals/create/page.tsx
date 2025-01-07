@@ -49,28 +49,28 @@ const CreatePropertyPage = () => {
 								type='text'
 								placeholder='ex: Seaside Ave.'
 								defaultValue='Seaside Ave.'
-								className=' py-2 px-3 bg-white '
+								className='py-2 px-3 bg-white '
 							/>
 							<FormInput
 								name='city'
 								type='text'
 								placeholder='ex: Honolulu'
 								defaultValue='Honolulu'
-								className=' py-2 px-3 bg-white'
+								className='py-2 px-3 bg-white'
 							/>
 							<FormInput
 								name='state'
 								type='text'
 								placeholder='ex: Hawaii'
 								defaultValue='Hawaii'
-								className=' py-2 px-3 bg-white'
+								className='py-2 px-3 bg-white'
 							/>
 							<FormInput
 								name='zipcode'
 								type='text'
 								placeholder='ex: 96815'
 								defaultValue='96815'
-								className=' py-2 px-3 bg-white'
+								className='py-2 px-3 bg-white'
 							/>
 						</div>
 					</div>

@@ -68,3 +68,19 @@ export const deleteRentalAction = async (prevState: { propertyId: string }) => {
 		return renderError(error);
 	}
 };
+
+// Edit my rentals Page
+export const fetchRentalDetails = async (propertyId: string) => {
+	await connectDB();
+	const userId = await getUserId();
+
+	return await Property.findOne({ _id: propertyId, owner: userId }, {});
+};
+
+export const updatePropertyAction = async () => {
+	return { message: 'Updated property information successfully' };
+};
+
+export const updatePropertyImagesAction = async () => {
+	return { message: 'Updated property images successfully' };
+};

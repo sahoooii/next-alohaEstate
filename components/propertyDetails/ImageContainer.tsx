@@ -17,7 +17,6 @@ const ImageContainer = ({
 }) => {
 
 	return (
-		// mb delete later
 		<section className='relative mt-8'>
 			<Carousel opts={{ loop: true }} className='mt-[2rem]'>
 				<CarouselContent>

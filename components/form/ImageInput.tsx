@@ -9,7 +9,6 @@ const ImageInput = ({
 	labelName: string;
 	name: string;
 }) => {
-	// const name = 'image';
 	return (
 		<div className='mb-2 items-center'>
 			<Label htmlFor={name} className='capitalize'>
