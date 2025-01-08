@@ -3,7 +3,6 @@ import {
 	updatePropertyAction,
 	updatePropertyImagesAction,
 } from '@/actions/MyRentalsAction';
-import AmenitiesInput from '@/components/form/AmenitiesInput';
 import { SubmitButton } from '@/components/form/Buttons';
 import CategoriesInput from '@/components/form/CategoriesInput';
 import CounterInput from '@/components/form/CounterInput';
@@ -13,9 +12,9 @@ import PriceInput from '@/components/form/PriceInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { redirect } from 'next/navigation';
 import { type Amenity } from '@/utils/amenities';
-import ImageInput from '@/components/form/ImageInput';
 import ImagesInputContainer from '@/components/form/ImagesInputContainer';
 import ImageContainer from '@/components/propertyDetails/ImageContainer';
+import AmenitiesInput from '@/components/form/AmenitiesInput';
 
 const EditRentalPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchRentalDetails(params.id);
@@ -23,6 +22,9 @@ const EditRentalPage = async ({ params }: { params: { id: string } }) => {
 	if (!property) redirect('/');
 	const { _id } = property;
 	const propertyId = _id.toString();
+
+	const defaultAmenities: Amenity[] = JSON.parse(property.amenities);
+
 	return (
 		<section className='container pt-10 pb-28 sm:pb-16 md:pb-32'>
 			<h1 className='text-2xl font-mono mb-8 capitalize'>Edit Property</h1>
@@ -102,12 +104,11 @@ const EditRentalPage = async ({ params }: { params: { id: string } }) => {
 						<CounterInput detail='bedrooms' defaultValue={property.bedrooms} />
 						<CounterInput detail='beds' defaultValue={property.beds} />
 						<CounterInput detail='baths' defaultValue={property.baths} />
-						{/* Amenities */}
 						<div className='mb-6 bg-blue-50 sm:p-10 p-4 mt-14'>
 							<h3 className='text-lg mb-6 font-medium text-gray-700'>
 								Amenities
 							</h3>
-							{/* <AmenitiesInput /> */}
+							<AmenitiesInput defaultValue={defaultAmenities} />
 						</div>
 						<div className='flex justify-center'>
 							<SubmitButton
