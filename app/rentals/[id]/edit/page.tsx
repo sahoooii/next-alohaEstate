@@ -15,6 +15,7 @@ import { type Amenity } from '@/utils/amenities';
 import ImagesInputContainer from '@/components/form/ImagesInputContainer';
 import ImageContainer from '@/components/propertyDetails/ImageContainer';
 import AmenitiesInput from '@/components/form/AmenitiesInput';
+import BreadCrumps from '@/components/propertyDetails/BreadCrumps';
 
 const EditRentalPage = async ({ params }: { params: { id: string } }) => {
 	const property = await fetchRentalDetails(params.id);
@@ -27,7 +28,15 @@ const EditRentalPage = async ({ params }: { params: { id: string } }) => {
 
 	return (
 		<section className='container pt-10 pb-28 sm:pb-16 md:pb-32'>
-			<h1 className='text-2xl font-mono mb-8 capitalize'>Edit Property</h1>
+			<div className='mb-4'>
+				<h1 className='text-2xl font-mono mb-4 capitalize'>Edit Property</h1>
+				<BreadCrumps
+					name={property.name}
+					link='/rentals'
+					title='My Properties'
+				/>
+			</div>
+
 			<div className='border p-8 rounded-md'>
 				<div>
 					{/* Sliders */}

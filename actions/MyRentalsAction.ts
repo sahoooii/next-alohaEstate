@@ -6,6 +6,12 @@ import { getUserId } from './UserId';
 import Property from '@/models/Property';
 import { revalidatePath } from 'next/cache';
 import Booking from '@/models/Booking';
+import {
+	imagesSchema,
+	propertySchema,
+	validateWithZodSchema,
+} from '@/utils/schemas';
+import { uploadImages } from '@/utils/imageUpload';
 
 export const fetchRentals = async () => {
 	await connectDB();
@@ -77,10 +83,61 @@ export const fetchRentalDetails = async (propertyId: string) => {
 	return await Property.findOne({ _id: propertyId, owner: userId }, {});
 };
 
-export const updatePropertyAction = async () => {
-	return { message: 'Updated property information successfully' };
+export const updatePropertyAction = async (
+	prevState: unknown,
+	formData: FormData
+): Promise<{ message: string }> => {
+	await connectDB();
+	const userId = await getUserId();
+	const propertyId = formData.get('id') as string;
+	
+	try {
+		const rawData = Object.fromEntries(formData);
+		const validatedFields = validateWithZodSchema(propertySchema, rawData);
+
+		await Property.findOneAndUpdate(
+			{ _id: propertyId, owner: userId },
+			{
+				location: {
+					street: validatedFields.street,
+					city: validatedFields.city,
+					state: validatedFields.state,
+					zipcode: validatedFields.zipcode,
+				},
+				...validatedFields,
+			}
+		);
+		revalidatePath(`/rentals/${propertyId}/edit`);
+		return { message: 'Updated property successfully' };
+	} catch (error) {
+		return renderError(error);
+	}
 };
 
-export const updatePropertyImagesAction = async () => {
-	return { message: 'Updated property images successfully' };
+export const updatePropertyImagesAction = async (
+	prevState: unknown,
+	formData: FormData
+): Promise<{ message: string }> => {
+	await connectDB();
+	const userId = await getUserId();
+	const propertyId = formData.get('id') as string;
+
+	try {
+		const files = formData.getAll('images') as File[];
+		const images = files.filter((image) => image.name !== '');
+		validateWithZodSchema(imagesSchema, { images });
+
+		const fileName = 'properties';
+		const imagesUrls: string[] = await uploadImages(images, fileName);
+
+		await Property.findOneAndUpdate(
+			{ _id: propertyId, owner: userId },
+			{ images: imagesUrls }
+		);
+
+		revalidatePath(`/rentals/${propertyId}/edit`);
+		return { message: 'Updated property images successfully' };
+	} catch (error) {
+		return renderError(error);
+	}
 };
