@@ -15,7 +15,6 @@ import DeleteBooking from '@/components/booking/DeleteBooking';
 
 const BookingPage = async () => {
 	const bookings = await fetchBookings();
-	// console.log(bookings);
 
 	if (bookings.length === 0)
 		return (
@@ -53,6 +52,10 @@ const BookingPage = async () => {
 							checkIn,
 							checkOut,
 						} = booking;
+
+						// When owner deleted property
+						if (propertyId === null) return;
+
 						const bookingId = _id.toString();
 
 						const { _id: property, location, name } = propertyId;

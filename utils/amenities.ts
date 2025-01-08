@@ -1,16 +1,4 @@
 import { IconType } from 'react-icons';
-
-import {
-	FiTruck,
-	FiWind,
-	FiSun,
-	FiBox,
-	FiDroplet,
-	FiMapPin,
-	FiSunrise,
-	FiHeadphones,
-	FiTv,
-} from 'react-icons/fi';
 import {
 	PiWashingMachineDuotone,
 	PiWaves,
