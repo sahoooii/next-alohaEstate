@@ -3,7 +3,7 @@ import { TbBrandBooking, TbHomePlus } from 'react-icons/tb';
 import { VscPreview } from 'react-icons/vsc';
 import { BsPersonGear } from 'react-icons/bs';
 import { AiOutlineMessage, AiOutlineHome } from 'react-icons/ai';
-import { GrSchedule } from 'react-icons/gr';
+import { GrSchedule, GrUserAdmin } from 'react-icons/gr';
 import { IconType } from 'react-icons/lib';
 
 type NavLink = {
@@ -15,11 +15,12 @@ type NavLink = {
 export const navLinks: NavLink[] = [
 	{ href: '/', label: 'home', icon: AiOutlineHome },
 	{ href: '/favorites', label: 'favorites', icon: MdFavoriteBorder },
-	{ href: '/reservations', label: 'reservations', icon: GrSchedule },
-	{ href: '/reviews', label: 'your reviews', icon: VscPreview },
-	{ href: '/rentals/create ', label: 'create rental', icon: TbHomePlus },
+	{ href: '/reviews', label: 'reviews', icon: VscPreview },
+	{ href: '/bookings', label: 'bookings', icon: GrSchedule },
+	// { href: '/reservations', label: 'reservations', icon: GrSchedule },
+	{ href: '/rentals/create ', label: 'add rental', icon: TbHomePlus },
 	{ href: '/rentals', label: 'my rentals', icon: MdOutlineMapsHomeWork },
-	{ href: '/bookings', label: 'bookings', icon: TbBrandBooking },
 	{ href: '/messages', label: 'Messages', icon: AiOutlineMessage },
 	{ href: '/profile ', label: 'profile', icon: BsPersonGear },
+	{ href: '/admin ', label: 'admin', icon: GrUserAdmin },
 ];

@@ -12,9 +12,9 @@ import { redirect } from 'next/navigation';
 import { uploadImages } from '@/utils/imageUpload';
 import Property from '@/models/Property';
 import Favorite from '@/models/Favorite';
+import Booking from '@/models/Booking';
 import { PropertyData } from '@/utils/types';
 import { getUserId } from './UserId';
-import Booking from '@/models/Booking';
 
 export const createPropertyAction = async (
 	prevState: unknown,

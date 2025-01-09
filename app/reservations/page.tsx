@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {
 	Table,
 	TableBody,
@@ -10,16 +9,16 @@ import {
 } from '@/components/ui/table';
 import EmptyList from '@/components/properties/EmptyList';
 import { formatCurrency, formatDate, formatQuantity } from '@/utils/format';
-import { fetchBookings } from '@/actions/BookingAction';
-import DeleteBooking from '@/components/booking/DeleteBooking';
+import Link from 'next/link';
+import { fetchReservations } from '@/actions/ReservationsAction';
 
-const BookingPage = async () => {
-	const bookings = await fetchBookings();
-
-	if (bookings.length === 0)
+const ReservationsPage = async () => {
+	const reservations = await fetchReservations();
+	// console.log(reservations);
+	if (reservations.length === 0)
 		return (
 			<EmptyList
-				heading='No Booking'
+				heading='No reservations'
 				message='Search your favorite property and stay there'
 			/>
 		);
@@ -27,10 +26,10 @@ const BookingPage = async () => {
 	return (
 		<div className='container mt-8'>
 			<h4 className='mb-4 capitalize font-mono text-xl'>
-				Woo Hoo! Your have {formatQuantity(bookings.length, 'booking')}
+				Woo Hoo! Your have {formatQuantity(reservations.length, 'reservation')}
 			</h4>
 			<Table>
-				<TableCaption>A list of your recent bookings</TableCaption>
+				<TableCaption>A list of your recent reservations</TableCaption>
 				<TableHeader>
 					<TableRow>
 						<TableHead>Property Name</TableHead>
@@ -39,12 +38,17 @@ const BookingPage = async () => {
 						<TableHead>Check Out</TableHead>
 						<TableHead>Nights</TableHead>
 						<TableHead>Order Total</TableHead>
-						<TableHead>Cancel</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{bookings.map((booking) => {
-						const { _id, orderTotal, totalNights, checkIn, checkOut } = booking;
+					{reservations.map((reservation) => {
+						const {
+							_id,
+							orderTotal,
+							totalNights,
+							checkIn,
+							checkOut,
+						} = reservation;
 
 						const bookingId = _id.toString();
 
@@ -54,12 +58,10 @@ const BookingPage = async () => {
 						return (
 							<TableRow key={bookingId}>
 								{/* If owner deleted property */}
-								{booking.propertyId === null ? (
+								{reservation.propertyId === null ? (
 									<>
 										<TableCell>
-											<p className='text-gray-500'>
-												! Owner deleted some reason
-											</p>
+											<p className='text-gray-500'>! Owner deleted some reason</p>
 										</TableCell>
 										<TableCell>
 											<p></p>
@@ -69,13 +71,15 @@ const BookingPage = async () => {
 									<>
 										<TableCell>
 											<Link
-												href={`/properties/${booking.propertyId._id}`}
+												href={`/properties/${reservation.propertyId._id}`}
 												className='underline tracking-wide'
 											>
-												{booking.propertyId.name}
+												{reservation.propertyId.name}
 											</Link>
 										</TableCell>
-										<TableCell>{booking.propertyId.location.city}</TableCell>
+										<TableCell>
+											{reservation.propertyId.location.city}
+										</TableCell>
 									</>
 								)}
 								<TableCell>{startDate}</TableCell>
@@ -83,9 +87,6 @@ const BookingPage = async () => {
 								<TableCell>{formatQuantity(totalNights, 'night')}</TableCell>
 
 								<TableCell>{formatCurrency(orderTotal)}</TableCell>
-								<TableCell>
-									<DeleteBooking bookingId={bookingId} />
-								</TableCell>
 							</TableRow>
 						);
 					})}
@@ -95,4 +96,4 @@ const BookingPage = async () => {
 	);
 };
 
-export default BookingPage;
+export default ReservationsPage;
