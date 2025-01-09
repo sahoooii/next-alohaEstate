@@ -17,7 +17,6 @@ import { auth } from '@clerk/nextjs/server';
 import { findExistingReview } from '@/actions/ReviewsAction';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Booking } from '@/utils/types';
 
 const DynamicBookingWrapper = dynamic(
 	() => import('@/components/booking/BookingWrapper'),
