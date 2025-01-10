@@ -13,8 +13,11 @@ import UserIcon from './UserIcon';
 import SignOutLink from './SignOutLink';
 import { navLinks } from '@/utils/navLinks';
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 
 const LinksDropDown = () => {
+	const { userId } = auth();
+	const isAdminUser = userId === process.env.ADMIN_USER_ID;
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -47,6 +50,7 @@ const LinksDropDown = () => {
 				{/* After login Menu */}
 				<SignedIn>
 					{navLinks.map((link) => {
+						if (link.label === 'admin' && !isAdminUser) return null;
 						return (
 							<DropdownMenuItem key={link.href} asChild>
 								<Link

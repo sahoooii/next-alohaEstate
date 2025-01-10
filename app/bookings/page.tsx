@@ -39,7 +39,7 @@ const BookingPage = async () => {
 						<TableHead>Check Out</TableHead>
 						<TableHead>Nights</TableHead>
 						<TableHead>Order Total</TableHead>
-						<TableHead>Cancel</TableHead>
+						<TableHead>Delete/Cancel</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
