@@ -14,7 +14,7 @@ import Property from '@/models/Property';
 import Favorite from '@/models/Favorite';
 import Booking from '@/models/Booking';
 import { PropertyData } from '@/utils/types';
-import { getUserId } from './UserId';
+import { getUserId } from './AuthUserAction';
 
 export const createPropertyAction = async (
 	prevState: unknown,

@@ -2,7 +2,7 @@
 
 import connectDB from '@/config/database';
 import { renderError } from './Auth';
-import { getUserId } from './UserId';
+import { getUserId } from './AuthUserAction';
 import Property from '@/models/Property';
 import Booking from '@/models/Booking';
 import { calculateTotals } from '@/utils/calculateTotals';
