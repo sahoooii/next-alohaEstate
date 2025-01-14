@@ -6,7 +6,7 @@ import Property from '@/models/Property';
 import { createReviewSchema, validateWithZodSchema } from '@/utils/schemas';
 import { revalidatePath } from 'next/cache';
 import Profile from '@/models/Profile';
-import { getUserId } from './UserId';
+import { getUserId } from './AuthUserAction';
 
 export const createReviewAction = async (
 	prevState: unknown,

@@ -1,7 +1,7 @@
 'use server';
 
 import connectDB from '@/config/database';
-import { getUserId } from './UserId';
+import { getUserId } from './AuthUserAction';
 import Booking from '@/models/Booking';
 
 export const fetchReservations = async () => {

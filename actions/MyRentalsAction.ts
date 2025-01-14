@@ -2,7 +2,7 @@
 
 import connectDB from '@/config/database';
 import { renderError } from './Auth';
-import { getUserId } from './UserId';
+import { getUserId } from './AuthUserAction';
 import Property from '@/models/Property';
 import { revalidatePath } from 'next/cache';
 import Booking from '@/models/Booking';
@@ -90,7 +90,7 @@ export const updatePropertyAction = async (
 	await connectDB();
 	const userId = await getUserId();
 	const propertyId = formData.get('id') as string;
-	
+
 	try {
 		const rawData = Object.fromEntries(formData);
 		const validatedFields = validateWithZodSchema(propertySchema, rawData);

@@ -58,7 +58,7 @@ const BookingPage = async () => {
 									<>
 										<TableCell>
 											<p className='text-gray-500'>
-												! Owner deleted some reason
+												! Owner deleted some reasons
 											</p>
 										</TableCell>
 										<TableCell>
