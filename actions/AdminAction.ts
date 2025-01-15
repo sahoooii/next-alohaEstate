@@ -13,7 +13,7 @@ export const fetchStats = async () => {
 
 	const usersCount = await Profile.countDocuments();
 	const propertiesCount = await Property.countDocuments();
-	const bookingsCount = await Booking.countDocuments();
+	const bookingsCount = await Booking.countDocuments({ paymentStatus: true });
 
 	return { usersCount, propertiesCount, bookingsCount };
 };
@@ -27,6 +27,7 @@ export const fetchChartsData = async () => {
 	const sixMonthAgo = date;
 
 	const bookings = await Booking.find({
+		paymentStatus: true,
 		createdAt: { $gte: sixMonthAgo },
 	}).sort({ createdAt: 1 });
 

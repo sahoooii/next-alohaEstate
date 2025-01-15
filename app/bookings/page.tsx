@@ -12,10 +12,10 @@ import EmptyList from '@/components/properties/EmptyList';
 import { formatCurrency, formatDate, formatQuantity } from '@/utils/format';
 import { fetchBookings } from '@/actions/BookingAction';
 import DeleteBooking from '@/components/booking/DeleteBooking';
+import Stats from '@/components/booking/Stats';
 
 const BookingPage = async () => {
 	const bookings = await fetchBookings();
-
 	if (bookings.length === 0)
 		return (
 			<EmptyList
@@ -26,9 +26,16 @@ const BookingPage = async () => {
 
 	return (
 		<div className='container mt-8'>
-			<h4 className='mb-4 capitalize font-mono text-xl'>
-				Woo Hoo! Your have {formatQuantity(bookings.length, 'booking')}
-			</h4>
+			<div className='mb-4'>
+				<h4 className='capitalize font-mono text-xl text-primary mb-2'>
+					Woo Hoo! You have {formatQuantity(bookings.length, 'booking')}
+				</h4>
+				<h4 className='font-mono text-md'>
+					Total {formatQuantity(bookings.length, 'booking')}
+				</h4>
+				<Stats />
+			</div>
+
 			<Table>
 				<TableCaption>A list of your recent bookings</TableCaption>
 				<TableHeader>

@@ -17,8 +17,14 @@ export const createBookingAction = async (prevState: {
 	await connectDB();
 
 	const userId = await getUserId();
+
+	// For delete paymentStatus false, to not messy DB
+	await Booking.deleteMany({ profileId: userId, paymentStatus: false });
+
+	// At the beginning, we don't have a bookingId
+	let bookingId: null | string = null;
+
 	const { propertyId, checkIn, checkOut } = prevState;
-	console.log('checkIn:', checkIn);
 
 	const property = await Property.findById(propertyId, { price: 1 });
 
@@ -41,13 +47,14 @@ export const createBookingAction = async (prevState: {
 			checkIn,
 			checkOut,
 		});
+		bookingId = newBooking._id;
 
 		await newBooking.save();
 	} catch (error) {
 		return renderError(error);
 	}
 
-	redirect('/bookings');
+	redirect(`/checkout?bookingId=${bookingId}`);
 };
 
 // For bookings page
@@ -57,7 +64,7 @@ export const fetchBookings = async () => {
 	const userId = await getUserId();
 
 	const bookings = await Booking.find(
-		{ profileId: userId },
+		{ profileId: userId, paymentStatus: true },
 		{ orderTotal: 1, totalNights: 1, checkIn: 1, checkOut: 1 }
 	)
 		.populate('propertyId', {
@@ -86,4 +93,34 @@ export const deleteBookingAction = async (prevState: { bookingId: string }) => {
 	} catch (error) {
 		return renderError(error);
 	}
+};
+
+export const fetchBookingsStats = async () => {
+	await connectDB();
+	const userId = await getUserId();
+
+	const properties = await Property.countDocuments({
+		owner: userId,
+	});
+
+	const totals = await Booking.aggregate([
+		{
+			$match: {
+				profileId: userId,
+			},
+		},
+		{
+			$group: {
+				_id: userId,
+				orderTotal: { $sum: '$orderTotal' },
+				totalNights: { $sum: '$totalNights' },
+			},
+		},
+	]);
+
+	return {
+		properties,
+		nights: totals[0].totalNights || 0,
+		amount: totals[0].orderTotal || 0,
+	};
 };
