@@ -6,6 +6,7 @@ import { formatDate } from '@/utils/format';
 import connectDB from '@/config/database';
 import Booking from '@/models/Booking';
 
+// test
 export const POST = async (req: NextRequest, res: NextResponse) => {
 	const requestHeaders = new Headers(req.headers);
 	const origin = requestHeaders.get('origin');
