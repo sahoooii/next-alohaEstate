@@ -13,7 +13,7 @@ const ubuntu = Ubuntu({
 });
 
 export const metadata: Metadata = {
-	title: 'Aloha State',
+	title: 'Aloha Estate',
 	keywords: 'rental condo vacation property real estate',
 	description: 'Find your 3rd Place, in all over the world',
 };

@@ -32,6 +32,7 @@ export const fetchRentals = async () => {
 				{
 					$match: {
 						propertyId: rental._id,
+						paymentStatus: true,
 					},
 				},
 				{ $group: { _id: rental._id, totalNights: { $sum: '$totalNights' } } },
