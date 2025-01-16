@@ -26,12 +26,9 @@ const BookingPage = async () => {
 
 	return (
 		<div className='container mt-8'>
-			<div className='mb-4'>
+			<div className='mb-6'>
 				<h4 className='capitalize font-mono text-xl text-primary mb-2'>
 					Woo Hoo! You have {formatQuantity(bookings.length, 'booking')}
-				</h4>
-				<h4 className='font-mono text-md'>
-					Total {formatQuantity(bookings.length, 'booking')}
 				</h4>
 				<Stats />
 			</div>
