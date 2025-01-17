@@ -37,12 +37,11 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 		checkOut,
 		propertyId: { name, images },
 	} = booking;
-	const booking_id = _id.toString();
 
 	try {
 		const session = await stripe.checkout.sessions.create({
 			ui_mode: 'embedded',
-			metadata: { bookingId: booking_id },
+			metadata: { bookingId: _id.toString() },
 			line_items: [
 				{
 					quantity: 1,
