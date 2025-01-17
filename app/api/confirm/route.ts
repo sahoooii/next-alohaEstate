@@ -7,11 +7,12 @@ import connectDB from '@/config/database';
 import Booking from '@/models/Booking';
 
 export const GET = async (req: NextRequest) => {
+	await connectDB();
+	
 	const { searchParams } = new URL(req.url);
 	const session_id = searchParams.get('session_id') as string;
 
 	try {
-		await connectDB();
 		const session = await stripe.checkout.sessions.retrieve(session_id);
 		const bookingId = session.metadata?.bookingId;
 

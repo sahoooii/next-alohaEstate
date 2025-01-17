@@ -7,11 +7,9 @@ import connectDB from '@/config/database';
 import Booking from '@/models/Booking';
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
+	await connectDB();
 	const requestHeaders = new Headers(req.headers);
 	const origin = requestHeaders.get('origin');
-	console.log(origin);
-
-	await connectDB();
 
 	const { bookingId } = await req.json();
 
