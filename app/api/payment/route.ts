@@ -50,9 +50,9 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 						product_data: {
 							name: `${name}`,
 							images: [images[0]],
-							description: `Have fun this wonderful place for ${totalNights} nights, from ${formatDate(
+							description: `Stay in this wonderful place for ${totalNights} nights, from ${formatDate(
 								checkIn
-							)} to ${formatDate(checkOut)}. Aloha!`,
+							)} to ${formatDate(checkOut)}. Enjoy your stay!`,
 						},
 						unit_amount: orderTotal * 100,
 					},
