@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useCallback } from 'react';
 import axios from 'axios';
+import React, { useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { loadStripe } from '@stripe/stripe-js';
 import {
@@ -13,14 +13,12 @@ const stripePromise = loadStripe(
 	process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 );
 
-const CheckOut = () => {
+const CheckoutPage = () => {
 	const searchParams = useSearchParams();
 	const bookingId = searchParams.get('bookingId');
 
 	const fetchClientSecret = useCallback(async () => {
-		const response = await axios.post('/api/payment', {
-			bookingId: bookingId,
-		});
+		const response = await axios.post('/api/payment', { bookingId: bookingId });
 		return response.data.clientSecret;
 	}, [bookingId]);
 
@@ -34,4 +32,4 @@ const CheckOut = () => {
 	);
 };
 
-export default CheckOut;
+export default CheckoutPage;
