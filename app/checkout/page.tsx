@@ -21,8 +21,9 @@ const CheckoutPage = () => {
 		const response = await axios.post('/api/payment', {
 			bookingId: bookingId,
 		});
+		console.log(response.data.clientSecret);
 		return response.data.clientSecret;
-	}, []);
+	}, [bookingId]);
 
 	const options = { fetchClientSecret };
 	return (
