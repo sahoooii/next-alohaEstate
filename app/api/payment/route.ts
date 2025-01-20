@@ -70,3 +70,10 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 		});
 	}
 };
+
+export default async function handler(req: NextRequest, res: NextResponse) {
+	console.log('Entered the serverless function');
+
+	return { dummy: 'data' };
+}
+handler();
