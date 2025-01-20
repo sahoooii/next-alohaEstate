@@ -18,7 +18,7 @@ export const createBookingAction = async (prevState: {
 
 	const userId = await getUserId();
 
-	// For delete paymentStatus false, to not messy DB
+	// To delete paymentStatus of false, to not messy DB
 	await Booking.deleteMany({ profileId: userId, paymentStatus: false });
 
 	// At the beginning, we don't have a bookingId
