@@ -26,6 +26,8 @@ const CheckoutPage = () => {
 		console.log(response.data.clientSecret);
 		return response.data.clientSecret;
 	}, [bookingId]);
+	
+	console.log('Test');
 
 	const options = { fetchClientSecret };
 	return (
