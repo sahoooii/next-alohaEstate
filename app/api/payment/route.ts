@@ -1,10 +1,12 @@
-import Stripe from 'stripe';
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+'use server';
 
-import { type NextRequest, type NextResponse } from 'next/server';
-import { formatDate } from '@/utils/format';
 import connectDB from '@/config/database';
 import Booking from '@/models/Booking';
+import { type NextRequest, type NextResponse } from 'next/server';
+import { formatDate } from '@/utils/format';
+
+import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
 	await connectDB();
