@@ -6,6 +6,7 @@ import { type NextRequest, type NextResponse } from 'next/server';
 import { formatDate } from '@/utils/format';
 
 import Stripe from 'stripe';
+import Property from '@/models/Property';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
@@ -18,10 +19,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
 	const booking = await Booking.findOne({ _id: bookingId }).populate(
 		'propertyId',
-		{
-			name: 1,
-			images: 1,
-		}
+		'name images',
+		Property
 	);
 
 	if (!booking) {
