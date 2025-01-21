@@ -18,10 +18,7 @@ const CheckoutPage = () => {
 	const bookingId = searchParams.get('bookingId');
 
 	const fetchClientSecret = useCallback(async () => {
-		const response = await axios.post('/api/payment', {
-			bookingId: bookingId,
-		});
-		console.log('test');
+		const response = await axios.post('/api/payment', { bookingId: bookingId });
 		return response.data.clientSecret;
 	}, [bookingId]);
 
