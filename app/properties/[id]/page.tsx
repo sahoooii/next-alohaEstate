@@ -17,6 +17,7 @@ import { auth } from '@clerk/nextjs/server';
 import { findExistingReview } from '@/actions/ReviewsAction';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';
+import MessageFormButton from '@/components/messagges/MessageFormButton';
 
 const DynamicBookingWrapper = dynamic(
 	() => import('@/components/booking/BookingWrapper'),
@@ -51,7 +52,9 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 
 	const details = { guests, bedrooms, beds, baths };
 
-	const { firstName, lastName, clerkId, email, profileImage } = owner;
+	const { _id, firstName, lastName, clerkId, profileImage } = owner;
+	const ownerId = _id.toString();
+
 	const fullName = `${firstName} ${lastName}`;
 
 	const { userId } = auth();
@@ -102,6 +105,14 @@ const PropertyDetailsPage = async ({ params }: { params: { id: string } }) => {
 						price={price}
 						bookings={property.bookingData}
 					/>
+					{/* Message */}
+					{userId && isNotOwner ? (
+						<div className='mt-4'>
+							<MessageFormButton ownerId={ownerId} propertyId={propertyId} />
+						</div>
+					) : (
+						<></>
+					)}
 				</div>
 			</section>
 			<Separator />

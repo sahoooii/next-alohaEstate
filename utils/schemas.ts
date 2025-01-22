@@ -144,3 +144,22 @@ export const createReviewSchema = z.object({
 			message: 'Comment must be less than 1000 characters',
 		}),
 });
+
+export const messageSchema = z.object({
+	recipient: z.string(),
+	propertyId: z.string(),
+	name: z
+		.string()
+		.min(2, { message: 'Name must be at least 2 characters' })
+		.max(30, { message: 'Name must be in 30 characters or less' }),
+	email: z.string().email(),
+	message: z.string().refine(
+		(message) => {
+			const wordCount = message.split(' ').length;
+			return wordCount >= 5 && wordCount <= 3000;
+		},
+		{
+			message: 'Message must be between 5 and 1000 words.',
+		}
+	),
+});

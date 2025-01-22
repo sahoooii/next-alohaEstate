@@ -29,7 +29,7 @@ const CreateReview = ({ propertyId }: { propertyId: string }) => {
 						<TextAreaInput
 							name='comment'
 							labelText='Comment'
-							placeholder='Please tell other users your opinion'
+							placeholder='Please tell your opinion'
 						/>
 						<div className='flex justify-center mt-6'>
 							<SubmitButton
