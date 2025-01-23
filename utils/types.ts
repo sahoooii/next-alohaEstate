@@ -32,3 +32,25 @@ export type Booking = {
 	checkIn: Date;
 	checkOut: Date;
 };
+
+export type MessagesType = {
+	_id: string;
+	sender: {
+		_id: string;
+		firstName: string;
+		lastName: string;
+		profileImage: string;
+	};
+	recipient: string;
+	property: {
+		_id: string;
+		name: string;
+	};
+	name: string;
+	email: string;
+	message: string;
+	submitted: boolean;
+	read: boolean;
+	createdAt: Date;
+	updateAt: Date;
+};

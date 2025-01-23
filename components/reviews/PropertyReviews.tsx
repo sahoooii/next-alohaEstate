@@ -26,7 +26,7 @@ const PropertyReviews = async ({ propertyId }: { propertyId: string }) => {
 			) : (
 				<Title text={`${reviews.length} Reviews`} />
 			)}
-			<div className='grid md:grid-cols-2 gap-8 mt-4'>
+			<div className='grid md:grid-cols-2 gap-6 mt-4'>
 				{reviews.map((review) => {
 					return (
 						<ReviewCardAtDetailsPage key={review._id} reviewInfo={review} />
