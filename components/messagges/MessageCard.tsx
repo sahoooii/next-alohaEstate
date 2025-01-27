@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { MessagesType } from '@/utils/types';
 import Link from 'next/link';
 import { IoLogoWechat } from 'react-icons/io5';
-import { MdOutlineReply } from 'react-icons/md';
+import { MdOutlineReply, MdOutlineMarkEmailUnread } from 'react-icons/md';
 import { SubmitButton } from '../form/Buttons';
 import DeleteMessage from './DeleteMessage';
 
@@ -15,8 +15,11 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 	return (
 		<Card className='relative p-1 rounded-md shadow-md'>
 			{!message.read ? (
-				<div className='absolute top-2 right-2 bg-yellow-400 text-white px-2 py-1 rounded-md'>
-					New
+				<div className='absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-md'>
+					<div className='flex gap-1 items-center'>
+						<p>New</p>
+						<MdOutlineMarkEmailUnread size={16} />
+					</div>
 				</div>
 			) : (
 				<div className='absolute top-2 right-2'>
@@ -71,7 +74,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 				</div>
 			</CardContent>
 			<CardFooter className='flex items-center justify-end'>
-				{!message.read ? <SubmitButton text='Mark As Read' /> : <p>read</p>}
+				{!message.read && <SubmitButton text='Mark As Read' />}
 			</CardFooter>
 		</Card>
 	);
