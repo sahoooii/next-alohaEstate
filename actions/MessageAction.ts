@@ -104,6 +104,7 @@ export const fetchMessages = async ({
 	return [...unreadMessages, ...readMessages];
 };
 
+// For pagination
 export const fetchAllMessages = async () => {
 	await connectDB();
 	const userId = await getUserId();
@@ -145,6 +146,11 @@ export const fetchAllMessages = async () => {
 		]);
 
 	return [...unreadMessages, ...readMessages].length;
+};
+
+export const markAsReadAction = async () => {
+	await connectDB();
+	const userId = await getUserId();
 };
 
 export const deleteMessageAction = async (prevState: {

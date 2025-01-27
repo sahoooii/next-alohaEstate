@@ -41,7 +41,7 @@ const Messages = async ({
 			{totalMessages === 0 && <p>You have no messages</p>}
 			{/* Title size */}
 			<h1 className='text-3xl font-bold mb-4'>
-				You have {totalMessages > 1 && formatQuantity(totalMessages, 'message')}
+				You have {totalMessages > 0 && formatQuantity(totalMessages, 'message')}
 			</h1>
 			<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
 				{showMessages.map((message) => {
