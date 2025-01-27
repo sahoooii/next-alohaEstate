@@ -19,7 +19,7 @@ const CreateReview = ({ propertyId }: { propertyId: string }) => {
 				className='bg-gray-700 w-full sm:w-[300px] hover:bg-gray-400'
 				onClick={() => setIsReviewFormVisible((prev) => !prev)}
 			>
-				Wite A Review <MdOutlineRateReview className='ml-1' />
+				Write A Review <MdOutlineRateReview className='ml-1' />
 			</Button>
 			{isReviewFormVisible && (
 				<Card className='p-8 mt-8'>
@@ -29,7 +29,7 @@ const CreateReview = ({ propertyId }: { propertyId: string }) => {
 						<TextAreaInput
 							name='comment'
 							labelText='Comment'
-							placeholder='Please tell other users your opinion'
+							placeholder='Please tell your opinion'
 						/>
 						<div className='flex justify-center mt-6'>
 							<SubmitButton

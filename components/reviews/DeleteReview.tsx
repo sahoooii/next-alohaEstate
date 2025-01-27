@@ -1,5 +1,4 @@
-import React from 'react';
-import FormContainer from '../form/FormContainer';
+import FormContainer from '@/components/form/FormContainer';
 import DeleteReviewButton from './DeleteReviewButton';
 import { deleteReviewAction } from '@/actions/ReviewsAction';
 

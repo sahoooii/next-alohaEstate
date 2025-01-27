@@ -5,12 +5,10 @@ const MessageSchema = new Schema(
 		sender: {
 			type: Schema.Types.ObjectId,
 			ref: 'Profile',
-			required: true,
 		},
 		recipient: {
 			type: Schema.Types.ObjectId,
 			ref: 'Profile',
-			required: true,
 		},
 		propertyId: {
 			type: Schema.Types.ObjectId,
@@ -18,14 +16,19 @@ const MessageSchema = new Schema(
 		},
 		name: {
 			type: String,
-			required: [true, 'Name is required'],
+			required: true,
 		},
 		email: {
 			type: String,
-			required: [true, 'Email is required'],
+			required: true,
 		},
-		body: {
+		message: {
 			type: String,
+			required: true,
+		},
+		submitted: {
+			type: Boolean,
+			default: false,
 		},
 		read: {
 			type: Boolean,

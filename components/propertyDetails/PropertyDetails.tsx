@@ -16,22 +16,16 @@ const PropertyDetails = ({
 }: PropertyDetailsProps) => {
 	return (
 		<div className='flex gap-2 text-gray-500 mb-4 items-center'>
-			<FaPeopleGroup className='inline' />
-			<span className='md:hidden lg:inline'>
-				{formatQuantity(guests, 'guest')}{' '}
-			</span>
-			<FaBed className='inline' />
-			<span className='md:hidden lg:inline'>
-				{formatQuantity(beds, 'bed')}{' '}
-			</span>
-			<FaBath className='inline' />
-			<span className='md:hidden lg:inline'>
-				{formatQuantity(baths, 'bath')}{' '}
-			</span>
+			<FaPeopleGroup className='inline md:hidden lg:inline' />
+			<span className='lg:inline'>{formatQuantity(guests, 'guest')} </span>
+			<FaBed className='inline md:hidden lg:inline' />
+			<span className='lg:inline'>{formatQuantity(beds, 'bed')} </span>
+			<FaBath className='inline md:hidden lg:inline' />
+			<span className='lg:inline'>{formatQuantity(baths, 'bath')} </span>
 			{bedrooms !== 0 && bedrooms && (
 				<>
 					<MdBedroomChild className='inline' />
-					<span className='md:hidden lg:inline'>
+					<span className='lg:inline'>
 						{formatQuantity(bedrooms, 'bedroom')}{' '}
 					</span>
 				</>
