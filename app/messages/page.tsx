@@ -1,5 +1,5 @@
 import { fetchAllMessages, fetchMessages } from '@/actions/MessageAction';
-import MessageCard from '@/components/messagges/MessageCard';
+import MessageCard from '@/components/messagge/MessageCard';
 import PaginationPage from '@/components/properties/PaginationPage';
 import { formatQuantity } from '@/utils/format';
 import { MessagesType } from '@/utils/types';
