@@ -12,6 +12,7 @@ type SubmitButtonProps = {
 	className?: string;
 	text?: string;
 	size?: btnSize;
+
 };
 
 export const SubmitButton = ({
