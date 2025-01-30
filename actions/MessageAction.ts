@@ -8,6 +8,7 @@ import { messageSchema, validateWithZodSchema } from '@/utils/schemas';
 import { redirect } from 'next/navigation';
 import Profile from '@/models/Profile';
 import Property from '@/models/Property';
+import { revalidatePath } from 'next/cache';
 
 export const sendMessageAction = async (
 	prevState: unknown,
@@ -148,9 +149,23 @@ export const fetchAllMessages = async () => {
 	return [...unreadMessages, ...readMessages].length;
 };
 
-export const markAsReadAction = async () => {
+export const markAsReadAction = async (prevState: { messageId: string }) => {
 	await connectDB();
 	const userId = await getUserId();
+	const { messageId } = prevState;
+
+	const message = await Message.findById(messageId);
+
+	if (!message) throw new Error('Message not found');
+	// Verify ownership
+	if (message.recipient.toString() !== userId.toString()) {
+		throw new Error('unauthorized user');
+	}
+	message.read = true;
+
+	revalidatePath('/messages');
+	await message.save();
+	return { message: 'You read this message' };
 };
 
 export const deleteMessageAction = async (prevState: {
