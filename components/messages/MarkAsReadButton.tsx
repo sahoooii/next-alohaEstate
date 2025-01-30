@@ -1,23 +1,17 @@
 import React from 'react';
-import { Button } from '../ui/button';
+import FormContainer from '../form/FormContainer';
+import { SubmitButton } from '../form/Buttons';
+import { markAsReadAction } from '@/actions/MessageAction';
 
-const MarkAsReadButton = () => {
+const MarkAsReadButton = ({ messageId }: { messageId: string }) => {
+	const markAsRead = markAsReadAction.bind(null, {
+		messageId,
+	});
+
 	return (
-		// <Button
-		// 	type='submit'
-		// 	disabled={pending}
-		// 	className={`capitalize ${className}`}
-		// 	size={size}
-		// >
-		// 	{pending ? (
-		// 		<>
-		// 			<ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
-		// 			Please Wait...
-		// 		</>
-		// 	) : (
-		// 		text
-		// 	)}
-		// </Button>
+		<FormContainer action={markAsRead}>
+			<SubmitButton text='Mark As Read' />
+		</FormContainer>
 	);
 };
 

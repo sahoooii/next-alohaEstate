@@ -65,7 +65,7 @@ export const fetchBookings = async () => {
 
 	const bookings = await Booking.find(
 		{ profileId: userId, paymentStatus: true },
-		{ orderTotal: 1, totalNights: 1, checkIn: 1, checkOut: 1 }
+		{ orderTotal: 1, totalNights: 1, checkIn: 1, checkOut: 1, createdAt: 1 }
 	)
 		.populate('propertyId', {
 			_id: 1,

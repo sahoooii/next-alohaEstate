@@ -16,6 +16,7 @@ import Stats from '@/components/booking/Stats';
 
 const BookingPage = async () => {
 	const bookings = await fetchBookings();
+
 	if (bookings.length === 0)
 		return (
 			<EmptyList
@@ -24,6 +25,7 @@ const BookingPage = async () => {
 			/>
 		);
 
+	// order date =createdAt
 	return (
 		<div className='container mt-8'>
 			<div className='mb-6'>
@@ -43,17 +45,26 @@ const BookingPage = async () => {
 						<TableHead>Check Out</TableHead>
 						<TableHead>Nights</TableHead>
 						<TableHead>Order Total</TableHead>
+						<TableHead>Order Date</TableHead>
 						<TableHead>Delete/Cancel</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{bookings.map((booking) => {
-						const { _id, orderTotal, totalNights, checkIn, checkOut } = booking;
+						const {
+							_id,
+							orderTotal,
+							totalNights,
+							checkIn,
+							checkOut,
+							createdAt,
+						} = booking;
 
 						const bookingId = _id.toString();
 
 						const startDate = formatDate(checkIn);
 						const endDate = formatDate(checkOut);
+						const orderDate = formatDate(createdAt);
 
 						return (
 							<TableRow key={bookingId}>
@@ -87,6 +98,7 @@ const BookingPage = async () => {
 								<TableCell>{formatQuantity(totalNights, 'night')}</TableCell>
 
 								<TableCell>{formatCurrency(orderTotal)}</TableCell>
+								<TableCell>{orderDate}</TableCell>
 								<TableCell>
 									<DeleteBooking bookingId={bookingId} />
 								</TableCell>

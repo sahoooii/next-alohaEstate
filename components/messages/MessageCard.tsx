@@ -5,13 +5,10 @@ import { MessagesType } from '@/utils/types';
 import Link from 'next/link';
 import { IoLogoWechat } from 'react-icons/io5';
 import { MdOutlineReply, MdOutlineMarkEmailUnread } from 'react-icons/md';
-import { SubmitButton } from '../form/Buttons';
 import DeleteMessage from './DeleteMessage';
+import MarkAsReadButton from './MarkAsReadButton';
 
 const MessageCard = ({ message }: { message: MessagesType }) => {
-	// const { name } = message.property;
-	// console.log(message?.property?.name);
-	// Add pagination
 	return (
 		<Card className='relative p-1 rounded-md shadow-md'>
 			{!message.read ? (
@@ -25,7 +22,6 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 				<div className='absolute top-2 right-2'>
 					<DeleteMessage
 						messageId={message._id.toString()}
-						propertyId={message.property._id.toString()}
 					/>
 				</div>
 			)}
@@ -74,7 +70,9 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 				</div>
 			</CardContent>
 			<CardFooter className='flex items-center justify-end'>
-				{!message.read && <SubmitButton text='Mark As Read' />}
+				{!message.read && (
+					<MarkAsReadButton messageId={message._id.toString()} />
+				)}
 			</CardFooter>
 		</Card>
 	);

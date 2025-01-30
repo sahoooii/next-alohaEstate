@@ -8,6 +8,7 @@ import { messageSchema, validateWithZodSchema } from '@/utils/schemas';
 import { redirect } from 'next/navigation';
 import Profile from '@/models/Profile';
 import Property from '@/models/Property';
+import { revalidatePath } from 'next/cache';
 
 export const sendMessageAction = async (
 	prevState: unknown,
@@ -39,11 +40,10 @@ export const sendMessageAction = async (
 		});
 
 		await newMessage.save();
-		// console.log(newMessage);
 	} catch (error) {
 		return renderError(error);
 	}
-	redirect('/messages');
+	redirect('/');
 };
 
 export const fetchMessages = async ({
@@ -148,59 +148,45 @@ export const fetchAllMessages = async () => {
 	return [...unreadMessages, ...readMessages].length;
 };
 
-export const markAsReadAction = async () => {
+export const markAsReadAction = async (prevState: { messageId: string }) => {
 	await connectDB();
+
 	const userId = await getUserId();
+	const { messageId } = prevState;
+
+	try {
+		await Message.findOneAndUpdate(
+			{
+				_id: messageId,
+				recipient: userId,
+			},
+			{
+				read: true,
+			}
+		);
+
+		revalidatePath('/messages');
+		return { message: 'You read this message' };
+	} catch (error) {
+		return renderError(error);
+	}
 };
 
-export const deleteMessageAction = async (prevState: {
-	messageId: string;
-	propertyId: string;
-}) => {
+export const deleteMessageAction = async (prevState: { messageId: string }) => {
 	await connectDB();
 
 	const userId = await getUserId();
+	const { messageId } = prevState;
 
-	const { messageId, propertyId } = prevState;
+	try {
+		await Message.deleteOne({
+			_id: messageId,
+			recipient: userId,
+		});
 
-	// try {
-	// 	let property = await Message.findById(
-	// 		{ _id: messageId },
-	// 		{ averageRating: 1, numReviews: 1, reviews: 1 }
-	// 	);
-
-	// 	const deleteReview = property.reviews.find(
-	// 		(review: { _id: { toString: () => string } }) =>
-	// 			review._id.toString() === messageId
-	// 	);
-
-	// 	property = await Property.findOneAndUpdate(
-	// 		{ _id: propertyId, 'reviews.profileId': userId },
-	// 		{
-	// 			$pull: { reviews: deleteReview },
-	// 		},
-	// 		{
-	// 			new: true,
-	// 		}
-	// 	);
-
-	// 	property.numReviews = property.reviews.length;
-
-	// 	property.averageRating =
-	// 		property.numReviews > 0 &&
-	// 		(
-	// 			property.reviews.reduce(
-	// 				(acc: number, property: { rating: number }) => acc + property.rating,
-	// 				0
-	// 			) / property.reviews.length
-	// 		).toFixed(1);
-
-	// 	await property.save();
-
-	// 	revalidatePath('/reviews');
-	// 	return { message: 'Deleted Review successfully' };
-	// } catch (error) {
-	// 	return renderError(error);
-	// }
-	return { message: 'Deleted message successfully' };
+		revalidatePath('/messages');
+		return { message: 'Deleted message successfully' };
+	} catch (error) {
+		return renderError(error);
+	}
 };
