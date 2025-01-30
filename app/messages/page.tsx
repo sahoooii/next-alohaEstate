@@ -1,10 +1,10 @@
 import { fetchAllMessages, fetchMessages } from '@/actions/MessageAction';
 import MessageCard from '@/components/messages/MessageCard';
+import EmptyList from '@/components/properties/EmptyList';
 import PaginationPage from '@/components/properties/PaginationPage';
 import { formatQuantity } from '@/utils/format';
 import { MessagesType } from '@/utils/types';
 
-// test
 const Messages = async ({
 	searchParams,
 }: {
@@ -35,15 +35,20 @@ const Messages = async ({
 		message.property = message.propertyId;
 		return message;
 	});
-	// console.log('show:',showMessages);
 
 	return (
 		<section className='container mt-8 mb-24'>
-			{totalMessages === 0 && <p>You have no messages</p>}
-			{/* Title size */}
-			<h1 className='text-3xl font-bold mb-4'>
-				You have {totalMessages > 0 && formatQuantity(totalMessages, 'message')}
-			</h1>
+			{totalMessages === 0 ? (
+				<EmptyList
+					heading='No Message'
+					message='Your future customer will send message!'
+				/>
+			) : (
+				<h1 className='text-3xl font-bold mb-4'>
+					You have{' '}
+					{totalMessages >= 1 && formatQuantity(totalMessages, 'message')}
+				</h1>
+			)}
 			<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
 				{showMessages.map((message) => {
 					return <MessageCard key={message._id} message={message} />;

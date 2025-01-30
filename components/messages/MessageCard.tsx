@@ -22,7 +22,6 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 				<div className='absolute top-2 right-2'>
 					<DeleteMessage
 						messageId={message._id.toString()}
-						propertyId={message.property._id.toString()}
 					/>
 				</div>
 			)}
