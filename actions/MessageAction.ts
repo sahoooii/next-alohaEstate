@@ -151,6 +151,7 @@ export const fetchAllMessages = async () => {
 export const markAsReadAction = async () => {
 	await connectDB();
 	const userId = await getUserId();
+	return { message: 'You read this message' };
 };
 
 export const deleteMessageAction = async (prevState: {

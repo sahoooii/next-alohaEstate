@@ -4,7 +4,6 @@ import PaginationPage from '@/components/properties/PaginationPage';
 import { formatQuantity } from '@/utils/format';
 import { MessagesType } from '@/utils/types';
 
-// test
 const Messages = async ({
 	searchParams,
 }: {
