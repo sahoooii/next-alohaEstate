@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import Providers from './providers';
 import Navbar from '@/components/navbar/Navbar';
 import Footer from '@/components/footer/Footer';
+import { GlobalProvider } from '@/context/GlobalContext';
 
 const ubuntu = Ubuntu({
 	subsets: ['latin'],
@@ -25,17 +26,19 @@ export default function RootLayout({
 }>) {
 	return (
 		<ClerkProvider>
-			<html lang='en' suppressHydrationWarning>
-				<body className={`${ubuntu.variable} font-sans`}>
-					<Providers>
-						<div className='relative min-h-screen pb-[100px]'>
-							<Navbar />
-							<main>{children}</main>
-							<Footer />
-						</div>
-					</Providers>
-				</body>
-			</html>
+			<GlobalProvider>
+				<html lang='en' suppressHydrationWarning>
+					<body className={`${ubuntu.variable} font-sans`}>
+						<Providers>
+							<div className='relative min-h-screen pb-[100px]'>
+								<Navbar />
+								<main>{children}</main>
+								<Footer />
+							</div>
+						</Providers>
+					</body>
+				</html>
+			</GlobalProvider>
 		</ClerkProvider>
 	);
 }

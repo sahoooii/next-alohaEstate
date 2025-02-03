@@ -1,14 +1,34 @@
 import React from 'react';
-import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
+import {
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+} from '@/components/ui/card';
 import Image from 'next/image';
 import { MessagesType } from '@/utils/types';
 import Link from 'next/link';
 import { IoLogoWechat } from 'react-icons/io5';
 import { MdOutlineReply, MdOutlineMarkEmailUnread } from 'react-icons/md';
-import DeleteMessage from './DeleteMessage';
-import MarkAsReadButton from './MarkAsReadButton';
+import DeleteMessageContainer from './DeleteMessageContainer';
+import MarkAsReadContainer from './MarkAsReadContainer';
+import ReplyMessageButton from './reply/ReplyMessageButton';
 
 const MessageCard = ({ message }: { message: MessagesType }) => {
+	const messageId = message._id.toString();
+	const propertyId = message.property._id.toString();
+	// For reply message
+	const senderName =
+		message.recipient.firstName + ' ' + message.recipient.lastName;
+	const senderEmail = message.recipient.email;
+	const recipientId = message.sender._id.toString();
+	const replayMessage = {
+		messageId,
+		senderName,
+		senderEmail,
+		recipientId,
+		propertyId,
+	};
 	return (
 		<Card className='relative p-1 rounded-md shadow-md'>
 			{!message.read ? (
@@ -20,9 +40,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 				</div>
 			) : (
 				<div className='absolute top-2 right-2'>
-					<DeleteMessage
-						messageId={message._id.toString()}
-					/>
+					<DeleteMessageContainer messageId={messageId} isRead={message.read} />
 				</div>
 			)}
 			<CardHeader className='text-xl'>
@@ -38,7 +56,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 						<h3 className='text-base font-bold capitalize mb-1'>
 							From: {message.sender.firstName} {message.sender.lastName}
 						</h3>
-						<Link href={`/properties/${message.property._id}`}>
+						<Link href={`/properties/${propertyId}`}>
 							<h3 className='text-base text-blue-600 font-bold capitalize mb-1 underline'>
 								{message.property.name}
 							</h3>
@@ -70,8 +88,10 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 				</div>
 			</CardContent>
 			<CardFooter className='flex items-center justify-end'>
-				{!message.read && (
-					<MarkAsReadButton messageId={message._id.toString()} />
+				{!message.read ? (
+					<MarkAsReadContainer messageId={messageId} />
+				) : (
+					<ReplyMessageButton replayMessage={replayMessage} />
 				)}
 			</CardFooter>
 		</Card>

@@ -41,7 +41,13 @@ export type MessagesType = {
 		lastName: string;
 		profileImage: string;
 	};
-	recipient: string;
+	recipient: {
+		_id: string;
+		firstName: string;
+		lastName: string;
+		profileImage: string;
+		email: string;
+	};
 	property: {
 		_id: string;
 		name: string;
@@ -53,4 +59,14 @@ export type MessagesType = {
 	read: boolean;
 	createdAt: Date;
 	updateAt: Date;
+};
+
+export type ReplyMessageProps = {
+	replayMessage: {
+		messageId: string;
+		senderName: string;
+		senderEmail: string;
+		recipientId: string;
+		propertyId: string;
+	};
 };

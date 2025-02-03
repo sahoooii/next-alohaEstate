@@ -19,7 +19,6 @@ export const sendMessageAction = async (
 
 	try {
 		const rawData = Object.fromEntries(formData);
-		console.log(rawData);
 
 		const validatedFields = validateWithZodSchema(messageSchema, rawData);
 
@@ -70,6 +69,11 @@ export const fetchMessages = async ({
 				model: Profile,
 			},
 			{
+				path: 'recipient',
+				select: 'firstName lastName profileImage email',
+				model: Profile,
+			},
+			{
 				path: 'propertyId',
 				select: 'name',
 				model: Property,
@@ -90,6 +94,11 @@ export const fetchMessages = async ({
 			{
 				path: 'sender',
 				select: 'firstName lastName profileImage',
+				model: Profile,
+			},
+			{
+				path: 'recipient',
+				select: 'firstName lastName profileImage email',
 				model: Profile,
 			},
 			{
@@ -121,6 +130,11 @@ export const fetchAllMessages = async () => {
 				model: Profile,
 			},
 			{
+				path: 'recipient',
+				select: 'firstName lastName profileImage email',
+				model: Profile,
+			},
+			{
 				path: 'propertyId',
 				select: 'name',
 				model: Property,
@@ -136,6 +150,11 @@ export const fetchAllMessages = async () => {
 			{
 				path: 'sender',
 				select: 'firstName lastName profileImage',
+				model: Profile,
+			},
+			{
+				path: 'recipient',
+				select: 'firstName lastName profileImage email',
 				model: Profile,
 			},
 			{
@@ -189,4 +208,46 @@ export const deleteMessageAction = async (prevState: { messageId: string }) => {
 	} catch (error) {
 		return renderError(error);
 	}
+};
+
+export const getUnreadMessageCount = async () => {
+	await connectDB();
+
+	const userId = await getUserId();
+
+	const unreadMessageCount = await Message.countDocuments({
+		recipient: userId,
+		read: false,
+	});
+
+	return unreadMessageCount;
+};
+
+export const sendReplyMessageAction = async (
+	prevState: unknown,
+	formData: FormData
+): Promise<{ message: string }> => {
+	await connectDB();
+	const userId = await getUserId();
+
+	try {
+		const rawData = Object.fromEntries(formData);
+
+		const validatedFields = validateWithZodSchema(messageSchema, rawData);
+
+		const replyMessage = new Message({
+			sender: userId,
+			recipient: validatedFields.recipient,
+			propertyId: validatedFields.propertyId,
+			name: validatedFields.name,
+			email: validatedFields.email,
+			message: validatedFields.message,
+			submitted: true,
+		});
+
+		await replyMessage.save();
+	} catch (error) {
+		return renderError(error);
+	}
+	redirect('/');
 };

@@ -22,7 +22,7 @@ const Messages = async ({
 		page: paginationPage,
 		pageSize: paginationPageSize,
 	});
-	// console.log(messages);
+	// console.log('message:', messages);
 
 	const totalMessages = await fetchAllMessages();
 

@@ -6,6 +6,7 @@ import NavSearch from './NavSearch';
 import Link from 'next/link';
 import { auth } from '@clerk/nextjs/server';
 import { MdOutlineNotificationsActive } from 'react-icons/md';
+import UnreadMessageCount from '../messages/UnreadMessageCount';
 
 const Navbar = () => {
 	const { userId } = auth();
@@ -27,12 +28,9 @@ const Navbar = () => {
 										type='button'
 										className='relative rounded-full bg-white p-1 text-gray-600 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-400'
 									>
-										<span className='absolute -right-4 -top-3 bg-blue-400 text-white rounded-full py-[5px] px-[10px] text-xs font-bold'>
-											1
-										</span>
+										<UnreadMessageCount />
 										<MdOutlineNotificationsActive className='w-6 h-6' />
 									</button>
-									{/* <UnReadMessageCount session={session} /> */}
 								</Link>
 							</div>
 						) : (
