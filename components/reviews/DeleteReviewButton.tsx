@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormStatus } from 'react-dom';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import { FaRegTrashAlt, FaEdit } from 'react-icons/fa';
 import { ReloadIcon } from '@radix-ui/react-icons';
 

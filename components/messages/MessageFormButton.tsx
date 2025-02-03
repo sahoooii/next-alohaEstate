@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import { IoLogoWechat } from 'react-icons/io5';
 import MessageForm from './MessageForm';
 

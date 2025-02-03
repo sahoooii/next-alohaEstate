@@ -1,17 +1,23 @@
 import FormContainer from '@/components/form/FormContainer';
 import { deleteMessageAction } from '@/actions/MessageAction';
-import DeleteReviewButton from '@/components/reviews/DeleteReviewButton';
+import { DeleteMessageButton } from './DeleteMessageButton';
 
-const DeleteMessage = ({ messageId }: { messageId: string }) => {
+const DeleteMessageContainer = ({
+	messageId,
+	isRead,
+}: {
+	messageId: string;
+	isRead: boolean;
+}) => {
 	const deleteMessage = deleteMessageAction.bind(null, {
 		messageId,
 	});
 
 	return (
 		<FormContainer action={deleteMessage}>
-			<DeleteReviewButton actionType='delete' />
+			<DeleteMessageButton isReadMessage={isRead} />
 		</FormContainer>
 	);
 };
 
-export default DeleteMessage;
+export default DeleteMessageContainer;
