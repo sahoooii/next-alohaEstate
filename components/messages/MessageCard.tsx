@@ -13,8 +13,11 @@ import { MdOutlineReply, MdOutlineMarkEmailUnread } from 'react-icons/md';
 import DeleteMessageContainer from './DeleteMessageContainer';
 import MarkAsReadContainer from './MarkAsReadContainer';
 import ReplyMessageButton from './reply/ReplyMessageButton';
+import RepliedMessageButton from './reply/RepliedMessageButton';
 
 const MessageCard = ({ message }: { message: MessagesType }) => {
+	// console.log(message);
+
 	const messageId = message._id.toString();
 	const propertyId = message.property._id.toString();
 	// For reply message
@@ -22,7 +25,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 		message.recipient.firstName + ' ' + message.recipient.lastName;
 	const senderEmail = message.recipient.email;
 	const recipientId = message.sender._id.toString();
-	const replayMessage = {
+	const replyMessage = {
 		messageId,
 		senderName,
 		senderEmail,
@@ -87,13 +90,24 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 					</div>
 				</div>
 			</CardContent>
-			<CardFooter className='flex items-center justify-end'>
-				{!message.read ? (
+			{/* Mark as read button */}
+			{!message.read && (
+				<CardFooter className='flex items-center justify-end'>
 					<MarkAsReadContainer messageId={messageId} />
-				) : (
-					<ReplyMessageButton replayMessage={replayMessage} />
+				</CardFooter>
+			)}
+			{/* Reply message */}
+			{message.read && !message.isReplied && (
+				<CardFooter className='flex items-center justify-end'>
+					<ReplyMessageButton replyMessage={replyMessage} />
+				</CardFooter>
+			)}
+			{/* Show replied message */}
+			<div className='p-6 pt-0'>
+				{message.read && message.isReplied && (
+					<RepliedMessageButton repliedId={messageId} />
 				)}
-			</CardFooter>
+			</div>
 		</Card>
 	);
 };

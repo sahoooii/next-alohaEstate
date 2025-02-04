@@ -57,12 +57,13 @@ export type MessagesType = {
 	message: string;
 	submitted: boolean;
 	read: boolean;
+	isReplied: boolean;
 	createdAt: Date;
 	updateAt: Date;
 };
 
 export type ReplyMessageProps = {
-	replayMessage: {
+	replyMessage: {
 		messageId: string;
 		senderName: string;
 		senderEmail: string;
