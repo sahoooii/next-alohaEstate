@@ -38,6 +38,9 @@ const MessageSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
+		repliedId: {
+			type: Schema.Types.ObjectId,
+		},
 	},
 	{
 		timestamps: true,

@@ -8,7 +8,6 @@ const MessageFormButton = ({
 	ownerId: string;
 	propertyId: string;
 }) => {
-
 	return (
 		<MessageToggleButton actionType='send'>
 			<MessageForm ownerId={ownerId} propertyId={propertyId} />

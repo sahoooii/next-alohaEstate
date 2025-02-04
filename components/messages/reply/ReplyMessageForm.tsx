@@ -25,7 +25,7 @@ const ReplyMessageForm = ({
 					<input name='email' type='hidden' value={senderEmail} />
 					<TextAreaInput
 						name='message'
-						labelText='Message (5 - 3000 words)'
+						labelText='Message (10 - 3000 characters)'
 						placeholder='ex: Thank you for your message ...'
 					/>
 				</div>

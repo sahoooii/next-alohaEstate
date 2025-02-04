@@ -245,6 +245,7 @@ export const sendReplyMessageAction = async (
 			email: validatedFields.email,
 			message: validatedFields.message,
 			submitted: true,
+			repliedId: messageId,
 		});
 		// Mark as replied
 		await Message.findOneAndUpdate({ _id: messageId }, { isReplied: true });
@@ -256,20 +257,27 @@ export const sendReplyMessageAction = async (
 	redirect('/messages');
 };
 
-export const fetchRepliedMessages = async (messageId: string) => {
+export const fetchRepliedMessage = async (messageId: string) => {
 	await connectDB();
 	const userId = await getUserId();
 
-	const repliedMessages = await Message.find({
-		messageId: messageId,
-		sender: userId,
-	}).populate([
+	const repliedMessages = await Message.find(
+		{
+			repliedId: messageId,
+			sender: userId,
+		},
+		{ message: 1, createdAt: 1, sender: 1, recipient: 1 }
+	).populate([
 		{
 			path: 'sender',
-			select: 'firstName lastName profileImage',
+			select: 'firstName profileImage',
+			model: Profile,
+		},
+		{
+			path: 'recipient',
+			select: 'firstName lastName',
 			model: Profile,
 		},
 	]);
-
 	return repliedMessages;
 };

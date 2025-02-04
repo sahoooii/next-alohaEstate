@@ -6,7 +6,7 @@ import { IoLogoWechat } from 'react-icons/io5';
 import { MdOutlineReply } from 'react-icons/md';
 import { CiCircleCheck } from 'react-icons/ci';
 
-type actionType = 'send' |'reply' | 'replied';
+type actionType = 'send' | 'reply' | 'replied';
 
 const MessageToggleButton = ({
 	actionType,
@@ -22,9 +22,9 @@ const MessageToggleButton = ({
 			case 'send':
 				return (
 					<>
-					<IoLogoWechat className='text-gray-200 mr-1' size={24} />
-					<h3 className='ml-2 text-lg'>Send A Message</h3>
-					<IoLogoWechat className='text-gray-200 ml-1' size={24} />
+						<IoLogoWechat className='text-gray-200 mr-1' size={24} />
+						<h3 className='ml-2 text-lg'>Send A Message</h3>
+						<IoLogoWechat className='text-gray-200 ml-1' size={24} />
 					</>
 				);
 			case 'reply':
@@ -50,9 +50,16 @@ const MessageToggleButton = ({
 
 	return (
 		<div>
-			<div className='flex justify-end items-center'>
+			<div
+				className={`flex items-center ${
+					actionType === 'send' ? 'justify-center' : 'justify-end'
+				}`}
+			>
 				<Button
-					className=' text-white bg-gray-500 hover:bg-gray-400'
+					className={`text-white bg-primary ' ${
+						actionType === 'replied'
+							&& 'bg-gray-500 hover:bg-gray-400'
+					}`}
 					onClick={() => setIsMessageFormVisible((prev) => !prev)}
 				>
 					{renderIcon()}
