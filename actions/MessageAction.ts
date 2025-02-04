@@ -235,6 +235,8 @@ export const sendReplyMessageAction = async (
 
 		const validatedFields = validateWithZodSchema(messageSchema, rawData);
 
+		const messageId = rawData.messageId;
+
 		const replyMessage = new Message({
 			sender: userId,
 			recipient: validatedFields.recipient,
@@ -244,10 +246,30 @@ export const sendReplyMessageAction = async (
 			message: validatedFields.message,
 			submitted: true,
 		});
+		// Mark as replied
+		await Message.findOneAndUpdate({ _id: messageId }, { isReplied: true });
 
 		await replyMessage.save();
 	} catch (error) {
 		return renderError(error);
 	}
-	redirect('/');
+	redirect('/messages');
+};
+
+export const fetchRepliedMessages = async (messageId: string) => {
+	await connectDB();
+	const userId = await getUserId();
+
+	const repliedMessages = await Message.find({
+		messageId: messageId,
+		sender: userId,
+	}).populate([
+		{
+			path: 'sender',
+			select: 'firstName lastName profileImage',
+			model: Profile,
+		},
+	]);
+
+	return repliedMessages;
 };

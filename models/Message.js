@@ -34,6 +34,10 @@ const MessageSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
+		isReplied: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{
 		timestamps: true,
