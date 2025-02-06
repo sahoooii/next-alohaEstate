@@ -5,7 +5,6 @@ import { renderError } from './Auth';
 import Property from '@/models/Property';
 import { createReviewSchema, validateWithZodSchema } from '@/utils/schemas';
 import { revalidatePath } from 'next/cache';
-import Profile from '@/models/Profile';
 import { getUserId } from './AuthUserAction';
 
 export const createReviewAction = async (
@@ -17,18 +16,6 @@ export const createReviewAction = async (
 	const userId = await getUserId();
 
 	try {
-		const profile = await Profile.findById(
-			{ _id: userId },
-			{
-				firstName: 1,
-				lastName: 1,
-				profileImage: 1,
-			}
-		);
-
-		const { firstName, lastName, profileImage } = profile;
-		const fullName = `${firstName} ${lastName}`;
-
 		const rawData = Object.fromEntries(formData);
 		const validatedFields = validateWithZodSchema(createReviewSchema, rawData);
 
@@ -48,8 +35,6 @@ export const createReviewAction = async (
 
 			const review = {
 				profileId: userId,
-				fullName: fullName,
-				profileImage: profileImage,
 				rating: Number(rating),
 				comment: comment,
 			};
@@ -83,17 +68,19 @@ export const fetchPropertyReviews = async (propertyId: string) => {
 	const reviews = await Property.findById(
 		{ _id: propertyId },
 		{
-			reviews: {
-				profileId: 1,
-				fullName: 1,
-				profileImage: 1,
-				rating: 1,
-				comment: 1,
-				_id: 1,
-				createdAt: 1,
-			},
+			reviews: 1,
 		}
-	).sort({ createdAt: -1 });
+	)
+		.populate({
+			path: 'reviews',
+			populate: {
+				path: 'profileId',
+				select: 'username profileImage',
+				model: 'Profile',
+			},
+		})
+		.sort({ createdAt: -1 });
+
 	return reviews;
 };
 
@@ -124,8 +111,6 @@ export const fetchPropertyReviewsByUser = async ({
 				name: 1,
 				reviews: {
 					profileId: 1,
-					fullName: 1,
-					profileImage: 1,
 					rating: 1,
 					comment: 1,
 					_id: 1,

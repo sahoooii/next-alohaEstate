@@ -1,16 +1,8 @@
 import Title from '@/components/propertyDetails/Title';
 import { fetchPropertyReviews } from '@/actions/ReviewsAction';
 import ReviewCardAtDetailsPage from './ReviewCardAtDetailsPage';
-
-type Reviews = {
-	profileId: string;
-	fullName: string;
-	profileImage: string;
-	rating: number;
-	comment: string;
-	_id: string;
-	createdAt: Date;
-};
+import { Reviews } from '@/utils/types';
+import { formatQuantity } from '@/utils/format';
 
 const PropertyReviews = async ({ propertyId }: { propertyId: string }) => {
 	const reviewsData = await fetchPropertyReviews(propertyId);
@@ -21,16 +13,10 @@ const PropertyReviews = async ({ propertyId }: { propertyId: string }) => {
 
 	return (
 		<div className='mt-8'>
-			{reviews.length === 1 ? (
-				<Title text={`${reviews.length} Review`} />
-			) : (
-				<Title text={`${reviews.length} Reviews`} />
-			)}
+			<Title text={formatQuantity(reviews.length, 'Review')} />
 			<div className='grid md:grid-cols-2 gap-6 mt-4'>
 				{reviews.map((review) => {
-					return (
-						<ReviewCardAtDetailsPage key={review._id} reviewInfo={review} />
-					);
+					return <ReviewCardAtDetailsPage key={review._id} reviews={review} />;
 				})}
 			</div>
 		</div>
