@@ -6,18 +6,11 @@ const reviewSchema = new Schema(
 			type: Schema.Types.ObjectId,
 			ref: 'Profile',
 		},
-		fullName: {
-			type: String,
-		},
-		profileImage: {
-			type: String,
-		},
 		rating: {
 			type: Number,
 			min: 1,
 			max: 5,
 			required: true,
-			// default: 3,
 		},
 		comment: {
 			type: String,

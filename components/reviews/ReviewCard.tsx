@@ -11,7 +11,6 @@ type ReviewCardProps = {
 		propertyImage: string;
 		comment: string;
 		rating: number;
-		profileImage: string;
 		createdDate: string;
 	};
 	children?: React.ReactNode;

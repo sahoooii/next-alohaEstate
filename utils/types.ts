@@ -21,6 +21,19 @@ export type PropertyData = {
 	images: string[];
 };
 
+// Reviews
+export type Reviews = {
+	profileId: {
+		_id: string;
+		username: string;
+		profileImage: string;
+	};
+	rating: number;
+	comment: string;
+	_id: string;
+	createdAt: Date;
+};
+
 // Booking
 export type DateRangeSelect = {
 	startDate: Date;

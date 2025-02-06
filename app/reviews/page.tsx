@@ -6,6 +6,7 @@ import {
 } from '@/actions/ReviewsAction';
 import PaginationPage from '@/components/properties/PaginationPage';
 import DeleteReview from '@/components/reviews/DeleteReview';
+import { formatQuantity } from '@/utils/format';
 
 const ReviewsPage = async ({
 	searchParams,
@@ -39,9 +40,7 @@ const ReviewsPage = async ({
 	return (
 		<div className='container mt-8'>
 			<h1 className='text-2xl font-mono mb-8 capitalize'>
-				{`You wrote ${totalReviews} ${
-					totalReviews === 1 ? 'Review' : 'Reviews'
-				}`}
+				{`You wrote ${formatQuantity(totalReviews, 'review')}`}
 			</h1>
 			<section className='grid md:grid-cols-2 gap-8 mt-4'>
 				{reviews.map((review) => {
@@ -52,8 +51,6 @@ const ReviewsPage = async ({
 						_id: reviewId,
 						comment,
 						rating,
-						fullName: profileName,
-						profileImage,
 						createdAt,
 					} = review.reviews;
 
@@ -66,8 +63,6 @@ const ReviewsPage = async ({
 						reviewId,
 						comment,
 						rating,
-						profileName,
-						profileImage,
 						createdDate,
 					};
 
