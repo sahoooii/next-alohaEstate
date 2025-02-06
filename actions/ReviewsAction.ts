@@ -17,11 +17,14 @@ export const createReviewAction = async (
 	const userId = await getUserId();
 
 	try {
-		const profile = await Profile.findById(userId, {
-			firstName: 1,
-			lastName: 1,
-			profileImage: 1,
-		});
+		const profile = await Profile.findById(
+			{ _id: userId },
+			{
+				firstName: 1,
+				lastName: 1,
+				profileImage: 1,
+			}
+		);
 
 		const { firstName, lastName, profileImage } = profile;
 		const fullName = `${firstName} ${lastName}`;

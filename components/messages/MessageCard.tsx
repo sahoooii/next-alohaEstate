@@ -17,7 +17,6 @@ import RepliedMessageButton from './reply/RepliedMessageButton';
 
 const MessageCard = ({ message }: { message: MessagesType }) => {
 	// console.log(message);
-
 	const messageId = message._id.toString();
 	const propertyId = message.property._id.toString();
 	// For reply message
