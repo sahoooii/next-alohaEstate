@@ -18,12 +18,6 @@ const MessageForm = ({
 					<input name='recipient' type='hidden' value={ownerId} />
 					<input name='propertyId' type='hidden' value={propertyId} />
 					<FormInput
-						name='name'
-						type='text'
-						label='Name'
-						placeholder='Your name is ...'
-					/>
-					<FormInput
 						name='email'
 						type='email'
 						label='E-mail'

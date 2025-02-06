@@ -28,11 +28,18 @@ export const sendMessageAction = async (
 			return { message: 'You can not send a message to yourself' };
 		}
 
+		const sender = await Profile.findById(
+			{ _id: userId },
+			{ firstName: 1, lastName: 1 }
+		);
+		const { firstName, lastName } = sender;
+		const senderName = `${firstName} ${lastName}`;
+
 		const newMessage = new Message({
 			sender: userId,
 			recipient,
 			propertyId: validatedFields.propertyId,
-			name: validatedFields.name,
+			name: senderName,
 			email: validatedFields.email,
 			message: validatedFields.message,
 			submitted: true,
@@ -241,7 +248,7 @@ export const sendReplyMessageAction = async (
 			sender: userId,
 			recipient: validatedFields.recipient,
 			propertyId: validatedFields.propertyId,
-			name: validatedFields.name,
+			name: rawData.name,
 			email: validatedFields.email,
 			message: validatedFields.message,
 			submitted: true,
