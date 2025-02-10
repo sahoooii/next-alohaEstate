@@ -1,5 +1,29 @@
 import { Schema, model, models } from 'mongoose';
 
+const repliedMessageSchema = new Schema(
+	{
+		youGotReplied: {
+			type: Boolean,
+			default: false,
+		},
+		youGotRepliedMessage: {
+			type: String,
+		},
+		sender: {
+			type: Schema.Types.ObjectId,
+			ref: 'Profile',
+		},
+		recipient: {
+			type: Schema.Types.ObjectId,
+			ref: 'Profile',
+		},
+	},
+	{
+		timestamps: true,
+	}
+);
+
+
 const MessageSchema = new Schema(
 	{
 		sender: {
@@ -34,13 +58,11 @@ const MessageSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
-		isReplied: {
-			type: Boolean,
-			default: false,
-		},
-		repliedId: {
+		// save on sender data
+		senderMessageId: {
 			type: Schema.Types.ObjectId,
 		},
+		repliedMessage: [repliedMessageSchema],
 	},
 	{
 		timestamps: true,

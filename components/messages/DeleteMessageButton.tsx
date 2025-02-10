@@ -20,7 +20,6 @@ export const DeleteMessageButton = ({
 	const handleDeleteClick = () => {
 		setUnreadCount((prevCount: number) => (isRead ? prevCount : prevCount - 1));
 		setIsRead(isRead);
-		console.log(isRead);
 	};
 
 	return (

@@ -89,9 +89,6 @@ export const fetchMessages = async ({
 		.skip(skip)
 		.limit(pageSize);
 
-	// .populate('sender', 'firstName lastName profileImage')
-	// .populate('propertyId', 'name');
-
 	const unreadMessages = await Message.find({
 		recipient: userId,
 		read: false,
@@ -252,10 +249,21 @@ export const sendReplyMessageAction = async (
 			email: validatedFields.email,
 			message: validatedFields.message,
 			submitted: true,
-			repliedId: messageId,
+			senderMessageId: messageId,
 		});
+
 		// Mark as replied
-		await Message.findOneAndUpdate({ _id: messageId }, { isReplied: true });
+		await Message.findOneAndUpdate(
+			{ _id: messageId },
+			{
+				repliedMessage: {
+					youGotReplied: true,
+					youGotRepliedMessage: validatedFields.message,
+					sender: validatedFields.recipient,
+					recipient: userId,
+				},
+			}
+		);
 
 		await replyMessage.save();
 	} catch (error) {
@@ -270,21 +278,35 @@ export const fetchRepliedMessage = async (messageId: string) => {
 
 	const repliedMessages = await Message.find(
 		{
-			repliedId: messageId,
-			sender: userId,
+			_id: messageId,
+			'repliedMessage.recipient': userId,
 		},
-		{ message: 1, createdAt: 1, sender: 1, recipient: 1 }
+		{
+			repliedMessage: {
+				youGotRepliedMessage: 1,
+				sender: 1,
+				recipient: 1,
+				createdAt: 1,
+			},
+		}
 	).populate([
 		{
-			path: 'sender',
-			select: 'firstName profileImage',
-			model: Profile,
+			path: 'repliedMessage',
+			populate: {
+				path: 'sender',
+				select: 'firstName lastName profileImage',
+				model: 'Profile',
+			},
 		},
 		{
-			path: 'recipient',
-			select: 'firstName lastName',
-			model: Profile,
+			path: 'repliedMessage',
+			populate: {
+				path: 'recipient',
+				select: 'firstName lastName profileImage',
+				model: 'Profile',
+			},
 		},
 	]);
+	
 	return repliedMessages;
 };
