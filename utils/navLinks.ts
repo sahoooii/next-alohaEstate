@@ -1,5 +1,5 @@
 import { MdFavoriteBorder, MdOutlineMapsHomeWork } from 'react-icons/md';
-import { TbBrandBooking, TbHomePlus } from 'react-icons/tb';
+import { TbHomePlus } from 'react-icons/tb';
 import { VscPreview } from 'react-icons/vsc';
 import { BsPersonGear } from 'react-icons/bs';
 import { AiOutlineMessage, AiOutlineHome } from 'react-icons/ai';

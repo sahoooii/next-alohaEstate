@@ -16,9 +16,10 @@ import ReplyMessageButton from './reply/ReplyMessageButton';
 import RepliedMessageButton from './reply/RepliedMessageButton';
 
 const MessageCard = ({ message }: { message: MessagesType }) => {
-	// console.log(message);
 	const messageId = message._id.toString();
+	// console.log(message.repliedMessage);
 	const propertyId = message.property._id.toString();
+
 	// For reply message
 	const senderName =
 		message.recipient.firstName + ' ' + message.recipient.lastName;
@@ -31,6 +32,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 		recipientId,
 		propertyId,
 	};
+
 	return (
 		<Card className='relative p-1 rounded-md shadow-md'>
 			{!message.read ? (
@@ -52,7 +54,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 						width={50}
 						height={50}
 						alt={message.sender.firstName}
-						className='rounded-full object-cover'
+						className='rounded-full object-cover w-[50px] h-[50px]'
 					/>
 					<div className='ml-4'>
 						<h3 className='text-base font-bold capitalize mb-1'>
@@ -67,7 +69,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<div className='mb-4 py-5 px-3 bg-white rounded-xl shadow-lg'>
+				<div className='mb-4 py-5 px-3 bg-white rounded-xl shadow-lfg'>
 					<div className='flex items-center gap-2 mb-1'>
 						<IoLogoWechat className='text-primary mr-1' size={24} />
 						<p className='text-xs text-muted-foreground'>
@@ -96,15 +98,15 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 				</CardFooter>
 			)}
 			{/* Reply message */}
-			{message.read && !message.isReplied && (
+			{message.read && !message.repliedMessage[0]?.youGotReplied && (
 				<CardFooter className='flex items-center justify-end'>
 					<ReplyMessageButton replyMessage={replyMessage} />
 				</CardFooter>
 			)}
 			{/* Show replied message */}
 			<div className='p-6 pt-0'>
-				{message.read && message.isReplied && (
-					<RepliedMessageButton repliedId={messageId} />
+				{message.read && message.repliedMessage[0]?.youGotReplied && (
+					<RepliedMessageButton messageId={messageId} />
 				)}
 			</div>
 		</Card>

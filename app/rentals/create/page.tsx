@@ -17,20 +17,19 @@ const CreatePropertyPage = () => {
 				<h3 className='text-lg mb-4 font-medium'>General Info</h3>
 				<FormContainer action={createPropertyAction}>
 					<div className='grid md:grid-cols-2 gap-8 mb-4'>
-						{/* Attention!! defaultValue will delete later */}
 						<FormInput
 							name='name'
 							type='text'
 							label='Property Name (30 Limit)'
 							placeholder='ex: Studio in Waikiki'
-							defaultValue='House in Waikiki'
+							// defaultValue='House in Waikiki'
 						/>
 						<FormInput
 							name='tagline'
 							type='text'
 							label='Tagline (50 Limit)'
 							placeholder='ex: Chill out all day'
-							defaultValue='Beach All Day'
+							// defaultValue='Beach All Day'
 						/>
 						<PriceInput />
 						<CategoriesInput />
@@ -48,28 +47,28 @@ const CreatePropertyPage = () => {
 								label='street'
 								type='text'
 								placeholder='ex: Seaside Ave.'
-								defaultValue='Seaside Ave.'
+								// defaultValue='Seaside Ave.'
 								className='py-2 px-3 bg-white '
 							/>
 							<FormInput
 								name='city'
 								type='text'
 								placeholder='ex: Honolulu'
-								defaultValue='Honolulu'
+								// defaultValue='Honolulu'
 								className='py-2 px-3 bg-white'
 							/>
 							<FormInput
 								name='state'
 								type='text'
 								placeholder='ex: Hawaii'
-								defaultValue='Hawaii'
+								// defaultValue='Hawaii'
 								className='py-2 px-3 bg-white'
 							/>
 							<FormInput
 								name='zipcode'
 								type='text'
 								placeholder='ex: 96815'
-								defaultValue='96815'
+								// defaultValue='96815'
 								className='py-2 px-3 bg-white'
 							/>
 						</div>

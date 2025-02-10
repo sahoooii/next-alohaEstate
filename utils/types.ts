@@ -70,9 +70,19 @@ export type MessagesType = {
 	message: string;
 	submitted: boolean;
 	read: boolean;
-	isReplied: boolean;
 	createdAt: Date;
 	updateAt: Date;
+	repliedMessage: [
+		{
+			youGotReplied: boolean;
+			youGotRepliedMessage: string;
+			sender: string;
+			recipient: string;
+			_id: string;
+			createdAt: Date;
+			updatedAt: Date;
+		}
+	];
 };
 
 export type ReplyMessageProps = {

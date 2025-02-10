@@ -2,10 +2,10 @@ import React from 'react';
 import MessageToggleButton from '../MessageToggleButton';
 import RepliedMessageForm from './RepliedMessageForm';
 
-const RepliedMessageButton = ({ repliedId }: { repliedId: string }) => {
+const RepliedMessageButton = ({ messageId }: { messageId: string }) => {
 	return (
 		<MessageToggleButton actionType='replied'>
-			<RepliedMessageForm repliedId={repliedId} />
+			<RepliedMessageForm messageId={messageId} />
 		</MessageToggleButton>
 	);
 };
