@@ -45,7 +45,7 @@ const ReviewCard = ({ reviewInfo, children }: ReviewCardProps) => {
 				<Comment comment={reviewInfo.comment} />
 			</CardContent>
 			{/* Delete button */}
-			<div className='absolute top-3 right-3'>{children}</div>
+			<div className='absolute top-3 right-2 md:top-1 lg:top-3'>{children}</div>
 		</Card>
 	);
 };
