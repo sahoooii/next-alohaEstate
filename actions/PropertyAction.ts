@@ -56,13 +56,6 @@ export const createPropertyAction = async (
 	redirect('/');
 };
 
-export const getAllPropertiesCount = async () => {
-	await connectDB();
-	const totalProperties = await Property.countDocuments({});
-
-	return totalProperties;
-};
-
 // Fetch and search properties
 export const fetchProperties = async ({
 	search = '',
@@ -135,7 +128,58 @@ export const fetchProperties = async ({
 	return properties;
 };
 
-// To get Favorite id (_id at Favorite schema)
+// For pagination
+export const getAllPropertiesCount = async ({
+	search = '',
+	category,
+}: {
+	search?: string;
+	category?: string;
+}) => {
+	await connectDB();
+
+	const hasCategory = category ? { category: category } : {};
+
+	const hasSearch = search
+		? {
+				$or: [
+					{
+						name: { $regex: search, $options: 'i' },
+					},
+					{
+						tagline: { $regex: search, $options: 'i' },
+					},
+				],
+		  }
+		: {};
+
+	const haveCategoryAndSearch =
+		category && search
+			? {
+					category: category,
+					$or: [
+						{
+							name: { $regex: search, $options: 'i' },
+						},
+						{
+							tagline: { $regex: search, $options: 'i' },
+						},
+					],
+			  }
+			: {};
+
+	const properties = await Property.countDocuments(
+		{
+			...hasCategory,
+			...hasSearch,
+			...haveCategoryAndSearch,
+		},
+		{}
+	);
+
+	return properties;
+};
+
 export const fetchFavoriteId = async ({
 	propertyId,
 }: {
