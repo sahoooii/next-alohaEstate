@@ -28,7 +28,11 @@ const PropertiesContainer = async ({
 		pageSize: paginationPageSize,
 	});
 
-	const totalProperties = await getAllPropertiesCount();
+	const totalProperties = await getAllPropertiesCount({
+		category,
+		search,
+	});
+
 	const totalPages = Math.ceil(totalProperties / paginationPageSize);
 
 	const showPagination = totalProperties > paginationPageSize;
@@ -46,6 +50,7 @@ const PropertiesContainer = async ({
 	return (
 		<>
 			<PropertiesList properties={properties} />
+
 			{showPagination && (
 				<PaginationPage
 					page={paginationPage}
