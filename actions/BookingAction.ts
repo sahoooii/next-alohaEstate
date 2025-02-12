@@ -99,8 +99,8 @@ export const fetchBookingsStats = async () => {
 	await connectDB();
 	const userId = await getUserId();
 
-	const properties = await Property.countDocuments({
-		owner: userId,
+	const properties = await Booking.countDocuments({
+		profileId: userId,
 	});
 
 	const totals = await Booking.aggregate([
