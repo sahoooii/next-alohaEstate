@@ -10,7 +10,7 @@
 
 ### Demo
 
-![Image](https://github.com/user-attachments/assets/8f02a53e-fb74-48ac-b6d3-02ad4eb345a6)
+![Image](https://github.com/user-attachments/assets/17a42d77-53dd-4133-b6ad-9cb89f8ae18f)
 
 ## Describe
 
