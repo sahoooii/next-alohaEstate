@@ -8,13 +8,17 @@
 ## Link
 [Aloha Estate](https://next-aloha-estate.vercel.app)
 
+### Demo
+
+![Image](https://github.com/user-attachments/assets/8f02a53e-fb74-48ac-b6d3-02ad4eb345a6)
+
 ## Describe
 
-This project is a full-stack vacation rental app, like an Airbnb built with Next.js and TypeScript. Mainly UI designed using shadcn/ui and Tailwind CSS. This one is my first piece of the Next.js original project.loha Estate is located in Hawaii, and find a perfect property in Hawaii which is you will stay in your next vacation.<br />
+Aloha Estate is located in Hawaii, and find a perfect property in Hawaii which is you will stay in your next vacation.This project is a full-stack vacation rental app, like an Airbnb built with Next.js and TypeScript. Mainly UI designed using shadcn/ui and Tailwind CSS. This one is my first piece of the Next.js original project<br />
 shadcn/ui helped me create a sophisticated design which is what I want to create. This app looks simple but it has enough functionality to find your perfect vacation rental. For example, we have a search function, you can search property with category also keywords. And you can save your favorite property on your list. If you have a question, you can message to property's owner. Also, manage own property and your bookings and so on.<br />
 I created a lot of functionality in this app, so please browse!
 
-このプロジェクトは、Next.jsとTypeScriptを使用して構築された Airbnbのようなフルスタックのバケーションレンタルアプリです。主に shadcn/uiとTailwind CSSを使用してUIを設計しました。これはNext.jsを使用した初めてのフルスタックオリジナルプロジェクトの作品ですAloha Estateはハワイにあり、次の休暇に滞在するのに最適なハワイの物件を見つけます。<br />
+Aloha Estateはハワイにあり、次の休暇に滞在するのに最適なハワイの物件を見つけます。このプロジェクトは、Next.jsとTypeScriptを使用して構築された Airbnbのようなフルスタックのバケーションレンタルアプリです。主に shadcn/uiとTailwind CSSを使用してUIを設計しました。これはNext.jsを使用した初めてのフルスタックオリジナルプロジェクトの作品です<br />
 shadcn/uiは、洗練されたデザインを作成するのに役立ちました。このアプリは見た目はシンプルですが、完璧なバケーションレンタルを見つけるのに十分な機能を備えています。例えば検索機能があり、カテゴリーやキーワードで物件を検索できます。お気に入りの物件をリストに保存でたり、質問がある場合は、物件のオーナーにメッセージを送信できます。また、自分の物件や自分の予約などを管理することもできます。<br />
 多くの機能を作成したので、ぜひご覧ください。
 
