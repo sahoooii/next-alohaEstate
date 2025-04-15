@@ -9,6 +9,7 @@ const LoadingTable = ({ rows }: { rows?: number }) => {
 			</div>
 		);
 	});
+
 	return <>{tableRows}</>;
 };
 

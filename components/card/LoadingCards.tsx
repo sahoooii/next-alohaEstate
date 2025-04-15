@@ -1,5 +1,10 @@
 import { Skeleton } from '../ui/skeleton';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import {
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+} from '@/components/ui/card';
 
 export const LoadingCards = () => {
 	return (
@@ -32,11 +37,27 @@ export const RecentLoadingCards = () => {
 
 export const SkeltonCard = () => {
 	return (
-		<div>
-			<Skeleton className='h-[300px] rounded-md' />
-			<Skeleton className='h-4 mt-2 w-3/4' />
-			<Skeleton className='h-4 mt-2 w-1/2' />
-		</div>
+		<Card className='h-[450px]'>
+			<CardHeader>
+				<div className='bg-white rounded-xl shadow-lg h-[250px] relative'>
+					<div className='absolute top-5 right-5 z-5'>
+						<Skeleton className='w-10 h-10 rounded-full' />
+					</div>
+					<div className='absolute top-7 left-5 z-5'>
+						<Skeleton className='w-20 h-7 rounded-sm' />
+					</div>
+				</div>
+			</CardHeader>
+			<CardContent>
+				<div className='py-2 bg-white rounded-xl shadow-lg h-[120px]'>
+					<div className='flex flex-col gap-y-2 p-2'>
+						<Skeleton className='w-3/5 h-3' />
+						<Skeleton className='w-full h-6' />
+						<Skeleton className='w-4/5 h-3 mt-2' />
+					</div>
+				</div>
+			</CardContent>
+		</Card>
 	);
 };
 
@@ -107,5 +128,65 @@ export const MessageLoadingCard = () => {
 				<Skeleton className='w-1/3 h-6' />
 			</CardFooter>
 		</Card>
+	);
+};
+
+export const CreateLoadingCard = () => {
+	return (
+		<div className='container mt-8'>
+			<div className='grid md:grid-cols-2 gap-8 mb-4'>
+				<Skeleton className='w-full h-10' />
+				<Skeleton className='w-full h-10' />
+				<Skeleton className='w-full h-10' />
+				<Skeleton className='w-full h-10' />
+			</div>
+			<Skeleton className='w-full h-40' />
+			<div className='pb-3 mt-6 bg-white rounded-xl shadow-lg'>
+				<div className='grid md:grid-cols-2 gap-2 md:gap-4 mb-6 py-4 px-4'>
+					<Skeleton className='w-full h-10' />
+					<Skeleton className='w-full h-10' />
+					<Skeleton className='w-full h-10' />
+					<Skeleton className='w-full h-10' />
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export const EditPropertyLoadingCard = () => {
+	return (
+		<div className='container mt-8'>
+			<div className='flex justify-between gap-1 md:gap-2 items-center w-full'>
+				<Skeleton className='w-10 h-10 rounded-full' />
+				<Skeleton className='h-[350px] md:h-[450px] lg:h-[550px] md:w-[80%] w-[90%] mx-auto' />
+				<Skeleton className='w-10 h-10 rounded-full' />
+			</div>
+			<Skeleton className='w-[150px] md:w-[25%] h-5 mx-auto mt-4' />
+			<div className='py-6 grid grid-cols-2 gap-3'>
+				<Skeleton className='w-full h-10' />
+				<Skeleton className='w-full h-10' />
+				<Skeleton className='w-full h-10' />
+				<Skeleton className='w-full h-10' />
+			</div>
+		</div>
+	);
+};
+
+export const ProfileLoadingCard = () => {
+	return (
+		<div className='container mt-10 mb-24'>
+			<div className='border px-6 pt-12 pb-20'>
+				<div className='flex items-center justify-center'>
+					<Skeleton className='w-28 h-28 rounded-full' />
+				</div>
+				<Skeleton className='w-[150px] md:w-[20%] h-8 mx-auto mt-4' />
+				<div className='py-6 grid grid-cols-2 gap-4'>
+					<Skeleton className='w-full h-10' />
+					<Skeleton className='w-full h-10' />
+					<Skeleton className='w-full h-10' />
+				</div>
+				<Skeleton className='w-[200px] md:w-[30%] h-8 mx-auto mt-4' />
+			</div>
+		</div>
 	);
 };
