@@ -15,6 +15,22 @@ export type PropertyCardProps = {
 	baths: number;
 };
 
+export type PropertyDataProps = {
+	id: string;
+	name: string;
+	tagline: string;
+	price: number;
+	category: string;
+	images: [string];
+	description: string;
+	location: { street: string; city: string; state: string; zipcode: string };
+	guests: number;
+	bedrooms: number;
+	beds: number;
+	baths: number;
+	amenities: [string];
+};
+
 export type PropertyData = {
 	owner: string;
 	location: { street: string; city: string; state: string; zipcode: string };

@@ -47,7 +47,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 					<DeleteMessageContainer messageId={messageId} isRead={message.read} />
 				</div>
 			)}
-			<CardHeader className='text-xl'>
+			<CardHeader className='text-xl mt-5'>
 				<div className='flex items-center gap-x-4'>
 					<Image
 						src={message.sender.profileImage}
