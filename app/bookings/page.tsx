@@ -35,7 +35,7 @@ const BookingPage = async () => {
 				<Stats />
 			</div>
 
-			<Table className='mt-10 mb-24'>
+			<Table className='mt-10 mb-40'>
 				<TableCaption>A list of your recent bookings</TableCaption>
 				<TableHeader>
 					<TableRow>
