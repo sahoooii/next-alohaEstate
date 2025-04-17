@@ -155,7 +155,7 @@ export const CreateLoadingCard = () => {
 
 export const EditPropertyLoadingCard = () => {
 	return (
-		<div className='container mt-8'>
+		<div className='container mt-12'>
 			<div className='flex justify-between gap-1 md:gap-2 items-center w-full'>
 				<Skeleton className='w-10 h-10 rounded-full' />
 				<Skeleton className='h-[350px] md:h-[450px] lg:h-[550px] md:w-[80%] w-[90%] mx-auto' />
