@@ -94,3 +94,20 @@ export type ReplyMessageProps = {
 		propertyId: string;
 	};
 };
+
+export type EditPropertyType = {
+	_id: string;
+	owner: string;
+	name: string;
+	tagline: string;
+	price: number;
+	category: string;
+	description: string;
+	guests: number;
+	bedrooms: number;
+	beds: number;
+	baths: number;
+	amenities: string[];
+	location: { street: string; city: string; state: string; zipcode: string };
+	images: string[];
+};

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import EditPropertyContainer from '@/components/rentals/EditPropertyContainer';
 import { EditPropertyLoadingCard } from '@/components/card/LoadingCards';
 
-const EditRentalPage = async ({ params }: { params: { id: string } }) => {
+const EditRentalPage = ({ params }: { params: { id: string } }) => {
 	return (
 		<section className='container pt-10 pb-28 sm:pb-16 md:pb-32'>
 			<div className='mb-4'>
