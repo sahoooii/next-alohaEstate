@@ -15,7 +15,7 @@ const ReplyMessageForm = ({
 	},
 }: ReplyMessageProps) => {
 	return (
-		<div className='bg-white p-8 rounded-lg shadow-md mt-4'>
+		<div className='bg-white p-4 rounded-lg shadow-md mt-4'>
 			<FormContainer action={sendReplyMessageAction}>
 				<div className='grid gap-6 mb-4 w-[250px]'>
 					<input name='messageId' type='hidden' value={messageId} />

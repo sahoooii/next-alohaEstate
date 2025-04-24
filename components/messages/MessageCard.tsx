@@ -9,7 +9,11 @@ import Image from 'next/image';
 import { MessagesType } from '@/utils/types';
 import Link from 'next/link';
 import { IoLogoWechat } from 'react-icons/io5';
-import { MdOutlineReply, MdOutlineMarkEmailUnread } from 'react-icons/md';
+import {
+	MdOutlineReply,
+	MdOutlineMarkEmailUnread,
+	MdDateRange,
+} from 'react-icons/md';
 import DeleteMessageContainer from './DeleteMessageContainer';
 import MarkAsReadContainer from './MarkAsReadContainer';
 import ReplyMessageButton from './reply/ReplyMessageButton';
@@ -17,8 +21,8 @@ import RepliedMessageButton from './reply/RepliedMessageButton';
 
 const MessageCard = ({ message }: { message: MessagesType }) => {
 	const messageId = message._id.toString();
-	// console.log(message.repliedMessage);
 	const propertyId = message.property._id.toString();
+	const senderId = message.sender._id.toString();
 
 	// For reply message
 	const senderName =
@@ -32,6 +36,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 		recipientId,
 		propertyId,
 	};
+	// console.log('replyMessage:', senderEmail);
 
 	return (
 		<Card className='relative p-1 rounded-md shadow-md'>
@@ -57,11 +62,16 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 						className='rounded-full object-cover w-[50px] h-[50px]'
 					/>
 					<div className='ml-4'>
-						<h3 className='text-base font-bold capitalize mb-1'>
-							From: {message.sender.firstName} {message.sender.lastName}
-						</h3>
+						<Link
+							href={`/messages/${senderId}/${propertyId}`}
+							className='text-sm text-blue-600 underline'
+						>
+							<h3 className='text-base font-bold capitalize mb-1 underline'>
+								From: {message.sender.firstName} {message.sender.lastName}
+							</h3>
+						</Link>
 						<Link href={`/properties/${propertyId}`}>
-							<h3 className='text-base text-blue-600 font-bold capitalize mb-1 underline'>
+							<h3 className='text-base font-bold capitalize mb-1 underline'>
 								{message.property.name}
 							</h3>
 						</Link>
@@ -69,13 +79,24 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<div className='mb-4 py-5 px-3 bg-white rounded-xl shadow-lfg'>
+				<div className='mb-4 px-3 bg-white rounded-xl shadow-lfg'>
+					<Link
+						href={`/messages/${senderId}/${propertyId}`}
+						className='text-sm text-blue-600 underline'
+					>
+						<div className='flex items-center mb-1'>
+							<IoLogoWechat className='text-primary mr-2' size={20} />
+							<p className='text-base font-bold'>Chat</p>
+						</div>
+					</Link>
+
 					<div className='flex items-center gap-2 mb-1'>
-						<IoLogoWechat className='text-primary mr-1' size={24} />
+						<MdDateRange className='text-primary mr-1' size={20} />
 						<p className='text-xs text-muted-foreground'>
 							{new Date(message.createdAt).toLocaleString()}
 						</p>
 					</div>
+
 					<div className='flex items-center gap-1 mb-2'>
 						<MdOutlineReply className='text-primary mr-1' size={20} />
 						<p className='text-xs text-muted-foreground'>Reply:</p>{' '}
@@ -86,6 +107,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 							{message.email}
 						</a>
 					</div>
+
 					<div>
 						<p className='text-gray-700'>{message.message}</p>
 					</div>
@@ -103,6 +125,7 @@ const MessageCard = ({ message }: { message: MessagesType }) => {
 					<ReplyMessageButton replyMessage={replyMessage} />
 				</CardFooter>
 			)}
+
 			{/* Show replied message */}
 			<div className='p-6 pt-0'>
 				{message.read && message.repliedMessage[0]?.youGotReplied && (

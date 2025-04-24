@@ -1,4 +1,7 @@
-import { fetchAllMessages, fetchMessages } from '@/actions/MessageAction';
+import {
+	fetchGroupedMessagesLength,
+	fetchGroupedMessages,
+} from '@/actions/MessageAction';
 import MessageCard from '@/components/messages/MessageCard';
 import EmptyList from '@/components/properties/EmptyList';
 import PaginationPage from '@/components/properties/PaginationPage';
@@ -18,27 +21,27 @@ const Messages = async ({
 	const pageSize = '6';
 	const paginationPageSize = parseInt(pageSize);
 
-	const messages = await fetchMessages({
+	const groupedMessages = await fetchGroupedMessages({
 		page: paginationPage,
 		pageSize: paginationPageSize,
 	});
-	// console.log('message:', messages);
+	// console.log('groupedMessages:', groupedMessages);
 
-	const totalMessages = await fetchAllMessages();
+	const groupTotalMessages = await fetchGroupedMessagesLength();
 
-	const totalPages = Math.ceil(totalMessages / paginationPageSize);
+	const totalPages = Math.ceil(groupTotalMessages / paginationPageSize);
 
-	const showPagination = totalMessages > paginationPageSize;
+	const showPagination = groupTotalMessages > paginationPageSize;
 
-	const showMessages: MessagesType[] = messages.map((message) => {
+	const showMessages: MessagesType[] = groupedMessages.map((message) => {
 		message.sender = message.sender;
-		message.property = message.propertyId;
+		message.property = message.property;
 		return message;
 	});
 
 	return (
-		<section className='container mt-8 mb-24'>
-			{totalMessages === 0 ? (
+		<section className='container mt-8 mb-32'>
+			{groupTotalMessages === 0 ? (
 				<EmptyList
 					heading='No Message'
 					message='Your future customer will send message!'
@@ -46,7 +49,8 @@ const Messages = async ({
 			) : (
 				<h1 className='text-3xl font-bold mb-4'>
 					You have{' '}
-					{totalMessages >= 1 && formatQuantity(totalMessages, 'message')}
+					{groupTotalMessages >= 1 &&
+						formatQuantity(groupTotalMessages, 'message')}
 				</h1>
 			)}
 			<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
