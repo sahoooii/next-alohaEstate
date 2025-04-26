@@ -1,15 +1,19 @@
-import DarkMode from './DarkMode';
-import LinksDropDown from './LinksDropDown';
 import Logo from './Logo';
 import NavLinks from './NavLinks';
 import NavSearch from './NavSearch';
 import Link from 'next/link';
-import { auth } from '@clerk/nextjs/server';
 import { MdOutlineNotificationsActive } from 'react-icons/md';
-import UnreadMessageCount from '../messages/UnreadMessageCount';
+import { fetchProfileImage } from '@/actions/ProfileActions';
+import { auth } from '@clerk/nextjs/server';
+import DarkModeWrapper from './DarkModeWrapper';
+import UnreadMessageCountWrapper from './UnreadMessageCountWrapper';
+import LinksDropdownWrapper from './LinksDropdownWrapper';
 
-const Navbar = () => {
+const Navbar = async () => {
 	const { userId } = auth();
+
+	const profileImage = await fetchProfileImage();
+
 	return (
 		<nav className='border-b-1'>
 			<div className='px-8 w-full flex flex-col sm:flex-row sm:justify-between sm:items-center flex-wrap gap-4 py-6 bg-blue-100'>
@@ -20,7 +24,7 @@ const Navbar = () => {
 				<NavSearch />
 				<div className='flex gap-5 items-center justify-between md:justify-start'>
 					<div className='flex gap-4 items-center justify-start'>
-						<DarkMode />
+						<DarkModeWrapper />
 						{userId ? (
 							<div className='flex items-center'>
 								<Link href='/messages' className='relative group'>
@@ -28,7 +32,7 @@ const Navbar = () => {
 										type='button'
 										className='relative rounded-full bg-white p-1 text-gray-600 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-400'
 									>
-										<UnreadMessageCount />
+										<UnreadMessageCountWrapper />
 										<MdOutlineNotificationsActive className='w-6 h-6' />
 									</button>
 								</Link>
@@ -37,7 +41,7 @@ const Navbar = () => {
 							<></>
 						)}
 					</div>
-					<LinksDropDown />
+					<LinksDropdownWrapper profileImage={profileImage} />
 				</div>
 			</div>
 		</nav>

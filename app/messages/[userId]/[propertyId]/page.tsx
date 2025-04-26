@@ -17,12 +17,10 @@ const MessageChatPage = async ({
 
 	const messages = await fetchMessageChat(userId, propertyId);
 
-	console.log('chat:', messages);
+	// console.log('chat:', messages);
 
 	const senderName =
-		messages[0].sender.firstName +
-		' ' +
-		messages[0].sender.lastName;
+		messages[0].sender.firstName + ' ' + messages[0].sender.lastName;
 
 	return (
 		<div className='container mt-8 mb-32'>
@@ -33,7 +31,12 @@ const MessageChatPage = async ({
 				</Link>
 			</div>
 			<div className='sm:p-10'>
-				<ChatCard messages={messages} currentUserId={currentUserId} />
+				<ChatCard
+					messages={messages}
+					currentUserId={currentUserId}
+					senderId={userId}
+					propertyId={propertyId}
+				/>
 			</div>
 		</div>
 	);

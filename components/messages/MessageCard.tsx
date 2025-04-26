@@ -1,138 +1,56 @@
 import React from 'react';
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-} from '@/components/ui/card';
 import Image from 'next/image';
 import { MessagesType } from '@/utils/types';
 import Link from 'next/link';
-import { IoLogoWechat } from 'react-icons/io5';
-import {
-	MdOutlineReply,
-	MdOutlineMarkEmailUnread,
-	MdDateRange,
-} from 'react-icons/md';
-import DeleteMessageContainer from './DeleteMessageContainer';
-import MarkAsReadContainer from './MarkAsReadContainer';
-import ReplyMessageButton from './reply/ReplyMessageButton';
-import RepliedMessageButton from './reply/RepliedMessageButton';
+import { MdOutlineMarkEmailUnread } from 'react-icons/md';
 
 const MessageCard = ({ message }: { message: MessagesType }) => {
-	const messageId = message._id.toString();
-	const propertyId = message.property._id.toString();
-	const senderId = message.sender._id.toString();
-
-	// For reply message
-	const senderName =
-		message.recipient.firstName + ' ' + message.recipient.lastName;
-	const senderEmail = message.recipient.email;
-	const recipientId = message.sender._id.toString();
-	const replyMessage = {
-		messageId,
-		senderName,
-		senderEmail,
-		recipientId,
-		propertyId,
-	};
-	// console.log('replyMessage:', senderEmail);
+	const sender = message.sender;
+	const property = message.property;
+	const propertyId = property._id;
+	const senderId = sender._id;
 
 	return (
-		<Card className='relative p-1 rounded-md shadow-md'>
-			{!message.read ? (
-				<div className='absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-md'>
-					<div className='flex gap-1 items-center'>
-						<p>New</p>
-						<MdOutlineMarkEmailUnread size={16} />
-					</div>
-				</div>
-			) : (
-				<div className='absolute top-2 right-2'>
-					<DeleteMessageContainer messageId={messageId} isRead={message.read} />
-				</div>
+		<Link
+			href={`/messages/${senderId}/${propertyId}`}
+			className='block hover:bg-muted/30 transition rounded-md border p-4 relative md:max-w-[80%] mx-auto'
+		>
+			{!message.read && (
+				<span className='absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-0.5 rounded-md flex items-center gap-1'>
+					New <MdOutlineMarkEmailUnread size={14} />
+				</span>
 			)}
-			<CardHeader className='text-xl mt-5'>
-				<div className='flex items-center gap-x-4'>
-					<Image
-						src={message.sender.profileImage}
-						width={50}
-						height={50}
-						alt={message.sender.firstName}
-						className='rounded-full object-cover w-[50px] h-[50px]'
-					/>
-					<div className='ml-4'>
-						<Link
-							href={`/messages/${senderId}/${propertyId}`}
-							className='text-sm text-blue-600 underline'
-						>
-							<h3 className='text-base font-bold capitalize mb-1 underline'>
-								From: {message.sender.firstName} {message.sender.lastName}
-							</h3>
-						</Link>
-						<Link href={`/properties/${propertyId}`}>
-							<h3 className='text-base font-bold capitalize mb-1 underline'>
-								{message.property.name}
-							</h3>
-						</Link>
-					</div>
-				</div>
-			</CardHeader>
-			<CardContent>
-				<div className='mb-4 px-3 bg-white rounded-xl shadow-lfg'>
-					<Link
-						href={`/messages/${senderId}/${propertyId}`}
-						className='text-sm text-blue-600 underline'
-					>
-						<div className='flex items-center mb-1'>
-							<IoLogoWechat className='text-primary mr-2' size={20} />
-							<p className='text-base font-bold'>Chat</p>
-						</div>
-					</Link>
 
-					<div className='flex items-center gap-2 mb-1'>
-						<MdDateRange className='text-primary mr-1' size={20} />
-						<p className='text-xs text-muted-foreground'>
+			<div className='flex items-start gap-4'>
+				<Image
+					src={sender.profileImage}
+					width={40}
+					height={40}
+					alt={`${sender.firstName} ${sender.lastName}`}
+					className='rounded-full object-cover w-10 h-10'
+				/>
+				<div className='flex-1'>
+					<div className='flex justify-between items-center'>
+						<h3 className='font-semibold text-sm'>
+							{sender.firstName} {sender.lastName}
+						</h3>
+						<p
+							className={`text-xs text-muted-foreground text-right ml-2 whitespace-nowrap ${
+								!message.read ? 'mt-5' : 'mt-0'
+							}`}
+						>
 							{new Date(message.createdAt).toLocaleString()}
 						</p>
 					</div>
-
-					<div className='flex items-center gap-1 mb-2'>
-						<MdOutlineReply className='text-primary mr-1' size={20} />
-						<p className='text-xs text-muted-foreground'>Reply:</p>{' '}
-						<a
-							href={`mailto:${message.email}`}
-							className='underline text-blue-500 text-xs'
-						>
-							{message.email}
-						</a>
-					</div>
-
-					<div>
-						<p className='text-gray-700'>{message.message}</p>
-					</div>
+					<p className='text-sm text-gray-700 mt-1 line-clamp-1'>
+						{message.message.slice(0, 40)}...
+					</p>
+					<p className='text-xs text-muted-foreground mt-1 italic'>
+						Property: {property.name}
+					</p>
 				</div>
-			</CardContent>
-			{/* Mark as read button */}
-			{!message.read && (
-				<CardFooter className='flex items-center justify-end'>
-					<MarkAsReadContainer messageId={messageId} />
-				</CardFooter>
-			)}
-			{/* Reply message */}
-			{message.read && !message.repliedMessage[0]?.youGotReplied && (
-				<CardFooter className='flex items-center justify-end'>
-					<ReplyMessageButton replyMessage={replyMessage} />
-				</CardFooter>
-			)}
-
-			{/* Show replied message */}
-			<div className='p-6 pt-0'>
-				{message.read && message.repliedMessage[0]?.youGotReplied && (
-					<RepliedMessageButton messageId={messageId} />
-				)}
 			</div>
-		</Card>
+		</Link>
 	);
 };
 

@@ -1,14 +1,46 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { MessagesType } from '@/utils/types';
 import ChatMessageForm from './ChatMessageForm';
+import { useGlobalContext } from '@/context/GlobalContext';
+import { markMessagesAsRead } from '@/actions/MessageAction';
 
 type Props = {
 	messages: MessagesType[];
 	currentUserId: string;
+	senderId: string;
+	propertyId: string;
 };
 
-const ChatCard = ({ messages, currentUserId }: Props) => {
+const ChatCard = ({ messages, currentUserId, senderId, propertyId }: Props) => {
+	const { refreshUnreadCount } = useGlobalContext();
+
+	// useEffect(() => {
+	// 	console.log('🔥 marking messages and refreshing count');
+	// 	const handleMarkReadAndRefresh = async () => {
+	// 		await markMessagesAsRead(senderId, propertyId);
+	// 		refreshUnreadCount(); // ✅ 未読数も更新！
+	// 	};
+
+	// 	handleMarkReadAndRefresh();
+	// }, [senderId, propertyId]);
+
+	const hasMarkedAsRead = useRef(false);
+
+	useEffect(() => {
+		if (hasMarkedAsRead.current) return;
+
+		const handleMarkReadAndRefresh = async () => {
+			await markMessagesAsRead(senderId, propertyId);
+			refreshUnreadCount();
+			hasMarkedAsRead.current = true;
+		};
+
+		handleMarkReadAndRefresh();
+	}, [senderId, propertyId, refreshUnreadCount]);
+
 	return (
 		<div className='md:border md:rounded-md sm:px-5 px-0 py-6 max-w-full md:max-w-5xl mx-auto h-[80vh] flex flex-col justify-between'>
 			{/* 💬 チャット一覧 */}

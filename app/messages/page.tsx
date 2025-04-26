@@ -5,7 +5,6 @@ import {
 import MessageCard from '@/components/messages/MessageCard';
 import EmptyList from '@/components/properties/EmptyList';
 import PaginationPage from '@/components/properties/PaginationPage';
-import { formatQuantity } from '@/utils/format';
 import { MessagesType } from '@/utils/types';
 
 const Messages = async ({
@@ -18,7 +17,7 @@ const Messages = async ({
 	const paginationPage =
 		searchParams.page === undefined ? 1 : parseInt(searchParams.page);
 
-	const pageSize = '6';
+	const pageSize = '8';
 	const paginationPageSize = parseInt(pageSize);
 
 	const groupedMessages = await fetchGroupedMessages({
@@ -41,19 +40,14 @@ const Messages = async ({
 
 	return (
 		<section className='container mt-8 mb-32'>
-			{groupTotalMessages === 0 ? (
+			{groupTotalMessages === 0 && (
 				<EmptyList
-					heading='No Message'
-					message='Your future customer will send message!'
+					heading='No Messages'
+					message='Find a new Vacation!!'
 				/>
-			) : (
-				<h1 className='text-3xl font-bold mb-4'>
-					You have{' '}
-					{groupTotalMessages >= 1 &&
-						formatQuantity(groupTotalMessages, 'message')}
-				</h1>
 			)}
-			<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
+
+			<div className='mt-8'>
 				{showMessages.map((message) => {
 					return <MessageCard key={message._id} message={message} />;
 				})}

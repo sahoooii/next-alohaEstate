@@ -1,9 +1,8 @@
 import FormContainer from '@/components/form/FormContainer'
-import { sendReplyMessageAction } from '@/actions/MessageAction'
 
 const ChatMessageForm = () => {
 	return (
-		<FormContainer action={sendReplyMessageAction}>
+		// <FormContainer action={sendReplyMessageAction}>
 			<div className='mt-4 pt-4 border-t flex gap-3'>
 				<input
 					type='text'
@@ -17,7 +16,7 @@ const ChatMessageForm = () => {
 					Send
 				</button>
 			</div>
-		</FormContainer>
+		// </FormContainer>
 	);
 }
 
