@@ -1,9 +1,6 @@
 import { LuUser2 } from 'react-icons/lu';
-import { fetchProfileImage } from '@/actions/ProfileActions';
 
-const UserIcon = async () => {
-	const profileImage = await fetchProfileImage();
-
+const UserIcon = ({ profileImage }: { profileImage?: string }) => {
 	if (profileImage) {
 		return (
 			// eslint-disable-next-line @next/next/no-img-element

@@ -59,7 +59,7 @@ export type MessagesType = {
 		firstName: string;
 		lastName: string;
 		profileImage: string;
-		email: string;
+		email?: string;
 	};
 	property: {
 		_id: string;
@@ -72,24 +72,22 @@ export type MessagesType = {
 	read: boolean;
 	createdAt: Date;
 	updateAt: Date;
-	repliedMessage: [
-		{
-			youGotReplied: boolean;
-			youGotRepliedMessage: string;
-			sender: string;
-			recipient: string;
-			_id: string;
-			createdAt: Date;
-			updatedAt: Date;
-		}
-	];
+	repliedMessage: {
+		_id?: string;
+		youGotReplied: boolean;
+		youGotRepliedMessage: string;
+		sender: string;
+		recipient: string;
+		createdAt: Date;
+		updatedAt: Date;
+	}[];
 };
 
 export type ReplyMessageProps = {
 	replyMessage: {
 		messageId: string;
 		senderName: string;
-		senderEmail: string;
+		senderEmail?: string;
 		recipientId: string;
 		propertyId: string;
 	};

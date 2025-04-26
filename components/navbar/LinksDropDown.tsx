@@ -1,3 +1,5 @@
+'use client';
+
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,18 +14,23 @@ import { Button } from '../ui/button';
 import UserIcon from './UserIcon';
 import SignOutLink from './SignOutLink';
 import { navLinks } from '@/utils/navLinks';
-import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
-import { auth } from '@clerk/nextjs/server';
+import {
+	SignedIn,
+	SignedOut,
+	SignInButton,
+	SignUpButton,
+	useAuth,
+} from '@clerk/nextjs';
 
-const LinksDropDown = () => {
-	const { userId } = auth();
-	const isAdminUser = userId === process.env.ADMIN_USER_ID;
+const LinksDropDown = ({ profileImage }: { profileImage?: string }) => {
+	const { userId } = useAuth();
+	const isAdminUser = userId === process.env.NEXT_PUBLIC_ADMIN_USER_ID;
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant='outline' className='flex gap-4 max-w-[100px]'>
 					<LuAlignLeft className='w-6 h-6' />
-					<UserIcon />
+					<UserIcon profileImage={profileImage} />
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-44 mr-6' align='start' sideOffset={10}>

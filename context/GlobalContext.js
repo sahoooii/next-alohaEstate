@@ -1,7 +1,12 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
-import { getUnreadMessageCount } from '@/actions/MessageAction';
+import {
+	createContext,
+	useContext,
+	useState,
+	useEffect,
+	useCallback,
+} from 'react';
 import { useAuth } from '@clerk/nextjs';
 // Create Context
 const GlobalContext = createContext();
@@ -9,21 +14,33 @@ const GlobalContext = createContext();
 // Create Provider
 export function GlobalProvider({ children }) {
 	const [unreadCount, setUnreadCount] = useState(0);
+	const [localUserId, setLocalUserId] = useState(null);
 	const { userId } = useAuth();
 
-	useEffect(() => {
-		if(userId !== null) {
-			getUnreadMessageCount().then((count) => {
-				if (count) setUnreadCount(count);
-			});
+	const refreshUnreadCount = useCallback(async () => {
+		try {
+			const res = await fetch('/api/unreadCount');
+			const data = await res.json();
+			setUnreadCount(data.count || 0);
+			console.log('rendering!!!');
+		} catch (error) {
+			console.error('Failed to refresh unread count:', error);
 		}
-	}, [getUnreadMessageCount]);
+	}, []);
+
+	useEffect(() => {
+		if (!localUserId && userId) {
+			setLocalUserId(userId);
+			refreshUnreadCount();
+		}
+	}, [userId, localUserId, refreshUnreadCount]);
 
 	return (
 		<GlobalContext.Provider
 			value={{
 				unreadCount,
 				setUnreadCount,
+				refreshUnreadCount,
 			}}
 		>
 			{children}
