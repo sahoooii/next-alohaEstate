@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { MessagesType } from '@/utils/types';
 import ChatMessageForm from './ChatMessageForm';
@@ -15,20 +15,42 @@ type Props = {
 };
 
 const ChatCard = ({ messages, currentUserId, senderId, propertyId }: Props) => {
+const [chatMessages, setChatMessages] = useState<MessagesType[]>(messages);
+
+const handleSendMessage = (text: string) => {
+	setChatMessages((prev) => [
+		...prev,
+		{
+			_id: 'optimistic-' + Date.now(),
+			message: text,
+			sender: {
+				_id: currentUserId,
+				firstName: messages[0].sender.firstName,
+				lastName: messages[0].sender.lastName,
+				profileImage: messages[0].recipient.profileImage,
+			},
+			recipient: {
+				_id: senderId,
+				firstName: messages[0].recipient.firstName,
+				lastName: messages[0].recipient.lastName,
+				profileImage: messages[0].recipient.profileImage,
+			},
+			property: {
+				_id: propertyId,
+				name: '',
+			},
+			name: currentUserId,
+			submitted: true,
+			read: false,
+			createdAt: new Date(),
+			updateAt: new Date(),
+		},
+	]);
+};
+
 	const { refreshUnreadCount } = useGlobalContext();
 
-	// useEffect(() => {
-	// 	console.log('🔥 marking messages and refreshing count');
-	// 	const handleMarkReadAndRefresh = async () => {
-	// 		await markMessagesAsRead(senderId, propertyId);
-	// 		refreshUnreadCount(); // ✅ 未読数も更新！
-	// 	};
-
-	// 	handleMarkReadAndRefresh();
-	// }, [senderId, propertyId]);
-
 	const hasMarkedAsRead = useRef(false);
-
 	useEffect(() => {
 		if (hasMarkedAsRead.current) return;
 
@@ -45,7 +67,7 @@ const ChatCard = ({ messages, currentUserId, senderId, propertyId }: Props) => {
 		<div className='md:border md:rounded-md sm:px-5 px-0 py-6 max-w-full md:max-w-5xl mx-auto h-[80vh] flex flex-col justify-between'>
 			{/* 💬 チャット一覧 */}
 			<div className='overflow-y-auto space-y-6 md:space-y-5 mb-6 pr-1'>
-				{messages.map((message) => {
+				{chatMessages.map((message) => {
 					const isSender =
 						message.sender._id.toString() === currentUserId.toString();
 
@@ -90,7 +112,12 @@ const ChatCard = ({ messages, currentUserId, senderId, propertyId }: Props) => {
 					);
 				})}
 			</div>
-			<ChatMessageForm />
+			<ChatMessageForm
+				currentUserId={currentUserId}
+				senderId={senderId}
+				propertyId={propertyId}
+				onSendMessage={handleSendMessage}
+			/>
 		</div>
 	);
 };

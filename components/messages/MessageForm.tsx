@@ -1,5 +1,4 @@
 import FormContainer from '@/components/form/FormContainer';
-import FormInput from '@/components/form/FormInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { SubmitButton } from '@/components/form/Buttons';
 import { sendMessageAction } from '@/actions/MessageAction';
@@ -17,12 +16,6 @@ const MessageForm = ({
 				<div className='grid gap-6 mb-4 w-[250px]'>
 					<input name='recipient' type='hidden' value={ownerId} />
 					<input name='propertyId' type='hidden' value={propertyId} />
-					<FormInput
-						name='email'
-						type='email'
-						label='E-mail'
-						placeholder='Your email...'
-					/>
 					<TextAreaInput
 						name='message'
 						labelText='Message (10 - 3000 characters)'

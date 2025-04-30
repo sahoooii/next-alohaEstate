@@ -16,24 +16,27 @@ const MessageChatPage = async ({
 	const currentUserId = await getUserId();
 
 	const messages = await fetchMessageChat(userId, propertyId);
-
-	// console.log('chat:', messages);
+	const serializedMessages = JSON.parse(JSON.stringify(messages));
 
 	const senderName =
-		messages[0].sender.firstName + ' ' + messages[0].sender.lastName;
+		messages.length > 0
+			? messages[0].sender.firstName + ' ' + messages[0].sender.lastName
+			: '';
 
 	return (
 		<div className='container mt-8 mb-32'>
 			<BreadCrumps name={senderName} link='/messages' title='All Messages' />
 			<div className=' mt-4 mb-4'>
-				<Link href={`/properties/${propertyId}`} className='underline'>
-					<h1 className='text-3xl'>{messages[0].propertyId.name}</h1>
-				</Link>
+				{messages.length > 0 && (
+					<Link href={`/properties/${propertyId}`} className='underline'>
+						<h1 className='text-3xl'>{messages[0].propertyId.name}</h1>
+					</Link>
+				)}
 			</div>
 			<div className='sm:p-10'>
 				<ChatCard
-					messages={messages}
-					currentUserId={currentUserId}
+					messages={serializedMessages}
+					currentUserId={currentUserId.toString()}
 					senderId={userId}
 					propertyId={propertyId}
 				/>
