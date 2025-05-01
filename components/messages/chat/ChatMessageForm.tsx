@@ -1,11 +1,49 @@
-import FormContainer from '@/components/form/FormContainer'
+import { replyMessageAction } from '@/actions/MessageAction';
+import FormContainer from '@/components/form/FormContainer';
+import { useRef } from 'react';
 
-const ChatMessageForm = () => {
+type Props = {
+	currentUserId: string;
+	senderId: string;
+	propertyId: string;
+	onSendMessage: (message: string) => void;
+};
+
+const ChatMessageForm = ({
+	currentUserId,
+	senderId,
+	propertyId,
+	onSendMessage,
+}: Props) => {
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	const clearInput = () => {
+		if (inputRef.current) {
+			inputRef.current.value = '';
+		}
+	};
+
 	return (
-		// <FormContainer action={sendReplyMessageAction}>
+		<FormContainer
+			action={async (prevState: unknown, formData: FormData) => {
+				const message = formData.get('message') as string;
+				// Optimistic UI
+				onSendMessage(message); // クライアント側で即描画
+
+				const result = await replyMessageAction(prevState, formData);
+				clearInput();
+				return result;
+			}}
+		>
 			<div className='mt-4 pt-4 border-t flex gap-3'>
+				<input name='recipient' type='hidden' value={senderId} />
+				<input name='sender' type='hidden' value={currentUserId} />
+				<input name='propertyId' type='hidden' value={propertyId} />
+
 				<input
 					type='text'
+					name='message'
+					ref={inputRef}
 					placeholder='Type your message...'
 					className='flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base'
 				/>
@@ -16,8 +54,8 @@ const ChatMessageForm = () => {
 					Send
 				</button>
 			</div>
-		// </FormContainer>
+		</FormContainer>
 	);
-}
+};
 
-export default ChatMessageForm
+export default ChatMessageForm;

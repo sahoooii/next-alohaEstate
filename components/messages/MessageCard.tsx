@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { MdOutlineMarkEmailUnread } from 'react-icons/md';
 
 const MessageCard = ({ message }: { message: MessagesType }) => {
+	// console.log('message:', message);
 	const sender = message.sender;
 	const property = message.property;
 	const propertyId = property._id;

@@ -148,7 +148,6 @@ export const createReviewSchema = z.object({
 export const messageSchema = z.object({
 	recipient: z.string(),
 	propertyId: z.string(),
-	email: z.string().email(),
 	message: z
 		.string()
 		.min(10, { message: 'Message must be at least 10 characters' })

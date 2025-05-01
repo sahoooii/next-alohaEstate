@@ -36,7 +36,6 @@ export const sendMessageAction = async (
 			recipient,
 			propertyId: validatedFields.propertyId,
 			name: senderName,
-			email: validatedFields.email,
 			message: validatedFields.message,
 			submitted: true,
 			read: false,
@@ -237,13 +236,11 @@ export const getUnreadMessageCount = async () => {
 	await connectDB();
 
 	const userId = await getUserId();
-	console.log('userId:', userId);
 
 	const unreadMessageCount = await Message.countDocuments({
 		recipient: userId,
 		read: false,
 	});
-	console.log('unreadCount:', unreadMessageCount);
 
 	return unreadMessageCount;
 };
@@ -283,4 +280,42 @@ export const fetchMessageChat = async (
 		]);
 
 	return messages;
+};
+
+export const replyMessageAction = async (
+	prevState: unknown,
+	formData: FormData
+): Promise<{ message: string }> => {
+	await connectDB();
+	const userId = await getUserId();
+
+	try {
+		const rawData = Object.fromEntries(formData);
+
+		const validatedFields = validateWithZodSchema(messageSchema, rawData);
+
+		const recipient = validatedFields.recipient;
+
+		// To get sender name info
+		const profile = await Profile.findById(userId, 'firstName lastName');
+		const senderName = `${profile.firstName} ${profile.lastName}`;
+
+		const newMessage = new Message({
+			sender: userId,
+			recipient,
+			propertyId: validatedFields.propertyId,
+			name: senderName,
+			message: validatedFields.message,
+			submitted: true,
+			read: false,
+		});
+
+		await newMessage.save();
+
+		revalidatePath(`/messages/${userId}/${validatedFields.propertyId}`);
+
+		return { message: 'Message sent successfully' };
+	} catch (error) {
+		return renderError(error);
+	}
 };

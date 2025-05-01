@@ -22,7 +22,6 @@ export function GlobalProvider({ children }) {
 			const res = await fetch('/api/unreadCount');
 			const data = await res.json();
 			setUnreadCount(data.count || 0);
-			console.log('rendering!!!');
 		} catch (error) {
 			console.error('Failed to refresh unread count:', error);
 		}
