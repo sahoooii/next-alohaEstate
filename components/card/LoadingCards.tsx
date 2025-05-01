@@ -1,9 +1,5 @@
-import { Skeleton } from '../ui/skeleton';
-import {
-	Card,
-	CardContent,
-	CardHeader,
-} from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 export const LoadingCards = () => {
 	return (
@@ -104,22 +100,19 @@ export const ReviewLoadingCard = () => {
 
 export const MessageLoadingCard = () => {
 	return (
-		<>
-			<div className='flex items-center'>
-				<Skeleton className='w-20 h-20 rounded-full' />
-				<div className='ml-4'>
-					<Skeleton className='w-[150px] h-6 mb-2' />
-					<Skeleton className='w-[100px] h-4' />
+		<div className='rounded-md border p-4 relative md:max-w-[80%] mx-auto h-32'>
+			<Skeleton className='absolute top-2 right-3 w-[50px] h-4 rounded-md flex items-center' />
+			<Skeleton className='absolute top-8 right-3 w-[90px] h-4 rounded-md flex items-center gap-1' />
+			<div className='flex items-start gap-4 py-2 px-4'>
+				{/* Image */}
+				<Skeleton className='rounded-full object-cover w-10 h-10' />
+				<div className='flex-1'>
+					<Skeleton className='rounded-md w-[50%] h-8 mb-2' />
+					<Skeleton className='rounded-md w-[60%] h-4 mb-2' />
+					<Skeleton className='rounded-md w-[70%] h-3' />
 				</div>
 			</div>
-			<div className='py-5 px-3 bg-white rounded-xl shadow-lg h-[100px]'>
-				<div className='flex flex-col gap-y-2 p-2'>
-					<Skeleton className='w-3/5 h-2' />
-					<Skeleton className='w-4/5 h-2' />
-					<Skeleton className='w-full h-6' />
-				</div>
-			</div>
-		</>
+		</div>
 	);
 };
 
