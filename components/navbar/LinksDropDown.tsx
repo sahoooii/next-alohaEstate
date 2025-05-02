@@ -24,7 +24,12 @@ import {
 
 const LinksDropDown = ({ profileImage }: { profileImage?: string }) => {
 	const { userId } = useAuth();
-	const isAdminUser = userId === process.env.NEXT_PUBLIC_ADMIN_USER_ID;
+
+	const adminIds = [
+		process.env.NEXT_PUBLIC_ADMIN_USER_ID,
+		process.env.NEXT_PUBLIC_ADMIN_TEST_USER_ID,
+	];
+	const isAdminUser = adminIds.includes(userId ?? '');
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>

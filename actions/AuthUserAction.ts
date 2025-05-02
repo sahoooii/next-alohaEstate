@@ -9,6 +9,7 @@ export const getUserId = async () => {
 	await connectDB();
 
 	const user = await getAuthUser();
+
 	const userInfo =
 		user && (await Profile.find({ clerkId: user.id }, { _id: 1 }));
 	const userId = userInfo[0]._id;
@@ -19,7 +20,13 @@ export const getUserId = async () => {
 export const getAdminUser = async () => {
 	await connectDB();
 
+	const adminIds = [process.env.ADMIN_USER_ID, process.env.ADMIN_TEST_USER_ID];
+
 	const user = await getAuthUser();
-	if (user.id !== process.env.ADMIN_USER_ID) redirect('/');
+
+	if (!adminIds.includes(user.id)) {
+		console.log('redirecting: unauthorized');
+		redirect('/');
+	}
 	return user;
 };

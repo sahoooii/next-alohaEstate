@@ -5,8 +5,11 @@ import {
 } from '@/components/admin/Loading';
 import StatsContainer from '@/components/admin/StatsContainer';
 import ChartsContainer from '@/components/admin/ChartsContainer';
+import { getAdminUser } from '@/actions/AuthUserAction';
 
-const AdminPage = () => {
+const AdminPage = async () => {
+	await getAdminUser();
+	
 	return (
 		<div className='container mt-8'>
 			<Suspense fallback={<StatsLoadingContainer />}>
