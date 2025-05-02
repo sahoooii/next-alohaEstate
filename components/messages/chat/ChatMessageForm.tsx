@@ -27,6 +27,13 @@ const ChatMessageForm = ({
 		<FormContainer
 			action={async (prevState: unknown, formData: FormData) => {
 				const message = formData.get('message') as string;
+
+				if (!message.trim() || message.trim().length < 10) {
+					return { message: 'Message must be at least 10 characters' };
+				}
+				if (message.trim().length > 3000) {
+					return { message: 'Message must be in 3000 characters or less' };
+				}
 				// Optimistic UI
 				onSendMessage(message); // クライアント側で即描画
 
