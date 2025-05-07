@@ -19,7 +19,7 @@
 
 ## Demo
 
-![Image](https://github.com/user-attachments/assets/19586de0-0d03-4a82-a8a5-08a09a8cc213)
+![Image](https://github.com/user-attachments/assets/4cf39a7d-4964-4112-9172-1d9a643c4aee)
 
 <br />
 
