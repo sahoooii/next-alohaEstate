@@ -379,7 +379,7 @@ npm run dev
 
 <br />
 
-### 3. Build & Deploy
+### 5. Build & Deploy
 
 ```
 # Create production build
@@ -392,7 +392,7 @@ Make sure your environment variables are also set in the Vercel dashboard.
 
 <br />
 
-### 5. 📌 Sample Logins
+### 6. 📌 Sample Logins
 
 To skip the hassle of registration, you can log in with one of the dummy users created for testing:
 
