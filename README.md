@@ -276,12 +276,12 @@ After the initial development, I made several improvements to enhance UI consist
 
 ### Setup
 
-#### 1. 📌 Required Accounts
+### 1. 📌 Required Accounts
 
-- **MongoDB Atlas**: Create a database and obtain your MongoDB URI →&nbsp; [ Sign up](https://www.mongodb.com/cloud/atlas/register)
-- **Stripe**: Create an account and obtain your API keys → &nbsp; [ Sign up](https://dashboard.stripe.com/register)
-- **Cloudinary**: For image uploads → &nbsp; [ Sign up](https://cloudinary.com)
-- **Clerk**: For user authentication → &nbsp; [ Sign up](https://clerk.com)
+- **MongoDB Atlas**: Create a database and obtain your MongoDB URI →&nbsp; [Sign up](https://www.mongodb.com/cloud/atlas/register)
+- **Stripe**: Create an account and obtain your API keys → &nbsp; [Sign up](https://dashboard.stripe.com/register)
+- **Cloudinary**: For image uploads → &nbsp; [Sign up](https://cloudinary.com)
+- **Clerk**: For user authentication → &nbsp; [Sign up](https://clerk.com)
 
 <br />
 
@@ -406,7 +406,7 @@ To skip the hassle of registration, you can log in with one of the dummy users c
 
 <br />
 
-### 6. Stripe Test Payments 💳
+### 7. Stripe Test Payments 💳
 
 To test the booking and checkout functionality:
 
