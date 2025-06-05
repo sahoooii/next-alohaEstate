@@ -47,6 +47,12 @@ I implemented many functionalities in this project, so I hope you’ll take a lo
 <br />
 <br />
 
+### ⚠️ Note:
+
+This project uses Next.js version 14.2.13 to maintain compatibility and stability.<br >
+Some security alerts may appear due to indirect dependencies from react-scripts or legacy packages. <br >
+These do not affect core functionality and are acknowledged for future upgrade plans.
+
 **(JP)**
 
 **Aloha Estate** は、**Next.js** と **TypeScript** を使用して構築した Airbnb 風のフルスタック・バケーションレンタルアプリです。ハワイでの滞在にぴったりな物件を見つけることができます。
@@ -67,6 +73,12 @@ UI は主に **shadcn/ui** と **Tailwind CSS** を使用してデザインさ�
 
 たくさんの機能を実装したので、ぜひ触って楽しんでみてください！
 <br />
+<br />
+
+### ⚠️ Note:
+
+このプロジェクトでは、互換性と安定性を保つために Next.js のバージョン 14.2.13 を使用しています。<br />
+一部のセキュリティアラートは、`react-scripts` やレガシーなパッケージに由来する間接的な依存関係によるもので、アプリケーションの主要機能には影響しません。これらの問題は、今後のアップグレード計画の中で順次対応する予定です。
 <br />
 
 ## Features
