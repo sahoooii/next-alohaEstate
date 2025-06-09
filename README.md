@@ -1,15 +1,18 @@
 # next-alohaEstate <br />Build vacation rental Full-Stack App with Next.js 14+
 
-![Next.js](https://img.shields.io/badge/next.js-000?style=for-the-badge&logo=next.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![shadcn/ui](https://img.shields.io/badge/-shadcn/ui-000?style=for-the-badge&logo=shadcn/ui&logoColor=white)
+## 🛠 Tech Stack
+
+![Next.js](https://img.shields.io/badge/next.js@14.2.13-000?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript@5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Mongo DB](https://img.shields.io/badge/mongodb-00800?style=for-the-badge&logo=mongodb&logoColor=white)
-![Zod](https://img.shields.io/badge/zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white)
+![Zod](https://img.shields.io/badge/zod@3.23.8-3E67B1?style=for-the-badge&logo=zod&logoColor=white)
 <br />
-![Clerk](https://img.shields.io/badge/clerk-764ABC?style=for-the-badge&logo=clerk&logoColor=white)
-![Stripe](https://img.shields.io/badge/stripe-00457C?style=for-the-badge&logo=stripe&logoColor=white)
-![Cloudinary](https://img.shields.io/badge/cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=fff)
+![shadcn/ui](https://img.shields.io/badge/-shadcn/ui-000?style=for-the-badge&logo=shadcn/ui&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS@3.4.1-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+<br />
+![Clerk](https://img.shields.io/badge/clerk@5.6.4-764ABC?style=for-the-badge&logo=clerk&logoColor=white)
+![Stripe](https://img.shields.io/badge/stripe@17.5.0-00457C?style=for-the-badge&logo=stripe&logoColor=white)
+![Cloudinary](https://img.shields.io/badge/cloudinary@2.5.1-3448C5?style=for-the-badge&logo=cloudinary&logoColor=fff)
 
 <p>etc...</p>
 
