@@ -12,7 +12,7 @@ export default clerkMiddleware((auth, req) => {
 	].filter(Boolean);
 
 	const isAdminUser = userId && adminIds.includes(userId);
-	
+
 	if (isAdminRoute(req) && !isAdminUser) {
 		return NextResponse.redirect(new URL('/', req.url));
 	}
@@ -21,5 +21,5 @@ export default clerkMiddleware((auth, req) => {
 });
 
 export const config = {
-	matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+	matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
 };
