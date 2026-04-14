@@ -57,6 +57,7 @@ export const createBookingAction = async (prevState: {
 	redirect(`/checkout?bookingId=${bookingId}`);
 };
 
+// ↓このロジックのpaymentStatus=falseのものを取得して、それだけを消すシステムに変更する、その際、payment pageに飛べるようにする(	(`/checkout?bookingId=${bookingId}`); bookingIDもいる details
 // For bookings page
 export const fetchBookings = async () => {
 	await connectDB();
@@ -65,7 +66,7 @@ export const fetchBookings = async () => {
 
 	const bookings = await Booking.find(
 		{ profileId: userId, paymentStatus: true },
-		{ orderTotal: 1, totalNights: 1, checkIn: 1, checkOut: 1, createdAt: 1 }
+		{ orderTotal: 1, totalNights: 1, checkIn: 1, checkOut: 1, createdAt: 1 },
 	)
 		.populate('propertyId', {
 			_id: 1,
